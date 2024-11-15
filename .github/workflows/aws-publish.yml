@@ -66,13 +66,21 @@ jobs:
         if: success()
         run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-      - name: Push Docker image to Amazon ECR
+      - name: Push Docker image to Amazon ECR with tag version
         if: success()
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete:${{ steps.extract_version.outputs.VERSION }}
+
+      - name: Push Docker image to Amazon ECR with tag latest
+        if: success()
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete:latest
 
       - name: Logout from Amazon ECR
         if: success()
