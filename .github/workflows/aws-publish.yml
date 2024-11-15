@@ -67,8 +67,8 @@ jobs:
         run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
       - name: Push Docker image with tags version and latest
-		env:
-			FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete
+		    env:
+			    FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete
         run: |
           docker tag app-lanchonete $FULL_PATH_IMAGE:${{ steps.extract_version.outputs.VERSION }}
           docker push $FULL_PATH_IMAGE:${{ steps.extract_version.outputs.VERSION }}
