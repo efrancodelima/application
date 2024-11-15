@@ -72,7 +72,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-repository:${{ steps.extract_version.outputs.VERSION }}
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete:${{ steps.extract_version.outputs.VERSION }}
 
       - name: Logout from Amazon ECR
         if: success()
