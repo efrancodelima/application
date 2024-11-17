@@ -1,29 +1,19 @@
-# Tech Challenge - Fase 2
+# Tech Challenge - Fase 3
 
 Projeto realizado como atividade avaliativa do curso de **Software Architecture - Pós-Tech - FIAP**.
 
-Link do projeto no GitHub: https://github.com/efrancodelima/fiap-tech-challenge/tree/entrega-fase-2
+Link do projeto no GitHub:
 
-Link da imagem Docker do projeto: https://hub.docker.com/repository/docker/efrancodelima/app-lanchonete/general
-
-Link da playlist com os vídeos: https://www.youtube.com/playlist?list=PLqkuuK6NtwQ0W8lqcYVlN-KNkiP9A-tAX
-
-Essa playlist contém:
-
-- Arquitetura Kubernetes
-- Arquitetura Clean
-- Rodando o projeto
-- Testando a API
-- Escalando a aplicação
-
-Link do Swagger: `<URL>`/api/v2/swagger-ui/index.html
+- Aplicação: https://github.com/efrancodelima/application
+- Infra kubernetes: https://github.com/efrancodelima/infra-k8s
+- Infra do banco de dados: https://github.com/efrancodelima/infra-bd
+- Function AWS Lambda: https://github.com/efrancodelima/lambda
 
 # Índice
 
 - [Objetivos](#objetivos)
 - [Requisitos do negócio](#requisitos-do-negócio)
 - [Instruções para executar a aplicação](#instruções-para-executar-a-aplicação)
-- [Estrutura do projeto](#estrutura-do-projeto)
 
 ## Objetivos
 
@@ -31,19 +21,36 @@ Desenvolver um sistema para uma lanchonete, seguindo os pré-requisitos especifi
 
 ## Requisitos do negócio
 
-### Arquitetura
+Em relação à fase anterior, foi feita a migração do projeto que antes rodava localmente (com o minikube) para a nuvem da Amazon Web Services (AWS).
 
-Arquitetura do software
+O projeto foi dividido em 4 partes:
 
-- O projeto da fase 1 (arquitetura hexagonal) deverá ser adaptado para a Clean Architecture.
+- uma função lambda para a autenticação do usuário
+- uma aplicação com as regras de negócio
+- a infraestrutura kubernetes para a aplicação
+- a infraestrutura para o banco de dados
 
-Arquitetura da infra
+Cada parte tem um repositório separado no GitHub, conforme mencionado no início deste documento, e todos os repositórios necessitam pull request para realizar qualquer tipo de alteração na branch main.
 
-- O projeto irá rodar em containeres gerenciados pelo kubernetes (usamos o minikube na máquina local).
+A branch main dispara um GitHub Action, que executa o deploy na AWS, criando ou atualizando os recursos. No caso da aplicação, ele também faz o build do arquivo jar, testa o código, faz o build da imagem docker, envia a imagem para o repositório ECR da Amazon (utilizando duas tags: a versão do projeto e a tag latest) e faz o deploy no cluster EKS.
 
-![Arquitetura kubernetes](assets/images/infra-architecture.svg)
+### Função Lambda
 
-### API's web
+Responsável pela autenticação do usuário, que deve se identificar pelo CPF.
+
+Para tal, foi utilizado o API Gateway, o Lambda e o Cognito.
+
+O Lambda também se comunica com o banco de dados para verificar se o CPF já está cadastrado.
+
+### Aplicação
+
+No que diz respeito ao software, o projeto foi desenvolvido em Java (JDK 17) seguindo os princípios da Clean Architecture.
+
+A única alteração no código em relação à fasse anterior é que, como o banco de dados migrou do MySQL para o Amazon Aurora, alguns ajustes foram necessários na configuração do Springboot e nos repositórios.
+
+#### API da aplicação
+
+Não houve mudanças em relação à fase anterior.
 
 Cliente
 
@@ -65,160 +72,21 @@ Pedido
 - Pedidos mais antigos primeiro e mais novos depois.
 - Pedidos finalizados não devem aparecer na lista.
 
+### Infraestrutura kubernetes
+
+Foi criado um EKS Cluster para rodar a aplicação. Dentro desse cluster temos o deployment, o service e o HPA.
+
+### Infraestrutura do banco de dados
+
+O banco de dados escolhido foi o Amazon Aurora, que é do tipo relacional e compatível com MySQL e postgreSQL.
+
+Esse banco utiliza o Amazon RDS como service e roda dentro do Aurora Cluster (um cluster específico para banco de dados da AWS).
+
+## Documentação e modelagem do banco de dados
+
+Em construção.
+
 ## Instruções para executar a aplicação
-
-### Pré-requisitos
-
-As instruções citadas nesse documento foram testadas com:
-
-- Linux Ubuntu 22.04.4 LTS;
-- Docker 27.2.1
-- Minikube 1.34.0
-- Git 2.34.1
-
-### Rodando a aplicação
-
-#### 1. Clone o projeto.
-
-Abra um terminal, clone o projeto, mova para o diretório raiz do projeto e selecione a branch entrega-fase-2.
-
-```
-git clone https://github.com/efrancodelima/fiap-tech-challenge.git
-cd fiap-tech-challenge
-git checkout entrega-fase-2
-```
-
-#### 2. Inicie o Minikube.
-
-Ao iniciar o minikube, se não tiver nenhum cluster criado ainda, ele irá criar um.
-
-O minikube não trabalha com mais de um cluster simultâneo. Então, se necessário, apague o cluster anterior.
-
-```
-minikube delete
-```
-
-O comando abaixo inicia o minikube e cria um cluster com as especificações de CPU e memória passadas.
-
-Ajuste os valores, se necessário. CPU se refere à quantidade de núcleos e memory está em MiB.
-
-```
-minikube start --driver=docker --cpus=4 --memory=3870
-```
-
-#### 3. Habilite o dashboard e o coletor de métricas.
-
-Habilite o dashboard do minikube e o metrics-server.
-
-O metrics-server é o coletor de métricas, necessário para que o HPA possa funcionar.
-
-Temos uma branch em que iniciamos a configuração do Prometheus, mas voltamos para o metrics-server, pois o Prometheus estava pesando muito na máquina local e deixando os pods muito lentos para iniciar, além de superaquecer o processador.
-
-O Prometheus é mais robusto, com mais opções de configuração, porém o metrics-server é mais leve. Como iremos testar a escalabilidade da aplicação, a nossa escolha foi pelo mais leve.
-
-```
-minikube addons enable dashboard
-minikube addons enable metrics-server
-```
-
-#### 4. Prepare as imagens necessárias.
-
-O build da imagem da aplicação é multi-staged, ou seja, ele irá usar um container intermediário e temporário para compilar o projeto e depois, usando o arquivo compilado, criará a imagem final.
-
-Esse build é mais demorado, porém ele separa o processo de construção do aplicativo do processo de criação da imagem, reduzindo o tamanho da imagem final e garantindo que a compilação seja sempre executada no mesmo ambiente (container intermediário), rodando os mesmos comandos, usando a mesma JDK, etc... independente da plataforma do host.
-
-Dito isto, baixe a imagem do banco de dados e construa a imagem da aplicação com os seguintes comandos.
-
-```
-# Configura o terminal para usar o docker daemon dentro do minikube
-eval $(minikube docker-env)
-
-# Baixa a imagem do banco de dados
-docker pull mysql:8.4.0
-
-# Constrói a imagem da aplicação
-docker build -t app-lanchonete:1.12 -f Dockerfile .
-
-# Verifica as imagens disponíveis no minikube
-minikube image ls
-```
-
-Caso você tenha baixado/construído as imagens no host local, você também pode importá-las para o minikube com os comandos abaixo.
-
-```
-minikube image load mysql:8.4.0
-minikube image load app-lanchonete:1.12
-```
-
-#### 5. Inicie a aplicação.
-
-A criação dos recursos precisa ser feita em uma ordem específica, por exemplo: precisamos que as variáveis de ambiente estejam disponíveis antes de iniciar a aplicação; precisamos iniciar o volume de dados antes do banco de dados, etc.
-
-Há várias formas de aplicar essa ordem, cada uma com suas vantagens e desvantagens: jobs, initContainers, helm, scripts bash, entre outras. Nesse projeto usamos um misto de script bash e initContainer.
-
-Devido à baixa complexidade do projeto, poderíamos usar apenas o script bash e teríamos até um ganho de perfomance com isso, mas optamos por demonstrar também o funcionamento do initContainer.
-
-Tomamos o cuidado de não usar comandos específicos do linux nesse script, que necessitem de instalação adicional. O script trabalha basicamente com comandos do minikube.
-
-Se for a primeira vez que estiver rodando o projeto no cluster, vai demorar um pouco mais, pois o kubernetes precisa baixar as imagens.
-
-```
-# Mova para o diretório onde estão os arquivos manifestos
-cd k8s
-
-# Caso seja necessário, conceda permissão de execução para o script
-chmod +x run-apply.sh
-
-# Execute o script run-apply para rodar a aplicação
-./run-apply.sh
-```
-
-#### 6. Acompanhe a inicialização dos PODs.
-
-O comando abaixo exibe os pods e atualiza a tela a cada 2 segundos.
-
-Esse é um comando não responsivo, ou seja, ele irá usar/ocupar o terminal enquanto estiver rodando. Digite CTRL+C quando quiser sair.
-
-Se tudo estiver ok, os PODs irão subir e após algum tempo deverão estar com "STATUS Running" e "READY 1/1".
-
-```
-watch -n 2 minikube kubectl -- get pods
-```
-
-#### 7. Em caso de erro no POD.
-
-Essa aplicação roda na máquina local e os health checks foram configurados conforme os recursos do ambiente local.
-
-É possível que, em outra máquina, com cpu e memória diferentes, os PODs demorem mais para responder e talvez seja necessário um ajuste nos tempos da configuração dos health checks.
-
-Verifique a descrição detalhada do POD com o comando abaixo. Se alguma probe falhar, irá aparecer nessa descrição.
-
-O `<nome_pod>` deve ser igual ao que foi mostrado na etapa anterior, com o comando get pods.
-
-```
-minikube kubectl -- describe pod <nome_pod>
-```
-
-Se não resolver, verifique o log do pod.
-
-```
-minikube kubectl -- logs -f <nome_pod>
-```
-
-#### 8. Acesse a aplicação pelo navegador.
-
-Use o comando abaixo para expor o serviço para acesso externo. Uma `<URL>` será gerada.
-
-Esse é um comando não responsivo, digite CTRL+C quando quiser sair. Note que ao liberar o terminal, o comando não estará mais executando e o acesso externo será cortado (a `<URL>` vai parar de funcionar).
-
-```
-minikube service app-service --url
-```
-
-Abra o navegador e acesse: `<URL>`/api/v2/ \
-Esse link deverá abrir o Swagger da aplicação.
-
-#### 9. Ordem de execução das APIs.
 
 Sugestão de ordem para execução das APIs:
 
@@ -279,150 +147,3 @@ curl -X PUT <URL>/api/v2/pedidos/webhook/ \
 "card": {}
 }'
 ```
-
-#### 10. Acesse o dashboard do minikube.
-
-Veja informações mais detalhadas sobre a aplicação no dashboard do minikube.
-
-Use o comando abaixo para gerar o link para o dashboard.
-
-```
-minikube dashboard --url
-```
-
-## Estrutura do projeto
-
-O projeto foi estruturado em diretórios e subdiretórios conforme as camadas da Clean Architecture. \
-As camadas foram nomeadas como: "business layer", "application layer", "interface layer" e "external layer".
-
-- tech_challenge
-- business_layer
-- application_layer
-- interface_layer
-- external_layer
-
-### Camada de negócios
-
-- business_layer
-- entities
-  - enums
-- constants
-- exceptions
-  - messages
-
-#### entities
-
-Aqui temos as entidades de negócio, construídas como POJOs (Plain Old Java Objects). \
-Temos alguns VOs (Value Objects) entre elas (CPF, ItemPedido, StatusPedido e StatusPagamento), trabalhando com a ideia de composição. \
-Temos também alguns enums: CategoriaProduto, StatusPedidoEnum e StatusPagamentoEnum.
-
-#### constants
-
-Temos uma classe que guarda e compartilha a data/hora mínima que o sistema aceita em suas validações. \
-Temos três datas/horas no sistema: do checkout, do pagamento e do status do pedido.
-
-#### exceptions
-
-Em exceptions, criei uma classe customizada (BusinessRuleException) para as exceções lançadas por esta camada. \
-As mensagens das exceções ficam catalogadas nos enums dentro de /exceptions/messages.
-
-### Camada de aplicação
-
-- application_layer
-- exceptions
-  - messages
-- interfaces
-  - gateways
-- use_cases
-  - interfaces
-
-#### use_cases
-
-Aqui temos os casos de uso, todos com interface e implementação.
-
-#### interfaces / gateways
-
-Temos as interfaces dos gateways, sem a implementação, que fica em outra camada. \
-As interfaces dos gateways são necessárias aqui para que os casos de uso possam saber como recuperar os dados necessários à sua função.
-
-#### exceptions
-
-Por fim temos as exceções, no mesmo formato da camada anterior: classes customizadas e mensagens de erro catalogadas em enums.
-
-### Camada de interface/adaptação
-
-- interface_layer
-- controllers
-  - adapters
-  - request_adapters
-  - response_adapters
-- dtos
-- interfaces
-- exception_handler
-- gateways
-- entities
-- mappers
-- repositories
-
-#### controllers
-
-Nesta camada temos a interface e a implementação dos controllers. \
-O controller:
-
-- recebe a requisição da camada externa
-- adpta o formato para um objeto que o caso de uso conheça (entidades de negócio)
-- chama o caso de uso apropriado, passando o gateway para ele (inversão de dependência)
-- recebe a resposta do caso de uso
-- adapta a resposta para a camada externa (com ajuda do presenter)
-
-#### controllers / dtos
-
-Os DTOs documentam os tipos de requisições que o Controller aceita. \
-Por ser um DTO, uma classe java muito simples, não fiz a interface para eles, somente a implementação.
-
-#### controllers / adapters
-
-Temos os adapters, tanto da requisição quanto da resposta. \
-Os response_adapters fazem o papel do Presenter (dei outro nome, mas a função é a mesma).
-
-#### gateways
-
-Aqui temos os gateways implementados. Os gateways ligam os use cases com os repositórios para persistência de dados. Use cases > gateways > repositórios. Aplicação > interface > camada externa. \
-Temos também as entidades JPA (ORM), quer não se confundem com as entidades de negócio. \
-E temos as interfaces dos repositórios, para que o gateway saiba como utilizá-los.
-
-#### gateways / mappers
-
-Os mappers também trabalham como adaptadores: eles convertem as entidades de negócio em entidades JPA e vice-versa. \
-Deixei os mappers dentro da pasta gateways e os adaptadores dentro de controllers para não confundir. \
-Os dois fazem um trabalho parecido, mas cada um em um contexto diferente.
-
-#### exceptions_handler
-
-Por fim, temos uma pasta chamada exception_handler, que também faz um papel de "adaptar", só que um pouco diferente. \
-Ela capturas as exceções lançadas pelo sistema e as transforma em objetos do tipo ErrorResponse com os campos: code, status, message e timestamp. \
-Depois encapsula esse objeto em um ResponseEntity, que é o mesmo usado pelos response_adapters (presenters). \
-Lembra daquelas exceções customizadas que criamos nas camadas internas (domain e application)? Então, o handler vai usar aquelas exceções para ajustar corretamente o statusCode de cada uma.
-
-### Camada externa
-
-- external_layer
-- apis
-  - interfaces
-- swagger
-
-Nesse projeto, usamos SpringBoot e JPA. \
-Normalmente a conexão com o banco de dados seria feita na camada externa (de infra), mas o SpringBoot já gerencia automaticamente as conexões, então isso não foi necessário. \
-A implementação do repositório para acesso ao banco de dados também seria feita nesta camada e depois passada para o Gateway por meio do Controller. \
-Mas, como estamos usando JPA, os repositórios não necessitam ser implementados. Além disso, o SpringBoot injeta o repositório no gateway automaticamente. \
-Enfim, ajustamos os princípios da Clean Architecture para as tecnologias utilizadas no projeto. \
-
-#### apis
-
-Aqui temos as APIs web (endpoints) com interface e implementação. \
-As anotações do Swagger ficam apenas na interface, deixando o código da classe mais limpo, pois são muitas anotações. \
-Além disso, também atendemos ao princípio da "programação para interface".
-
-#### swagger
-
-Na pasta do swagger temos apenas um arquivo de configuração para a API do sistema.
