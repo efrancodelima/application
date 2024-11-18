@@ -19,9 +19,11 @@ Link do projeto no GitHub:
 
 Desenvolver um sistema para uma lanchonete, seguindo os pré-requisitos especificados no Tech Challenge.
 
-## Requisitos do negócio
+## Requisitos técnicos e negociais
 
-Em relação à fase anterior, foi feita a migração do projeto que antes rodava localmente (com o minikube) para a nuvem da Amazon Web Services (AWS).
+A única diferença nas regras de negócio, em relação à fase anterior do Tech Challenge, é a criação do sistema de autenticação do usuário (que será feita usando o Lambda e o Cognito). Os demais requisitos na parte negocial não mudaram, embora tenha havido muitas mudanças na parte técnica.
+
+Foi feita a migração do projeto que antes rodava localmente (com o minikube) para a nuvem da Amazon Web Services (AWS).
 
 O projeto foi dividido em 4 partes:
 
@@ -32,7 +34,17 @@ O projeto foi dividido em 4 partes:
 
 Cada parte tem um repositório separado no GitHub, conforme mencionado no início deste documento, e todos os repositórios necessitam pull request para realizar qualquer tipo de alteração na branch main.
 
-A branch main dispara um GitHub Action, que executa o deploy na AWS, criando ou atualizando os recursos. No caso da aplicação, ele também faz o build do arquivo jar, testa o código, faz o build da imagem docker, envia a imagem para o repositório ECR da Amazon (utilizando duas tags: a versão do projeto e a tag latest) e faz o deploy no cluster EKS.
+A branch main dispara um GitHub Action, que executa o deploy na AWS, criando ou atualizando os recursos.
+
+No caso da aplicação, o action faz o build do arquivo jar, testa o código, faz o build da imagem docker, envia a imagem para o repositório ECR da Amazon (utilizando duas tags: a versão do projeto e a tag latest) e faz o deploy no cluster EKS.
+
+No caso da infraestrutura do kubernetes, o action:
+- consulta os ids da VPC e das 4 subnets utilizadas pelo cluster
+- usa esses ids para importar a VPC e as subnets
+- importa também o cluster e a role usada pelo cluster (esses dois não precisam do id para importação, pois o campo name desses recursos é um identificador único, enquanto que no caso da VPC e das subnets não é)
+- executa o plan e, por fim, o apply
+
+É necessário fazer o import corretamente desses recursos para que o terrafoprm não crie recursos duplicados: se os recursos já existem, ele atualiza; caso contrário, ele cria.
 
 ### Função Lambda
 
