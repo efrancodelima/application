@@ -47,6 +47,12 @@ jobs:
 
       - name: Build Docker image
         if: success()
+        env:
+          DATASOURCE_URL: "jdbc:mysql://lanchonete-aurora-cluster.cluster-c5g2k0icup68.us-east-1.rds.amazonaws.com:3306/lanchonete"
+          DATASOURCE_USERNAME: "admin"
+          DATASOURCE_PASSWORD: "admin_a*eclGuFAf=kBi"
+          DATASOURCE_DRIVER_CLASS_NAME: "com.mysql.cj.jdbc.Driver"
+          JPA_DIALECT: "org.hibernate.dialect.MySQL8Dialect"
         run: docker build -t app-lanchonete -f Dockerfile .
 
       - name: Configure AWS credentials
