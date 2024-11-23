@@ -9,13 +9,13 @@ spring:
     url: ${DATASOURCE_URL}
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
-    driverClassName: ${DATASOURCE_DRIVER_CLASS_NAME}
+    driverClassName: "com.mysql.cj.jdbc.Driver"
   jpa:
     show-sql: false
     open-in-view: false
     hibernate:
-      ddl-auto: update
-      dialect: ${JPA_DIALECT}
+      ddl-auto: "update"
+      dialect: "org.hibernate.dialect.MySQL8Dialect"
 management:
   server:
     port: 8081
