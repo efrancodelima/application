@@ -39,12 +39,6 @@ jobs:
           JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
         run: mvn test
 
-      - name: Extract project version
-        env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
-        id: extract_version
-        run: echo "::set-output name=VERSION::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 
@@ -67,12 +61,14 @@ jobs:
         if: success()
         run: aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-      - name: Push Docker image with tags version and latest
+      - name: Tag and Push Docker image with version and latest
         env:
+          JAVA_HOME: /opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
           FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete
         run: |
-          docker tag app-lanchonete $FULL_PATH_IMAGE:${{ steps.extract_version.outputs.VERSION }}
-          docker push $FULL_PATH_IMAGE:${{ steps.extract_version.outputs.VERSION }}
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          docker tag app-lanchonete $FULL_PATH_IMAGE:$VERSION
+          docker push $FULL_PATH_IMAGE:$VERSION
           docker tag app-lanchonete $FULL_PATH_IMAGE:latest
           docker push $FULL_PATH_IMAGE:latest
 
