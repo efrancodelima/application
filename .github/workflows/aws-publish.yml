@@ -66,13 +66,11 @@ jobs:
       - name: Tag and Push Docker image with version and latest
         env:
           JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.13-11/x64
-          FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/fiap/app-lanchonete
+          FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/app-lanchonete
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           docker tag app-lanchonete $FULL_PATH_IMAGE:$VERSION
           docker push $FULL_PATH_IMAGE:$VERSION
-          docker tag app-lanchonete $FULL_PATH_IMAGE:latest
-          docker push $FULL_PATH_IMAGE:latest
 
       - name: Logout from Amazon ECR
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
