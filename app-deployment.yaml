@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app-deployment
-          image: 145023126233.dkr.ecr.us-east-1.amazonaws.com/app-lanchonete:2.0.1
+          image: 145023126233.dkr.ecr.us-east-1.amazonaws.com/app-lanchonete:2.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
