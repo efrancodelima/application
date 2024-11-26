@@ -25,7 +25,7 @@ envsubst < app-deployment.yaml | kubectl apply -f -
 kubectl apply -f app-service.yaml
 
 # Pega o link do app-service e guarda em uma variável
-sleep 15
+sleep 10
 SERVICE_URL=$(kubectl get svc app-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
 # Imprime a mensagem com o link do service
