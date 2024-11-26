@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Test, build, and push to AWS ECR
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-and-push:
+  test-build-push:
     runs-on: ubuntu-latest
     # environment: producao
     # Comentei o environment porque ele não está disponível para repositórios privados na conta gratuita
@@ -65,23 +65,11 @@ jobs:
           aws ecr get-login-password --region us-east-1 |
           docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
-      # - name: Tag and Push Docker image with version and latest
-      #   env:
-      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      #     AWS_REGION: ${{ secrets.AWS_REGION }}
-      #   run: ./aws-ecr-upload.sh
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-
-      - name: Deploy on AWS EKS
-        # Nesse step, quando o script aws-deploy.sh terminar, será impresso no console do Action
-        # o link completo para acessar a aplicação
+      - name: Tag and Push Docker image with version and latest
         env:
-          DATASOURCE_URL: ${{ secrets.DB_URL }}
-          DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
-          DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: ./aws-eks-deploy.sh
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+        run: ./aws-ecr-push.sh
 
       - name: Logout from Amazon ECR
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
