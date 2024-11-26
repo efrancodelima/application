@@ -3,7 +3,7 @@
 
 # Pega a versão do projeto para uma variável de ambiente
 JAVA_HOME="/opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.13-11/x64"
-FULL_PATH_IMAGE="${AWS_ACCOUNT_ID }.dkr.ecr.us-east-1.amazonaws.com/app-lanchonete"
+FULL_PATH_IMAGE="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/app-lanchonete"
 PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 # Verifica se a imagem com a tag já existe na AWS ECR
