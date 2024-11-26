@@ -72,7 +72,7 @@ jobs:
       #   run: ./aws-ecr-upload.sh
 
       - name: Set up kubectl
-        uses: azure/setup-kubectl@v1
+        uses: azure/setup-kubectl@v4
 
       - name: Deploy on AWS EKS
         # Nesse step, quando o script aws-deploy.sh terminar, será impresso no console do Action
