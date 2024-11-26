@@ -7,10 +7,10 @@ FULL_PATH_IMAGE="${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/app-lanchonet
 PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 # Verifica se a imagem com a tag já existe na AWS ECR
-EXISTING_IMAGE=$(aws ecr describe-images --repository-name app-lanchonete --image-ids imageTag=$PROJECT_VERSION --query 'imageDetails[0].imageDigest' --output text 2>/dev/null)
+EXISTING_IMAGE=$(aws ecr describe-images --repository-name app-lanchonete --image-ids imageTag=$PROJECT_VERSION --query 'imageDetails[0].imageTags' --output text 2>/dev/null)
 
 # Se existe lança um erro e encerra o script
-if [ "$EXISTING_IMAGE" != "None" ]; then
+if [ -n "$EXISTING_IMAGE" ]; then
     echo "Erro ao fazer o upload da imagem docker para o repositório da Amazon: \
     a versão $PROJECT_VERSION do projeto já existe no repositório ECR."
     exit 1
