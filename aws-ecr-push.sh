@@ -11,8 +11,7 @@ EXISTING_IMAGE=$(aws ecr describe-images --repository-name app-lanchonete --imag
 
 # Se existe lança um erro e encerra o script
 if [ -n "$EXISTING_IMAGE" ]; then
-    echo "Erro ao fazer o upload da imagem docker para o repositório da Amazon: \
-    a versão $PROJECT_VERSION do projeto já existe no repositório ECR."
+    echo "Erro ao fazer o upload da imagem docker para o repositório da Amazon: a versão $PROJECT_VERSION do projeto já existe no repositório ECR."
     exit 1
 fi
 

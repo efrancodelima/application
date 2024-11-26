@@ -1,4 +1,4 @@
-name: Test, build, and push to AWS ECR
+name: "Test, build, and push to AWS ECR"
 
 on:
   push:
@@ -69,6 +69,7 @@ jobs:
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: ./aws-ecr-push.sh
+        continue-on-error: true
 
       - name: Logout from Amazon ECR
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
