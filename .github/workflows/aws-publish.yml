@@ -63,14 +63,23 @@ jobs:
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} |
           docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
-      - name: Tag and Push Docker image with version and latest
+      # - name: Tag and Push Docker image with version and latest
+      #   env:
+      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      #     AWS_REGION: ${{ secrets.AWS_REGION }}
+      #   run: ./aws-ecr-upload.sh
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Deploy on AWS EKS
+        # Nesse step, quando o script aws-deploy.sh terminar, será impresso no console do Action
+        # o link completo para acessar a aplicação
         env:
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.13-11/x64
-          FULL_PATH_IMAGE: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/app-lanchonete
-        run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          docker tag app-lanchonete $FULL_PATH_IMAGE:$VERSION
-          docker push $FULL_PATH_IMAGE:$VERSION
+          DATASOURCE_URL: ${{ secrets.DATASOURCE_URL }}
+          DATASOURCE_USERNAME: ${{ secrets.DATASOURCE_USERNAME }}
+          DATASOURCE_PASSWORD: ${{ secrets.DATASOURCE_PASSWORD }}
+        run: ./aws-eks-deploy.sh
 
       - name: Logout from Amazon ECR
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
