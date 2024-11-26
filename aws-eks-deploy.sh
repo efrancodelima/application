@@ -2,6 +2,7 @@
 # Bourne-Again shell script, ASCII text executable
 
 # Se o cluster EKS não existir, encerra o script e não faz o deploy
+# Se existir, continua o script para fazer o deploy
 CLUSTER_NAME="lanchonete-eks-cluster"
 aws eks describe-cluster --name $CLUSTER_NAME > /dev/null 2>&1
 
@@ -10,8 +11,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Se existir, continua o script e faz o deploy
-# Pega a versão do projeto para uma variável de ambiente
+# Exporta a versão do projeto para uma variável de ambiente
+# Necessário para o app-deployment.yaml (não estou usando latest)
 export PROJECT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
 
 # Muda o contexto do kubeconfig para o cluster EKS
@@ -24,6 +25,7 @@ envsubst < app-deployment.yaml | kubectl apply -f -
 kubectl apply -f app-service.yaml
 
 # Pega o link do app-service e guarda em uma variável
+sleep 15
 SERVICE_URL=$(kubectl get svc app-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
 # Imprime a mensagem com o link do service
