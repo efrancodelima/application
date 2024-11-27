@@ -1,4 +1,4 @@
-name: "Test, build, and push to AWS ECR"
+name: "Test, build, push, and deploy"
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test-build-push:
+  pipeline:
     runs-on: ubuntu-latest
     # environment: producao
     # Comentei o environment porque ele não está disponível para repositórios privados na conta gratuita
@@ -65,11 +65,27 @@ jobs:
           aws ecr get-login-password --region us-east-1 |
           docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
+      - name: Set logout flag
+        run: echo "LOGOUT_ECR=true" >> $GITHUB_ENV
+
       - name: Tag and push docker image
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: ./aws-ecr-push.sh
-        continue-on-error: true
 
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Deploy on AWS EKS
+        env:
+          DATASOURCE_URL: ${{ secrets.DB_URL }}
+          DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
+          DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        # Quando o script aws-eks-deploy.sh terminar, será impresso no console do Action
+        # o link completo para acessar a API Swagger da aplicação
+        run: ./aws-eks-deploy.sh
+
+    post:
       - name: Logout from Amazon ECR
+        if: env.LOGOUT_ECR == 'true'
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
