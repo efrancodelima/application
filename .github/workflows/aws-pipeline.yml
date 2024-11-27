@@ -60,22 +60,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
-      # - name: Log in to Amazon ECR
-      #   run: |
-      #     aws ecr get-login-password --region us-east-1 |
-      #     docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+      - name: Log in to Amazon ECR
+        run: |
+          aws ecr get-login-password --region us-east-1 |
+          docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
-      # - name: Set logout flag
-      #   run: echo "LOGIN_ECR=true" >> $GITHUB_ENV
+      - name: Set logout flag
+        run: echo "LOGIN_ECR=true" >> $GITHUB_ENV
 
-      # - name: Tag and push docker image
-      #   env:
-      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-      #   run: ./aws-ecr-push.sh
+      - name: Tag and push docker image
+        env:
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: ./aws-ecr-push.sh
 
-      # - name: Logout from Amazon ECR
-      #   if: always() && env.LOGIN_ECR == 'true'
-      #   run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+      - name: Logout from Amazon ECR
+        if: always() && env.LOGIN_ECR == 'true'
+        run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
