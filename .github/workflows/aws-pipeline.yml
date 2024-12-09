@@ -76,15 +76,3 @@ jobs:
       - name: Logout from Amazon ECR
         if: always() && env.LOGIN_ECR == 'true'
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v4
-
-      - name: Deploy on AWS EKS
-        env:
-          DATASOURCE_URL: ${{ secrets.DB_URL }}
-          DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
-          DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        # Quando o script aws-eks-deploy.sh terminar, será impresso no console do Action
-        # o link completo para acessar a API Swagger da aplicação
-        run: ./aws-eks-deploy.sh

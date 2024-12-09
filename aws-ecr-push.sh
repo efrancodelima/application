@@ -15,8 +15,10 @@ if [ -n "$EXISTING_IMAGE" ]; then
     exit 1
 fi
 
-# Coloca a tag na imagem docker (construída em um step anterior do action)
+# Faz o upload da imagem docker para a AWS ECR com a tag da versão do projeto
 docker tag app-lanchonete $FULL_PATH_IMAGE:$PROJECT_VERSION
-
-# Faz o upload da imagem docker para a AWS ECR
 docker push $FULL_PATH_IMAGE:$PROJECT_VERSION
+
+# Faz o upload da imagem docker para a AWS ECR com a tag latest
+docker tag app-lanchonete $FULL_PATH_IMAGE:latest
+docker push $FULL_PATH_IMAGE:latest
