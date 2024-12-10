@@ -77,7 +77,7 @@ jobs:
         if: always() && env.LOGIN_ECR == 'true'
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
-      - name: Deploy
+      - name: Deploy on Amazon ECS
         run: |
           aws ecs update-service \
           --cluster lanchonete-ecs-cluster \
