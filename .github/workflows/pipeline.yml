@@ -76,3 +76,10 @@ jobs:
       - name: Logout from Amazon ECR
         if: always() && env.LOGIN_ECR == 'true'
         run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Deploy
+        run: |
+          aws ecs update-service \
+          --cluster lanchonete-ecs-cluster \
+          --service lanchonete-ecs-service \
+          --force-new-deployment
