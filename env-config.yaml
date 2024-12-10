@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: env-config
-data:
-  DATASOURCE_URL: jdbc:mysql://lanchonete-aurora-cluster.cluster-cli22s2m2g2o.us-east-1.rds.amazonaws.com:3306/lanchonete
-  DATASOURCE_USERNAME: admin
-  DATASOURCE_PASSWORD: admin_e*aclFAf=G0kBi
