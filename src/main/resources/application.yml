@@ -3,6 +3,9 @@ server:
   servlet:
     context-path: "/api/v2/"
 spring:
+  config:
+    activate:
+      on-profile: dev
   application:
     name: tech-challenge
   datasource:
@@ -40,8 +43,20 @@ management:
   security:
     enabled: false
 
+# Configuração do H2 para rodar local
 ---
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: local
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: update
