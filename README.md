@@ -106,7 +106,7 @@ O status do pedido muda em uma ordem definida: recebido, em preparação, pronto
 Exemplo de mock para a notificação do Mercado Pago usando o curl (você pode usar o Postman também, se preferir).
 
 ```
-curl -X PUT <URL>/api/v2/pedidos/webhook/ \
+curl -X PUT <URL>/pedidos/webhook/ \
 -H "Content-Type: application/json" \
 -d '{
 "id": 1,
