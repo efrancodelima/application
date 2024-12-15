@@ -69,7 +69,7 @@ jobs:
       - name: Tag and push docker image
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        run: ./aws-ecr-push.sh
+        run: ./s-aws-ecr-push.sh
 
       - name: Logout from Amazon ECR
         if: always() && env.LOGIN_ECR == 'true'

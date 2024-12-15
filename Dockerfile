@@ -13,6 +13,6 @@ WORKDIR /app
 COPY target/tech-challenge-*.jar .
 
 ## Script para inicializar a aplicação
-COPY run-project.sh .
-RUN chmod +x run-project.sh
-CMD ["sh", "-c", "./run-project.sh"]
+COPY s-run-project.sh .
+RUN chmod +x s-run-project.sh
+CMD ["sh", "-c", "./s-run-project.sh"]
