@@ -34,4 +34,4 @@ build/
 .vscode/
 
 ### Scripts ###
-s-push-local.sh
+s5-push-local.sh

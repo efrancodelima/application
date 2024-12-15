@@ -1,11 +1,9 @@
+# Profile default
 server:
-  port: 8080
+  port: 80
   servlet:
-    context-path: "/"
+    context-path: /
 spring:
-  config:
-    activate:
-      on-profile: dev
   application:
     name: app-lanchonete
   datasource:
@@ -20,7 +18,14 @@ spring:
       ddl-auto: "update"
       dialect: "org.hibernate.dialect.MySQL8Dialect"
 
-# Configuração do H2 para rodar local
+# Profile para a AWS
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+# Profile local para rodar com o H2
 ---
 spring:
   config:
