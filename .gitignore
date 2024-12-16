@@ -35,3 +35,4 @@ build/
 
 ### Scripts ###
 s5-push-local.sh
+s6-push-deploy.sh
