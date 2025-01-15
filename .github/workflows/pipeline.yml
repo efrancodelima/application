@@ -51,29 +51,44 @@ jobs:
           DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: docker build -t app-lanchonete -f Dockerfile .
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+
+      - name: Cache SonarQube packages
+	      uses: actions/cache@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Log in to Amazon ECR
-        run: |
-          aws ecr get-login-password --region us-east-1 |
-          docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
-
-      - name: Set logout flag
-        run: echo "LOGIN_ECR=true" >> $GITHUB_ENV
-
-      - name: Tag and push docker image
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      
+      - name: Build and analyze
         env:
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-        run: ./s2-ecr-push.sh
+	        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+	      run: |
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectKey=efrancodelima_application
 
-      - name: Logout from Amazon ECR
-        if: always() && env.LOGIN_ECR == 'true'
-        run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v4
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
 
-      - name: Deploy on Amazon ECS
-        run: ./s3-ecs-deploy.sh
+      # - name: Log in to Amazon ECR
+      #   run: |
+      #     aws ecr get-login-password --region us-east-1 |
+      #     docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+
+      # - name: Set logout flag
+      #   run: echo "LOGIN_ECR=true" >> $GITHUB_ENV
+
+      # - name: Tag and push docker image
+      #   env:
+      #     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+      #   run: ./s2-ecr-push.sh
+
+      # - name: Logout from Amazon ECR
+      #   if: always() && env.LOGIN_ECR == 'true'
+      #   run: docker logout ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com
+
+      # - name: Deploy on Amazon ECS
+      #   run: ./s3-ecs-deploy.sh
