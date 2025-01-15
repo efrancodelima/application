@@ -51,7 +51,6 @@ jobs:
           DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: docker build -t app-lanchonete -f Dockerfile .
 
-
       - name: Cache SonarQube packages
 	      uses: actions/cache@v4
         with:
