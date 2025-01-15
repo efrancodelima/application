@@ -22,6 +22,9 @@
 		<org.mapstructure.version>1.5.5.Final</org.mapstructure.version>
 		<org.projectlombok.mapstruct.version>0.2.0</org.projectlombok.mapstruct.version>
 		<org.projectlombok.version>1.18.34</org.projectlombok.version>
+		<!-- Sonar -->
+		<sonar.organization>efrancodelima</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -125,11 +128,6 @@
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
 		</dependency>
-		<!-- Sonar -->
-		<properties>
-			<sonar.organization>efrancodelima</sonar.organization>
-			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		</properties>
 	</dependencies>
 	<build>
 		<finalName>tech-challenge-3-v${project.version}</finalName>
