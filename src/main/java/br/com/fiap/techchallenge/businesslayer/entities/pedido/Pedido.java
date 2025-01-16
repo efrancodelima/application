@@ -18,18 +18,24 @@ public class Pedido {
 
   // Construtor usado para criar um pedido antes do checkout
   public Pedido(Cliente cliente, List<ItemPedido> itens) throws BusinessRuleException {
-
-    var statusPagamento = new StatusPagamento(null, StatusPagamentoEnum.AGUARDANDO_PAGAMENTO, LocalDateTime.now());
-    var statusPedido = new StatusPedido(StatusPedidoEnum.AGUARDANDO_CHECKOUT, LocalDateTime.now());
-
+    
     setCliente(cliente);
     setItens(itens);
-    setStatusPagamento(statusPagamento);
-    setStatusPedido(statusPedido);
+
+    var newStatusPagamento = new StatusPagamento(null, 
+        StatusPagamentoEnum.AGUARDANDO_PAGAMENTO, LocalDateTime.now());
+
+    setStatusPagamento(newStatusPagamento);
+
+    var newStatusPedido = new StatusPedido(StatusPedidoEnum.AGUARDANDO_CHECKOUT, 
+        LocalDateTime.now());
+
+    setStatusPedido(newStatusPedido);
   }
 
   // Construtor usado para instanciar um pedido já existente
-  public Pedido(Long numero, Cliente cliente, List<ItemPedido> itens, LocalDateTime dataHoraCheckout,
+  public Pedido(Long numero, Cliente cliente, 
+      List<ItemPedido> itens, LocalDateTime dataHoraCheckout,
       StatusPagamento pagamento, StatusPedido statusPedido)
       throws BusinessRuleException {
 
@@ -113,7 +119,7 @@ public class Pedido {
   }
 
   private void validarItens(List<ItemPedido> itens) throws BusinessRuleException {
-    if (itens == null || itens.size() == 0) {
+    if (itens == null || itens.isEmpty()) {
       throw new BusinessRuleException(PedidoExceptions.ITENS_VAZIO.getMensagem());
     }
 
