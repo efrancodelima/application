@@ -48,7 +48,7 @@ public final class PopularBd {
       popularPedidos();
     } catch (Exception e) {
       logger.info("Não foi possível popular o banco de dados.");
-      e.printStackTrace();
+      logger.info(Arrays.toString(e.getStackTrace()));
     }
   }
 
