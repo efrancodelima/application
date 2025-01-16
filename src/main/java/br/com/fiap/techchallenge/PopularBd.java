@@ -10,6 +10,7 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDt
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,12 @@ public final class PopularBd {
   private static ProdutoApi produtoApi;
   private static PedidoApi pedidoApi;
 
+  private static final Random random = new Random();
+
   /** 
    * Construtor da classe.
    */
-  private PopularBd(){
+  private PopularBd() {
     // Construtor vazio criado para ocultar o construtor público.
   }
 
@@ -51,7 +54,7 @@ public final class PopularBd {
       logger.info(Arrays.toString(e.getStackTrace()));
     }
   }
-
+  
   // Métodos privados
   private static void popularClientes() throws Exception {
     ClienteDto[] clientes = gerarClientes();
@@ -151,12 +154,11 @@ public final class PopularBd {
   }
 
   private static List<ItemPedidoDto> gerarItensPedido() {
-    Random random = new Random();
     int numeroDeItens = random.nextInt(2) + 1;
 
     return Arrays.asList(
         new ItemPedidoDto((long) (random.nextInt(16) + 1), random.nextInt(3) + 1),
         numeroDeItens == 2 ? new ItemPedidoDto((long) (random.nextInt(16) + 1), 
-        random.nextInt(3) + 1) : null).stream().filter(item -> item != null).toList();
+        random.nextInt(3) + 1) : null).stream().filter(Objects::nonNull).toList();
   }
 }
