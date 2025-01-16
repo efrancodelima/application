@@ -52,7 +52,7 @@ jobs:
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
           -Dsonar.projectKey=efrancodelima_application
 
-      - name: Check analyze result
+      - name: Verify analyze result
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./s7-sonar-qube.sh

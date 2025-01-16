@@ -168,7 +168,7 @@ public class Pedido {
   }
 
   private void validarPedidoContemItem() throws BusinessRuleException {
-    if (itens.size() == 0) {
+    if (itens.isEmpty()) {
       throw new BusinessRuleException(PedidoExceptions.PEDIDO_VAZIO.getMensagem());
     }
   }
