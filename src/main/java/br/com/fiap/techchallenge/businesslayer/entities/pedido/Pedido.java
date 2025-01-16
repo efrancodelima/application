@@ -130,8 +130,12 @@ public class Pedido {
 
   private void validarDataHoraCheckout(LocalDateTime dataHora, StatusPedidoEnum statusPedido)
       throws BusinessRuleException {
-    if (dataHora == null && statusPedido != StatusPedidoEnum.AGUARDANDO_CHECKOUT) {
-      throw new BusinessRuleException(PedidoExceptions.DATA_CHECKOUT_NULA.getMensagem());
+    if (dataHora == null) {
+      if (statusPedido != StatusPedidoEnum.AGUARDANDO_CHECKOUT) {
+        throw new BusinessRuleException(PedidoExceptions.DATA_CHECKOUT_NULA.getMensagem());
+      } else {
+        return;
+      }
     }
 
     if (dataHora.toLocalDate().isBefore(Validacao.dataMinima)) {
