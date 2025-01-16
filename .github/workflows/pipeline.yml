@@ -55,7 +55,7 @@ jobs:
       - name: Check analyze result
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: s7-sonar-qube.sh
+        run: ./s7-sonar-qube.sh
 
       # - name: Set up QEMU
       #   uses: docker/setup-qemu-action@v3
