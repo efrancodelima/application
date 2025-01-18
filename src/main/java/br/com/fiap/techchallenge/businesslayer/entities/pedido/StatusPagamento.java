@@ -68,7 +68,7 @@ public class StatusPagamento {
       throw new BusinessRuleException(StatusPagamentoExceptions.DATA_HORA_NULO.getMensagem());
     }
 
-    if (timestamp.toLocalDate().isBefore(Validacao.dataMinima)) {
+    if (timestamp.toLocalDate().isBefore(Validacao.DATA_MIN)) {
       throw new BusinessRuleException(StatusPagamentoExceptions.DATA_HORA_MIN.getMensagem());
     }
 

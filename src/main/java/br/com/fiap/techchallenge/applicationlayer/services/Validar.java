@@ -34,7 +34,7 @@ public final class Validar {
   public static <T> void listNotEmpty(List<T> lista, EnumNotFoundExceptions excecao)
       throws ResourceNotFoundException {
 
-    if (lista.size() < 1) {
+    if (lista.isEmpty()) {
       throw new ResourceNotFoundException(excecao.getMensagem());
     }
   }

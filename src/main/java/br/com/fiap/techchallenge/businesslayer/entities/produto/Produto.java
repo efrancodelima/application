@@ -94,12 +94,14 @@ public class Produto {
   }
 
   private void validarDescricao(String descricao) throws BusinessRuleException {
-    if (descricao == null) {
-      return;
-    } else if (descricao.length() < 20) {
-      throw new BusinessRuleException(ProdutoExceptions.DESCRICAO_MIN.getMensagem());
-    } else if (descricao.length() > 150) {
-      throw new BusinessRuleException(ProdutoExceptions.DESCRICAO_MAX.getMensagem());
+    if (descricao != null) {
+      
+      if (descricao.length() < 20) {
+        throw new BusinessRuleException(ProdutoExceptions.DESCRICAO_MIN.getMensagem());
+      
+      } else if (descricao.length() > 150) {
+        throw new BusinessRuleException(ProdutoExceptions.DESCRICAO_MAX.getMensagem());
+      }
     }
   }
 

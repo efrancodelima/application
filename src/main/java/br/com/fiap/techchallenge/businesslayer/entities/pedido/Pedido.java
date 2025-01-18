@@ -138,7 +138,7 @@ public class Pedido {
       }
     }
 
-    if (dataHora.toLocalDate().isBefore(Validacao.dataMinima)) {
+    if (dataHora.toLocalDate().isBefore(Validacao.DATA_MIN)) {
       throw new BusinessRuleException(PedidoExceptions.DATA_CHECKOUT_MIN.getMensagem());
     }
 

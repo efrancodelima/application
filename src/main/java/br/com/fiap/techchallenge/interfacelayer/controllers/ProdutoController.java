@@ -59,10 +59,10 @@ public class ProdutoController implements IProdutoController {
     CategoriaProduto categoria = CategoriaProduto.fromString(categoriaStr);
     List<Produto> produtos = BuscarProdutosPorCategoria.buscar(gateway, categoria);
 
-    if (produtos.size() > 0) {
-      return ProdutoResponseAdapter.adaptar(produtos, HttpStatus.OK);
-    } else {
+    if (produtos.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } else {
+      return ProdutoResponseAdapter.adaptar(produtos, HttpStatus.OK);
     }
   }
 

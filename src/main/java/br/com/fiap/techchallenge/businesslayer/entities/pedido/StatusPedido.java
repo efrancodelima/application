@@ -44,7 +44,7 @@ public class StatusPedido {
       throw new BusinessRuleException(StatusPedidoExceptions.DATA_HORA_NULO.getMensagem());
     }
 
-    if (dataHora.toLocalDate().isBefore(Validacao.dataMinima)) {
+    if (dataHora.toLocalDate().isBefore(Validacao.DATA_MIN)) {
       throw new BusinessRuleException(StatusPedidoExceptions.DATA_HORA_MIN.getMensagem());
     }
 

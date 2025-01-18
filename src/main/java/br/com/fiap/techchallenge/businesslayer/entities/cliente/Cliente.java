@@ -89,17 +89,20 @@ public class Cliente {
   }
 
   private void validarEmail(String email) throws BusinessRuleException {
-    if (email == null) {
-      return;
-    } else if (email.length() > 40) {
-      throw new BusinessRuleException(ClienteExceptions.EMAIL_MAX_CHAR.getMensagem());
-    } else {
-      String emailRegexRFC5322 = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
-      Pattern pattern = Pattern.compile(emailRegexRFC5322);
-      if (!pattern.matcher(email).matches()) {
-        throw new BusinessRuleException(ClienteExceptions.EMAIL_INVALIDO.getMensagem());
+    if (email != null) {
+      
+      if (email.length() > 40) {
+        throw new BusinessRuleException(ClienteExceptions.EMAIL_MAX_CHAR.getMensagem());
+      
+      } else {
+        String emailRegexRfc5322 = "^[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegexRfc5322);
+        
+        if (!pattern.matcher(email).matches()) {
+          throw new BusinessRuleException(ClienteExceptions.EMAIL_INVALIDO.getMensagem());
+        }
       }
-    }
+    } 
   }
 
   private void validarCliente(String nome, String email) throws BusinessRuleException {
