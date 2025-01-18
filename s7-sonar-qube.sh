@@ -14,6 +14,8 @@ remove_non_numeric() {
   echo "$numeric_string"
 }
 
+# # # # # # # # # #  Security  # # # # # # # # # #
+
 echo ""
 echo "Security analysis"
 
@@ -39,6 +41,8 @@ else
   echo "- New security hotspots: ${new_sec_hotspots} (ok)"
 fi
 
+# # # # # # # # # #  Reliability  # # # # # # # # # #
+
 echo ""
 echo "Reliability analysis"
 
@@ -51,4 +55,31 @@ if [ $new_bugs -gt 0 ]; then
   exit 1
 else
   echo "- New bugs: ${new_bugs} (ok)"
+fi
+
+# # # # # # # # # #  Maintainability  # # # # # # # # # #
+
+echo ""
+echo "Maintainability analysis"
+
+# New code smells
+new_code_smells=$(create_sonar_url "new_code_smells" | jq .component.measures[0].periods[0].value)
+new_code_smells=$(remove_non_numeric $new_code_smells)
+
+if [ $new_code_smells -gt 0 ]; then
+  echo "- New code smells: ${new_code_smells} (fail)"
+  # exit 1
+else
+  echo "- New code smells: ${new_code_smells} (ok)"
+fi
+
+# Maintainability rating
+sqale_rating=$(create_sonar_url "sqale_rating" | jq .component.measures[0].value)
+sqale_rating=$(remove_non_numeric $sqale_rating)
+
+if [ $sqale_rating -eq 10 ]; then
+  echo "- Maintainability rating: A (ok)"
+else
+  echo "- Maintainability rating: ${sqale_rating} (ok)"
+  # exit 1
 fi

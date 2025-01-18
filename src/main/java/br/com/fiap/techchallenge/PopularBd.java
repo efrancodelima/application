@@ -88,58 +88,64 @@ public final class PopularBd {
   }
 
   private static ProdutoDto[] gerarProdutos() {
+
+    String acompanhamento = "ACOMPANHAMENTO";
+    String bebida = "BEBIDA";
+    String lanche = "LANCHE";
+    String sobremesa = "SOBREMESA";
+
     return new ProdutoDto[] {
         // Acompanhamentos
         new ProdutoDto("Batata Frita", "Batata frita crocante",
-        BigDecimal.valueOf(5.50), "ACOMPANHAMENTO"),
+        BigDecimal.valueOf(5.50), acompanhamento),
 
         new ProdutoDto("Anéis de Cebola", "Anéis de cebola empanados", 
-        BigDecimal.valueOf(6.00), "ACOMPANHAMENTO"),
+        BigDecimal.valueOf(6.00), acompanhamento),
 
         new ProdutoDto("Nuggets de Frango", "Porção de nuggets de frango", 
-        BigDecimal.valueOf(7.00), "ACOMPANHAMENTO"),
+        BigDecimal.valueOf(7.00), acompanhamento),
         
         new ProdutoDto("Mandioca Frita", "Porção de mandioca frita", 
-        BigDecimal.valueOf(5.00), "ACOMPANHAMENTO"),
+        BigDecimal.valueOf(5.00), acompanhamento),
 
         // Bebidas
         new ProdutoDto("Refrigerante Cola", "Refrigerante de cola 350ml", 
-        BigDecimal.valueOf(3.50), "BEBIDA"),
+        BigDecimal.valueOf(3.50), bebida),
         
         new ProdutoDto("Suco de Laranja", "Suco de laranja natural 300ml", 
-        BigDecimal.valueOf(4.00), "BEBIDA"),
+        BigDecimal.valueOf(4.00), bebida),
         
         new ProdutoDto("Água Mineral", "Água mineral sem gás 500ml", 
-        BigDecimal.valueOf(2.50), "BEBIDA"),
+        BigDecimal.valueOf(2.50), bebida),
         
         new ProdutoDto("Chá Gelado", "Chá gelado de limão 300ml", 
-        BigDecimal.valueOf(3.00), "BEBIDA"),
+        BigDecimal.valueOf(3.00), bebida),
 
         // Lanches
         new ProdutoDto("Cheeseburger Bacon", "Hambúrguer com queijo e bacon", 
-        BigDecimal.valueOf(12.00), "LANCHE"),
+        BigDecimal.valueOf(12.00), lanche),
         
         new ProdutoDto("Sanduíche de Frango", "Sanduíche de frango grelhado", 
-        BigDecimal.valueOf(10.00), "LANCHE"),
+        BigDecimal.valueOf(10.00), lanche),
         
         new ProdutoDto("Wrap Vegetariano", "Wrap vegetariano com legumes", 
-        BigDecimal.valueOf(9.00), "LANCHE"),
+        BigDecimal.valueOf(9.00), lanche),
         
         new ProdutoDto("Hot Dog", "Hot dog com molho especial", 
-        BigDecimal.valueOf(8.00), "LANCHE"),
+        BigDecimal.valueOf(8.00), lanche),
 
         // Sobremesas
         new ProdutoDto("Sorvete de Chocolate", "Sorvete de chocolate 2 bolas", 
-        BigDecimal.valueOf(6.50),            "SOBREMESA"),
+        BigDecimal.valueOf(6.50),            sobremesa),
         
         new ProdutoDto("Torta de Maçã", "Torta de maçã com canela", 
-        BigDecimal.valueOf(5.50), "SOBREMESA"),
+        BigDecimal.valueOf(5.50), sobremesa),
         
         new ProdutoDto("Brownie", "Brownie de chocolate com nozes", 
-        BigDecimal.valueOf(7.00), "SOBREMESA"),
+        BigDecimal.valueOf(7.00), sobremesa),
         
         new ProdutoDto("Pudim", "Pudim de leite condensado", 
-        BigDecimal.valueOf(4.50), "SOBREMESA")
+        BigDecimal.valueOf(4.50), sobremesa)
     };
   }
 

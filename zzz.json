@@ -1,0 +1,36 @@
+{
+    "component": {
+        "id": "AZRduJ7N-bRmtreHuLYM",
+        "key": "efrancodelima_application",
+        "name": "tech-challenge",
+        "description": "Tech Challenge Fase 3 - Software Architecture",
+        "qualifier": "TRK",
+        "measures": [
+            {
+                "metric": "new_code_smells",
+                "periods": [
+                    {
+                        "index": 1,
+                        "value": "56",
+                        "bestValue": false
+                    }
+                ]
+            }
+        ]
+    }
+}{
+    "component": {
+        "id": "AZRduJ7N-bRmtreHuLYM",
+        "key": "efrancodelima_application",
+        "name": "tech-challenge",
+        "description": "Tech Challenge Fase 3 - Software Architecture",
+        "qualifier": "TRK",
+        "measures": [
+            {
+                "metric": "sqale_rating",
+                "value": "1.0",
+                "bestValue": true
+            }
+        ]
+    }
+}
