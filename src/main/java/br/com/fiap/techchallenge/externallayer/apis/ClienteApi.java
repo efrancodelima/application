@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
-import br.com.fiap.techchallenge.externallayer.apis.interfaces.IClienteApi;
+import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntClienteApi;
 import br.com.fiap.techchallenge.interfacelayer.controllers.ClienteController;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/clientes")
-public class ClienteApi implements IClienteApi {
+public class ClienteApi implements IntClienteApi {
 
   private final ClienteController controller;
 
