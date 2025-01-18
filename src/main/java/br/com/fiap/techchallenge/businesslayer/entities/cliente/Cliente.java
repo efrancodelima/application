@@ -50,7 +50,7 @@ public class Cliente {
 
   private void setNome(String nome) throws BusinessRuleException {
     nome = nome == null ? null : nome.trim();
-    validarnome(nome);
+    validarNome(nome);
     this.nome = nome;
   }
 
@@ -73,16 +73,18 @@ public class Cliente {
     }
   }
 
-  private void validarnome(String nome) throws BusinessRuleException {
-    if (nome == null || nome.isEmpty()) {
-      return;
-    } else if (nome.length() > 50) {
-      throw new BusinessRuleException(ClienteExceptions.NOME_MAX_CHAR.getMensagem());
-    } else {
-      ArrayList<String> palavras = getListaPalavras(nome, 3);
-      if (palavras.size() < 1) {
-        throw new BusinessRuleException(ClienteExceptions.NOME_INVALIDO.getMensagem());
-      }
+  private void validarNome(String nome) throws BusinessRuleException {
+    if (nome != null && !nome.isEmpty()) {
+
+      if (nome.length() > 50) {
+        throw new BusinessRuleException(ClienteExceptions.NOME_MAX_CHAR.getMensagem());
+      
+      } else {
+        ArrayList<String> palavras = getListaPalavras(nome, 3);
+        if (palavras.isEmpty()) {
+          throw new BusinessRuleException(ClienteExceptions.NOME_INVALIDO.getMensagem());
+        }
+      }  
     }
   }
 

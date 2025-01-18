@@ -78,10 +78,10 @@ public class PedidoController implements IPedidoController {
   @Override
   public ResponseEntity<List<Pedido>> listarPedidos() throws Exception {
     List<Pedido> pedidos = ListarPedidos.listar(pedidoGateway);
-    if (!pedidos.isEmpty()) {
-      return PedidoResponseAdapter.adaptar(pedidos, HttpStatus.OK);
-    } else {
+    if (pedidos.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } else {
+      return PedidoResponseAdapter.adaptar(pedidos, HttpStatus.OK);
     }
   }
 
