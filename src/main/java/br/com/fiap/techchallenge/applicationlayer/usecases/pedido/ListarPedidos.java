@@ -28,7 +28,7 @@ public final class ListarPedidos {
         .sorted(Comparator.comparing((Pedido p) -> p.getStatusPedido().getStatus(),
             Comparator.comparingInt(ListarPedidos::getStatusOrder))
             .thenComparing(p -> p.getStatusPedido().getDataHora()))
-        .collect(Collectors.toList());
+        .toList();
   }
 
   private static int getStatusOrder(StatusPedidoEnum status) {

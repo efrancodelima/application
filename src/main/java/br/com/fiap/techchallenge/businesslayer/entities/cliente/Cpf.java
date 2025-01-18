@@ -21,12 +21,12 @@ public class Cpf {
 
     validarCpf(cpf);
 
-    int numero = (int) (cpf / 100);
-    byte digitoVerificador = (byte) (cpf % 100);
+    int numeroCpf = (int) (cpf / 100);
+    byte digitoCpf = (byte) (cpf % 100);
 
-    validarNumeroEDigitoVerificador(numero, digitoVerificador);
-    this.numero = numero;
-    this.digitoVerificador = digitoVerificador;
+    validarNumeroEDigitoVerificador(numeroCpf, digitoCpf);
+    this.numero = numeroCpf;
+    this.digitoVerificador = digitoCpf;
   }
 
   // Getters
