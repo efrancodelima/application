@@ -18,66 +18,66 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPedidoJp
 
 public final class PedidoMapper {
 
-    private PedidoMapper() {}
+  private PedidoMapper() {}
 
-    // Métodos públicos
-    public static PedidoJpa getPedidoJpa(Pedido pedido) {
+  // Métodos públicos
+  public static PedidoJpa getPedidoJpa(Pedido pedido) {
 
-        ClienteJpa clienteJpa = null;
-        List<ItemPedidoJpa> itensJpa = ItemPedidoMapper.getListItemPedidoJpa(pedido.getItens());
-        LocalDateTime dataHoraCheckout = pedido.getDataHoraCheckout();
-        StatusPagamentoJpa statusPagamentoJpa = null;
-        StatusPedidoJpa statusPedidoJpa;
+    ClienteJpa clienteJpa = null;
+    List<ItemPedidoJpa> itensJpa = ItemPedidoMapper.getListItemPedidoJpa(pedido.getItens());
+    LocalDateTime dataHoraCheckout = pedido.getDataHoraCheckout();
+    StatusPagamentoJpa statusPagamentoJpa = null;
+    StatusPedidoJpa statusPedidoJpa;
 
-        if (pedido.getCliente() != null) {
-            clienteJpa = ClienteMapper.getClienteJpa(pedido.getCliente());
-        }
-
-        if (pedido.getStatusPagamento() != null) {
-            statusPagamentoJpa = StatusPagamentoMapper
-                    .getStatusPagamentoJpa(pedido.getStatusPagamento());
-        }
-
-        if (pedido.getStatusPedido() != null) {
-            statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
-        } else {
-            statusPedidoJpa = new StatusPedidoJpa(StatusPedidoEnum.AGUARDANDO_CHECKOUT, LocalDateTime.now());
-        }
-
-        return new PedidoJpa(pedido.getNumero(), clienteJpa, itensJpa, dataHoraCheckout,
-                statusPagamentoJpa, statusPedidoJpa);
+    if (pedido.getCliente() != null) {
+      clienteJpa = ClienteMapper.getClienteJpa(pedido.getCliente());
     }
 
-    public static Pedido getPedido(PedidoJpa pedidoJpa) throws Exception {
-
-        long id = pedidoJpa.getNumero();
-        Cliente cliente = null;
-        List<ItemPedido> itens = ItemPedidoMapper.getListItemPedido(pedidoJpa.getItensJpa());
-        LocalDateTime dataHoraCheckout = pedidoJpa.getDataHoraCheckout();
-        StatusPagamento statusPagamento = null;
-        StatusPedido statusPedido = StatusPedidoMapper.getStatusPedido(pedidoJpa.getStatusPedido());
-
-        if (pedidoJpa.getClienteJpa() != null) {
-            cliente = ClienteMapper.getCliente(pedidoJpa.getClienteJpa());
-        }
-
-        if (pedidoJpa.getStatusPagamento() != null) {
-            statusPagamento = StatusPagamentoMapper
-                    .getStatusPagamento(pedidoJpa.getStatusPagamento());
-        }
-
-        return new Pedido(id, cliente, itens, dataHoraCheckout, statusPagamento, statusPedido);
+    if (pedido.getStatusPagamento() != null) {
+      statusPagamentoJpa = StatusPagamentoMapper
+          .getStatusPagamentoJpa(pedido.getStatusPagamento());
     }
 
-    public static List<Pedido> getListPedido(List<PedidoJpa> pedidosJpa)
-            throws Exception {
-        List<Pedido> pedidos = new ArrayList<>();
-        for (PedidoJpa pedidoJpa : pedidosJpa) {
-
-            Pedido pedido = getPedido(pedidoJpa);
-            pedidos.add(pedido);
-        }
-        return pedidos;
+    if (pedido.getStatusPedido() != null) {
+      statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
+    } else {
+      statusPedidoJpa = new StatusPedidoJpa(StatusPedidoEnum.AGUARDANDO_CHECKOUT, LocalDateTime.now());
     }
+
+    return new PedidoJpa(pedido.getNumero(), clienteJpa, itensJpa, dataHoraCheckout,
+        statusPagamentoJpa, statusPedidoJpa);
+  }
+
+  public static Pedido getPedido(PedidoJpa pedidoJpa) throws Exception {
+
+    long id = pedidoJpa.getNumero();
+    Cliente cliente = null;
+    List<ItemPedido> itens = ItemPedidoMapper.getListItemPedido(pedidoJpa.getItensJpa());
+    LocalDateTime dataHoraCheckout = pedidoJpa.getDataHoraCheckout();
+    StatusPagamento statusPagamento = null;
+    StatusPedido statusPedido = StatusPedidoMapper.getStatusPedido(pedidoJpa.getStatusPedido());
+
+    if (pedidoJpa.getClienteJpa() != null) {
+      cliente = ClienteMapper.getCliente(pedidoJpa.getClienteJpa());
+    }
+
+    if (pedidoJpa.getStatusPagamento() != null) {
+      statusPagamento = StatusPagamentoMapper
+          .getStatusPagamento(pedidoJpa.getStatusPagamento());
+    }
+
+    return new Pedido(id, cliente, itens, dataHoraCheckout, statusPagamento, statusPedido);
+  }
+
+  public static List<Pedido> getListPedido(List<PedidoJpa> pedidosJpa)
+      throws Exception {
+    List<Pedido> pedidos = new ArrayList<>();
+    for (PedidoJpa pedidoJpa : pedidosJpa) {
+
+      Pedido pedido = getPedido(pedidoJpa);
+      pedidos.add(pedido);
+    }
+    return pedidos;
+  }
 
 }
