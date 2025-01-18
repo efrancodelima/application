@@ -185,3 +185,19 @@ else
   echo "- Maintainability rating: ${sqale_rating} (fail)"
   exit 1
 fi
+
+# # # # # # # # # #  Quality gate  # # # # # # # # # #
+
+echo ""
+echo "Quality gate"
+
+# New code smells
+alert_status=$(get_sonar_metric "alert_status")
+alert_status=$(remove_double_quotes $alert_status)
+
+if [ "$(echo "$alert_status == 0" | bc -l)" -eq 1 ]; then
+  echo "- Status: ${alert_status}"
+else
+  echo "- Status: ${alert_status}"
+  exit 1
+fi
