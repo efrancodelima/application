@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request_adapters;
+package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request;
 
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;

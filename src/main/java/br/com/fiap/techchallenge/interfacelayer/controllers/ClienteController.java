@@ -4,8 +4,8 @@ import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.BuscarCliente
 import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.CadastrarCliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
-import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request_adapters.ClienteRequestAdapter;
-import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response_adapters.ClienteResponseAdapter;
+import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ClienteRequestAdapter;
+import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ClienteResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.IClienteController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;

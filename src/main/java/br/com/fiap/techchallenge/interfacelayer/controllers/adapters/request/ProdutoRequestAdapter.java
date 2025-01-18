@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request_adapters;
+package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request;
 
 import java.math.BigDecimal;
 

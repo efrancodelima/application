@@ -1,10 +1,8 @@
-package br.com.fiap.techchallenge.interfacelayer.exception_handler;
+package br.com.fiap.techchallenge.interfacelayer.exceptionhandler;
 
 import java.time.LocalDateTime;
-
-import org.springframework.http.HttpStatus;
-
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 @Data
 public class ErrorResponse {

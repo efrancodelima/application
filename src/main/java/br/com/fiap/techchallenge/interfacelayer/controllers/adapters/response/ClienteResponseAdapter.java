@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response_adapters;
+package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
