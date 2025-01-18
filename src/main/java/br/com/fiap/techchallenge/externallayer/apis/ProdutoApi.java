@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
-import br.com.fiap.techchallenge.externallayer.apis.interfaces.IProdutoApi;
+import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntProdutoApi;
 import br.com.fiap.techchallenge.interfacelayer.controllers.ProdutoController;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/produtos")
-public class ProdutoApi implements IProdutoApi {
+public class ProdutoApi implements IntProdutoApi {
 
   // Atributos
   private final ProdutoController controller;

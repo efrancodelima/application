@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
-import br.com.fiap.techchallenge.externallayer.apis.interfaces.IPedidoApi;
+import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntPedidoApi;
 import br.com.fiap.techchallenge.interfacelayer.controllers.PedidoController;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercado_pago.PagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/pedidos")
-public class PedidoApi implements IPedidoApi {
+public class PedidoApi implements IntPedidoApi {
 
   // Atributos
   private final PedidoController controller;
