@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * A API de Produtos.
+ */
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoApi implements IntProdutoApi {
@@ -17,7 +20,11 @@ public class ProdutoApi implements IntProdutoApi {
   // Atributos
   private final ProdutoController controller;
 
-  // Construtor
+  /**
+   * O construtor da classe.
+   *
+   * @param controller O controller de Produtos.
+   */
   @Autowired
   public ProdutoApi(ProdutoController controller) {
     this.controller = controller;
@@ -29,7 +36,8 @@ public class ProdutoApi implements IntProdutoApi {
   }
 
   @Override
-  public ResponseEntity<Produto> editarProduto(long codigo, ProdutoDto produtoDto) throws Exception {
+  public ResponseEntity<Produto> editarProduto(long codigo,
+      ProdutoDto produtoDto) throws Exception {
     return controller.editarProduto(codigo, produtoDto);
   }
 
@@ -39,7 +47,8 @@ public class ProdutoApi implements IntProdutoApi {
   }
 
   @Override
-  public ResponseEntity<List<Produto>> buscarProdutosPorCategoria(String categoria) throws Exception {
+  public ResponseEntity<List<Produto>> buscarProdutosPorCategoria(
+      String categoria) throws Exception {
     return controller.buscarProdutosPorCategoria(categoria);
   }
 }

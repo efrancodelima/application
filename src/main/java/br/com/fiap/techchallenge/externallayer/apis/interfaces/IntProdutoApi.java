@@ -4,7 +4,6 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -25,80 +24,185 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Produtos")
 public interface IntProdutoApi {
 
-  // Cadastrar produto
-  @Operation(summary = "Cadastrar produto", description = ProdutoConstantes.descricaoCadastrar)
+  /** 
+   * Cadastrar produto.
+   *
+   * @param cadastrar O produto que será cadastrado.
+   * @return O produto que foi cadastrado.
+   */
+  @Operation(summary = "Cadastrar produto", description = Constantes.DESC_CADASTRAR)
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = ProdutoConstantes.d201, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e201))),
-      @ApiResponse(responseCode = "400", description = ProdutoConstantes.d400, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e400))),
-      @ApiResponse(responseCode = "422", description = ProdutoConstantes.d422, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e422))),
-      @ApiResponse(responseCode = "500", description = ProdutoConstantes.d500, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e500))) })
+    @ApiResponse(responseCode = "201", description = Constantes.D201,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E201))),
+
+    @ApiResponse(responseCode = "400", description = Constantes.D400,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E400))),
+
+    @ApiResponse(responseCode = "422", description = Constantes.D422,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E422))),
+
+    @ApiResponse(responseCode = "500", description = Constantes.D500,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E500))) })
+  
   @PostMapping("/cadastrar")
   ResponseEntity<Produto> cadastrarProduto(@RequestBody ProdutoDto cadastrar) throws Exception;
 
-  // Editar produto
-  @Operation(summary = "Editar produto", description = ProdutoConstantes.descricaoEditar)
-  @Parameters({
-      @Parameter(name = "codigo", description = "Código do produto a ser editado", required = true)
-  })
+  /** 
+   * Editar produto.
+   *
+   * @param codigo O código do produto que será atualizado.
+   * @param atualizar O produto que será atualizado.
+   * @return O produto que foi atualizado.
+   */
+  @Operation(summary = "Editar produto", description = Constantes.DESC_EDITAR)
+  
+  @Parameter(name = "codigo", description = "Código do produto a ser editado", required = true)
+  
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "204", description = ProdutoConstantes.d204, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e204))),
-      @ApiResponse(responseCode = "400", description = ProdutoConstantes.d400, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e400))),
-      @ApiResponse(responseCode = "404", description = ProdutoConstantes.d404, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e404))),
-      @ApiResponse(responseCode = "422", description = ProdutoConstantes.d422, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e422))),
-      @ApiResponse(responseCode = "500", description = ProdutoConstantes.d500, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e500))) })
-  @PutMapping("/editar/{codigo}")
-  ResponseEntity<Produto> editarProduto(@PathVariable long codigo, @RequestBody ProdutoDto atualizar)
-      throws Exception;
+    @ApiResponse(responseCode = "204", description = Constantes.D204,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E204))),
+  
+    @ApiResponse(responseCode = "400", description = Constantes.D400,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E400))),
+    
+    @ApiResponse(responseCode = "404", description = Constantes.D404,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E404))),
 
-  // Remover produto
-  @Operation(summary = "Remover produto", description = ProdutoConstantes.descricaoRemover)
+    @ApiResponse(responseCode = "422", description = Constantes.D422,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E422))),
+
+    @ApiResponse(responseCode = "500", description = Constantes.D500,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E500))) })
+  
+  @PutMapping("/editar/{codigo}")
+  ResponseEntity<Produto> editarProduto(@PathVariable long codigo,
+      @RequestBody ProdutoDto atualizar) throws Exception;
+
+  /** 
+   * Remover produto.
+   *
+   * @param codigo O código do produto que será removido.
+   * @return O produto que foi removido.
+   */
+  @Operation(summary = "Remover produto", description = Constantes.DESC_REMOVER)
+
   @Parameter(name = "codigo", description = "Código do produto a ser removido", required = true)
+
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "204", description = ProdutoConstantes.d204, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e204))),
-      @ApiResponse(responseCode = "400", description = ProdutoConstantes.d400, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e400))),
-      @ApiResponse(responseCode = "404", description = ProdutoConstantes.d404, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e404))),
-      @ApiResponse(responseCode = "422", description = ProdutoConstantes.d422, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e422))),
-      @ApiResponse(responseCode = "500", description = ProdutoConstantes.d500, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e500))) })
+    @ApiResponse(responseCode = "204", description = Constantes.D204,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E204))),
+
+    @ApiResponse(responseCode = "400", description = Constantes.D400,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E400))),
+
+    @ApiResponse(responseCode = "404", description = Constantes.D404,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E404))),
+
+    @ApiResponse(responseCode = "422", description = Constantes.D422,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E422))),
+
+    @ApiResponse(responseCode = "500", description = Constantes.D500,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E500))) })
+  
   @DeleteMapping(value = "/remover/{codigo}")
   ResponseEntity<Produto> removerProduto(@PathVariable long codigo) throws Exception;
 
-  // Listar produtos por categoria
-  @Operation(summary = "Buscar produtos por categoria", description = ProdutoConstantes.descricaoBuscarPorCategoria)
-  @Parameters({
-      @Parameter(name = "categoria", description = "Categoria dos produtos que serão buscados", required = true)
-  })
+  /** 
+   * Listar produtos por categoria.
+   */
+  @Operation(summary = "Buscar produtos por categoria",
+      description = Constantes.DESC_BUSCAR_POR_CAT)
+
+  @Parameter(name = "categoria", description = "Categoria dos produtos que serão buscados",
+      required = true)
+  
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = ProdutoConstantes.d200, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e200))),
-      @ApiResponse(responseCode = "204", description = ProdutoConstantes.d204, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e404))),
-      @ApiResponse(responseCode = "400", description = ProdutoConstantes.d400, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e400))),
-      @ApiResponse(responseCode = "422", description = ProdutoConstantes.d422, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e422))),
-      @ApiResponse(responseCode = "500", description = ProdutoConstantes.d500, content = @Content(mediaType = "application/json", examples = @ExampleObject(value = ProdutoConstantes.e500))) })
+    @ApiResponse(responseCode = "200", description = Constantes.D200,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E200))),
+
+    @ApiResponse(responseCode = "204", description = Constantes.D204,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E404))),
+
+    @ApiResponse(responseCode = "400", description = Constantes.D400,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E400))),
+
+    @ApiResponse(responseCode = "422", description = Constantes.D422,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E422))),
+
+    @ApiResponse(responseCode = "500", description = Constantes.D500,
+      content = @Content(mediaType = "application/json", examples = @ExampleObject(
+        value = Constantes.E500))) })
+  
   @GetMapping(value = "/buscar/{categoria}")
   ResponseEntity<List<Produto>> buscarProdutosPorCategoria(
       @PathVariable("categoria") String categoria) throws Exception;
 
-}
+  /** 
+   * Constantes usadas na APi de Produtos.
+   */
+  final class Constantes {
 
-final class ProdutoConstantes {
+    private Constantes() {}
 
-  public static final String descricaoCadastrar = "Para cadastrar um novo produto, informe os dados do produto conforme o schema ProdutoDto no final desta página.<br>A descrição do produto é opcional.";
-  public static final String descricaoEditar = "Para editar um produto, informe o código do produto (path) e os dados do produto (body) conforme o schema ProdutoDto ao final desta página.";
-  public static final String descricaoRemover = "Para remover um produto, informe o código do produto a ser removido.";
-  public static final String descricaoBuscarPorCategoria = "Para buscar os produtos por categoria, informe a categoria (lanche, acompanhamento, bebida ou sobremesa).";
+    public static final String DESC_CADASTRAR = "Para cadastrar um novo produto, "
+        + "informe os dados do produto conforme o schema ProdutoDto no final desta página.<br>"
+        + "A descrição do produto é opcional.";
 
-  public static final String d200 = "Sucesso!";
-  public static final String d201 = d200;
-  public static final String d204 = d200;
-  public static final String d400 = "Requisição inválida!";
-  public static final String d404 = "Produto não encontrado!";
-  public static final String d422 = "Operação não permitida!";
-  public static final String d500 = "Erro!";
+    public static final String DESC_EDITAR = "Para editar um produto, informe o código "
+        + "do produto (path) e os dados do produto (body) conforme o schema ProdutoDto ao "
+        + "final desta página.";
 
-  public static final String e200 = "{ \"codigo\": 1,\"nome\": \"X-Monstrão\",\"descricao\": \"O lanche do marombeiro, repleto de whey e creatina.\",\"preco\": 35.9,\"categoria\": \"LANCHE\" }";
-  public static final String e201 = e200;
-  public static final String e204 = "";
-  public static final String e400 = "{ \"timestamp\": \"2024-09-08T02:05:58.036+00:00\", \"status\": 400, \"error\": \"Bad Request\", \"path\": \"/produtos/cadastrar\" }";
-  public static final String e404 = "{ \"message\": \"Nenhum produto foi encontrado para o código informado.\" }";
-  public static final String e422 = "{ \"message\": \"O preço do produto deve ser maior que 0.\" }";
-  public static final String e500 = "{ \"message\": \"Ocorreu um erro inesperado no servidor.\" }";
+    public static final String DESC_REMOVER = "Para remover um produto, informe o código do "
+        + "produto a ser removido.";
+
+    public static final String DESC_BUSCAR_POR_CAT = "Para buscar os produtos por categoria, "
+        + "informe a categoria (lanche, acompanhamento, bebida ou sobremesa).";
+
+    public static final String D200 = "Sucesso!";
+    public static final String D201 = D200;
+    public static final String D204 = D200;
+    public static final String D400 = "Requisição inválida!";
+    public static final String D404 = "Produto não encontrado!";
+    public static final String D422 = "Operação não permitida!";
+    public static final String D500 = "Erro!";
+
+    public static final String E200 = "{ \"codigo\": 1,\"nome\": \"X-Monstrão\","
+        + "\"descricao\": \"O lanche do marombeiro, repleto de whey e creatina.\","
+        + "\"preco\": 35.9,\"categoria\": \"LANCHE\" }";
+
+    public static final String E201 = E200;
+    public static final String E204 = "";
+
+    public static final String E400 = "{ \"timestamp\": \"2024-09-08T02:05:58.036+00:00\", "
+        + "\"status\": 400, \"error\": \"Bad Request\", \"path\": \"/produtos/cadastrar\" }";
+
+    public static final String E404 = "{ \"message\": \"Nenhum produto foi encontrado para "
+        + "o código informado.\" }";
+
+    public static final String E422 = "{ \"message\": \"O preço do produto deve ser maior "
+        + "que 0.\" }";
+
+    public static final String E500 = "{ \"message\": \"Ocorreu um erro inesperado no "
+        + "servidor.\" }";
+
+  }
+
 }
