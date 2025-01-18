@@ -18,8 +18,10 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPedidoJp
 
 public final class PedidoMapper {
 
+    private PedidoMapper() {}
+
     // Métodos públicos
-    private static PedidoJpa getPedidoJpa(Pedido pedido) {
+    public static PedidoJpa getPedidoJpa(Pedido pedido) {
 
         ClienteJpa clienteJpa = null;
         List<ItemPedidoJpa> itensJpa = ItemPedidoMapper.getListItemPedidoJpa(pedido.getItens());
