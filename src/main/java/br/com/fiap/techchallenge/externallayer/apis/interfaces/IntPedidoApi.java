@@ -138,7 +138,7 @@ public interface IntPedidoApi {
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = Constantes.D200,
       content = @Content(mediaType = "application/json", examples = @ExampleObject(
-        value = Constantes.E200listar))),
+        value = Constantes.E200_LISTAR))),
 
     @ApiResponse(responseCode = "400", description = Constantes.D400,
       content = @Content(mediaType = "application/json", examples = @ExampleObject(
@@ -204,7 +204,7 @@ public interface IntPedidoApi {
     public static final String E200 = "{ \"numeroPedido\": 4, \"statusPedido\": \"PRONTO\", "
         + "\"dataHora\": \"2024-09-08 15:31:59\" }";
     
-    public static final String E200listar = "[ { \"numero\": 1, \"cliente\": null, \"itens\": "
+    public static final String E200_LISTAR = "[ { \"numero\": 1, \"cliente\": null, \"itens\": "
         + "[ { \"produto\": { \"codigo\": 1, \"nome\": \"X-Monstrão\", \"descricao\": null, "
         + "\"preco\": 20, \"categoria\": \"LANCHE\" }, \"quantidade\": 1, \"valorItem\": 20 } ], "
         + "\"dataHoraCheckout\": \"2024-09-20T10:22:09.175124\", \"statusPagamento\": { "
