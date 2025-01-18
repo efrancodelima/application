@@ -46,7 +46,7 @@ public class PedidoGateway implements InPedidoGateway {
   }
 
   @Override
-  public List<Pedido> buscarTodosOsPedidos() throws Exception, Exception {
+  public List<Pedido> buscarTodosOsPedidos() throws Exception {
     List<PedidoJpa> pedidosJpa = pedidoJpaRepository.findAll();
     return PedidoMapper.getListPedido(pedidosJpa);
   }
