@@ -15,19 +15,17 @@ remove_non_numeric() {
 }
 
 echo ""
-echo "Code analysis"
-
-echo "- Security analysis"
+echo "Security analysis"
 
 # New vulnerabilities
 new_vulnerabilities=$(create_sonar_url "new_vulnerabilities" | jq .component.measures[0].periods[0].value)
 new_vulnerabilities=$(remove_non_numeric $new_vulnerabilities)
 
 if [ $new_vulnerabilities -gt 0 ]; then
-  echo "New vulnerabilities: ${new_vulnerabilities} (fail)"
+  echo "- New vulnerabilities: ${new_vulnerabilities} (fail)"
   exit 1
 else
-  echo "New vulnerabilities: ${new_vulnerabilities} (ok)"
+  echo "- New vulnerabilities: ${new_vulnerabilities} (ok)"
 fi
 
 # New security hotspots
@@ -35,22 +33,22 @@ new_sec_hotspots=$(create_sonar_url "new_security_hotspots" | jq .component.meas
 new_sec_hotspots=$(remove_non_numeric $new_sec_hotspots)
 
 if [ $new_sec_hotspots -gt 0 ]; then
-  echo "New security hotspots: ${new_sec_hotspots} (fail)"
+  echo "- New security hotspots: ${new_sec_hotspots} (fail)"
   exit 1
 else
-  echo "New security hotspots: ${new_sec_hotspots} (ok)"
+  echo "- New security hotspots: ${new_sec_hotspots} (ok)"
 fi
 
-
-echo "- Reliability analysis"
+echo ""
+echo "Reliability analysis"
 
 # New bugs
 new_bugs=$(create_sonar_url "new_bugs" | jq .component.measures[0].periods[0].value)
 new_bugs=$(remove_non_numeric $new_bugs)
 
 if [ $new_bugs -gt 0 ]; then
-  echo "New bugs: ${new_bugs} (fail)"
+  echo "- New bugs: ${new_bugs} (fail)"
   exit 1
 else
-  echo "New bugs: ${new_bugs} (ok)"
+  echo "- New bugs: ${new_bugs} (ok)"
 fi

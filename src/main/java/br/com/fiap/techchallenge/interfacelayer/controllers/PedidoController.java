@@ -1,12 +1,5 @@
 package br.com.fiap.techchallenge.interfacelayer.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-
 import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.BuscarClientePeloCpf;
 import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.AtualizarStatusPagamento;
 import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.AtualizarStatusPedido;
@@ -33,82 +26,93 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.IPedidoCo
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.PedidoGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ProdutoGateway;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
 @Component
 public class PedidoController implements IPedidoController {
 
-    // Atributos
-    @Autowired
-    PedidoGateway pedidoGateway;
+  // Atributos
+  private final PedidoGateway pedidoGateway;
+  private final ClienteGateway clienteGateway;
+  private final ProdutoGateway produtoGateway;
 
-    @Autowired
-    ClienteGateway clienteGateway;
+  // Construtor
+  @Autowired
+  public PedidoController(PedidoGateway pedidoGateway, ClienteGateway clienteGateway, 
+      ProdutoGateway produtoGateway) {
+    this.pedidoGateway = pedidoGateway;
+    this.clienteGateway = clienteGateway;
+    this.produtoGateway = produtoGateway;
+  }
 
-    @Autowired
-    ProdutoGateway produtoGateway;
+  // Métodos públicos
+  @Override
+  public ResponseEntity<StatusPedidoDto> fazerCheckout(PedidoDto pedidoDto) throws Exception {
+    Cliente cliente = getClientePedidoDto(pedidoDto);
+    List<ItemPedido> itens = getItensPedidoDto(pedidoDto);
 
-    // Métodos públicos
-    @Override
-    public ResponseEntity<StatusPedidoDto> fazerCheckout(PedidoDto pedidoDto) throws Exception {
-        Cliente cliente = getClientePedidoDto(pedidoDto);
-        List<ItemPedido> itens = getItensPedidoDto(pedidoDto);
+    Pedido pedido = new Pedido(cliente, itens);
+    pedido = FazerCheckoutPedido.fazerCheckout(pedidoGateway, pedido);
 
-        Pedido pedido = new Pedido(cliente, itens);
-        pedido = FazerCheckoutPedido.fazerCheckout(pedidoGateway, pedido);
+    return StatusPedidoResponseAdapter.adaptar(pedido, HttpStatus.CREATED);
+  }
 
-        return StatusPedidoResponseAdapter.adaptar(pedido, HttpStatus.CREATED);
+  @Override
+  public ResponseEntity<StatusPedidoDto> atualizarStatusPedido(Long numeroPedido) throws Exception {
+    Pedido pedido = AtualizarStatusPedido.atualizar(pedidoGateway, numeroPedido);
+    return StatusPedidoResponseAdapter.adaptar(pedido, HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(
+      Long numeroPedido) throws Exception {
+    Pedido pedido = BuscarPedido.buscar(pedidoGateway, numeroPedido);
+    return StatusPagamentoResponseAdapter.adaptar(pedido, HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<List<Pedido>> listarPedidos() throws Exception {
+    List<Pedido> pedidos = ListarPedidos.listar(pedidoGateway);
+    if (!pedidos.isEmpty()) {
+      return PedidoResponseAdapter.adaptar(pedidos, HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+  }
 
-    @Override
-    public ResponseEntity<StatusPedidoDto> atualizarStatusPedido(Long numeroPedido) throws Exception {
-        Pedido pedido = AtualizarStatusPedido.atualizar(pedidoGateway, numeroPedido);
-        return StatusPedidoResponseAdapter.adaptar(pedido, HttpStatus.OK);
+  @Override
+  public ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto) throws Exception {
+    var statusPagamento = PagamentoRequestAdapter.adaptar(pagamentoDto);
+    AtualizarStatusPagamento.atualizar(pedidoGateway, statusPagamento);
+    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+  }
+
+  // Métodos privados
+  private Cliente getClientePedidoDto(PedidoDto pedidoDto) throws Exception {
+    Cliente cliente = null;
+    Long cpfLong = pedidoDto.getCpfCliente();
+
+    if (cpfLong != null) {
+      Cpf cpf = new Cpf(cpfLong);
+      cliente = BuscarClientePeloCpf.buscar(clienteGateway, cpf);
     }
+    return cliente;
+  }
 
-    @Override
-    public ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(Long numeroPedido) throws Exception {
-        Pedido pedido = BuscarPedido.buscar(pedidoGateway, numeroPedido);
-        return StatusPagamentoResponseAdapter.adaptar(pedido, HttpStatus.OK);
+  private List<ItemPedido> getItensPedidoDto(PedidoDto pedidoDto) throws Exception {
+    List<Produto> produtos = new ArrayList<>();
+    List<ItemPedidoDto> itensDto = pedidoDto.getItens();
+
+    for (ItemPedidoDto item : itensDto) {
+      var produto = BuscarProduto.buscar(produtoGateway, item.codigoProduto);
+      produtos.add(produto);
     }
-
-    @Override
-    public ResponseEntity<List<Pedido>> listarPedidos() throws Exception {
-        List<Pedido> pedidos = ListarPedidos.listar(pedidoGateway);
-        if (pedidos.size() > 0) {
-            return PedidoResponseAdapter.adaptar(pedidos, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-    }
-
-    @Override
-    public ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto) throws Exception {
-        var statusPagamento = PagamentoRequestAdapter.adaptar(pagamentoDto);
-        AtualizarStatusPagamento.atualizar(pedidoGateway, statusPagamento);
-        return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-    }
-
-    // Métodos privados
-    private Cliente getClientePedidoDto(PedidoDto pedidoDto) throws Exception {
-        Cliente cliente = null;
-        Long cpfLong = pedidoDto.getCpfCliente();
-
-        if (cpfLong != null) {
-            Cpf cpf = new Cpf(cpfLong);
-            cliente = BuscarClientePeloCpf.buscar(clienteGateway, cpf);
-        }
-        return cliente;
-    }
-
-    private List<ItemPedido> getItensPedidoDto(PedidoDto pedidoDto) throws Exception {
-        List<Produto> produtos = new ArrayList<>();
-        List<ItemPedidoDto> itensDto = pedidoDto.getItens();
-
-        for (ItemPedidoDto item : itensDto) {
-            var produto = BuscarProduto.buscar(produtoGateway, item.codigoProduto);
-            produtos.add(produto);
-        }
-        return ItemPedidoRequestAdapter.adaptar(itensDto, produtos);
-    }
+    return ItemPedidoRequestAdapter.adaptar(itensDto, produtos);
+  }
 
 }
