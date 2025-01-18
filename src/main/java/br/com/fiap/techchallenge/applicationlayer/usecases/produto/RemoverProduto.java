@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.applicationlayer.services.Validar;
 
 public final class RemoverProduto {
 
+  private RemoverProduto() {}
+
   // Métodos públicos
   public static void remover(InProdutoGateway gateway, Long codigoProduto) throws Exception {
     Validar.notNull(codigoProduto, EnumApplicationExceptions.PRODUTO_CODIGO_NULO);

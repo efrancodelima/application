@@ -5,6 +5,8 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPagament
 
 public final class StatusPagamentoMapper {
 
+    private StatusPagamentoMapper() {}
+
     public static StatusPagamentoJpa getStatusPagamentoJpa(StatusPagamento status) {
         return new StatusPagamentoJpa(status.getCodigo(), status.getStatus(), status.getDataHora());
     }

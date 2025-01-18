@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 
 public final class CadastrarCliente {
 
+  private CadastrarCliente() {}
+
   public static Cliente cadastrar(InClienteGateway gateway, Cliente cliente) throws Exception {
     Validar.notNull(cliente, EnumApplicationExceptions.CLIENTE_NULO);
 

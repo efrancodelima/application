@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 
 public final class PagamentoRequestAdapter {
 
+  private PagamentoRequestAdapter() {}
+
   public static StatusPagamento adaptar(PagamentoDto pagamentoDto) throws Exception {
 
     Long codigo = pagamentoDto.getId();

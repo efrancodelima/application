@@ -9,6 +9,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 
 public final class EditarProduto {
 
+  private EditarProduto() {}
+
   public static void editar(InProdutoGateway gateway, Produto produto) throws Exception {
     Validar.notNull(produto, EnumApplicationExceptions.PRODUTO_NULO);
 

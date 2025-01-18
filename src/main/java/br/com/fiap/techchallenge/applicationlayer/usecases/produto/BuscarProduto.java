@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 
 public final class BuscarProduto {
 
+  private BuscarProduto() {}
+
   // Métodos públicos
   public static Produto buscar(InProdutoGateway gateway, Long codigoProduto) throws Exception {
     Validar.notNull(codigoProduto, EnumApplicationExceptions.PRODUTO_CODIGO_NULO);

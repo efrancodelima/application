@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class Validacao {
 
+  private Validacao() {}
+
   public static final  LocalDate DATA_MIN = LocalDate.of(2020, 1, 1);
 
   public static final String DATA_MIN_STR = "01/01/2020";

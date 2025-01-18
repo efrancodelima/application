@@ -10,6 +10,8 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ProdutoJpa;
 
 public final class ItemPedidoMapper {
 
+    private ItemPedidoMapper() {}
+
     // Métodos públicos
     public static ItemPedidoJpa getItemPedidoJpa(ItemPedido item) {
         ProdutoJpa produtoJpa = ProdutoMapper.getProdutoJpa(item.getProduto());

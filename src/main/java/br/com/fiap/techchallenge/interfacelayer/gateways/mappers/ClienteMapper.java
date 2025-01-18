@@ -6,6 +6,8 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ClienteJpa;
 
 public final class ClienteMapper {
 
+    private ClienteMapper() {}
+
     public static ClienteJpa getClienteJpa(Cliente cliente) {
         return new ClienteJpa(cliente.getCodigo(), cliente.getCpf().pegarNumeroComDigito(), cliente.getNome(),
                 cliente.getEmail());

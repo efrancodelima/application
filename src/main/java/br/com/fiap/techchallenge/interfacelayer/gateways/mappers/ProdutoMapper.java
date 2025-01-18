@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ProdutoJpa;
 
 public final class ProdutoMapper {
 
+    private ProdutoMapper() {}
+
     // Métodos públicos
     public static ProdutoJpa getProdutoJpa(Produto produto) {
         return new ProdutoJpa(produto.getCodigo(), produto.getNome(), produto.getDescricao(), produto.getPreco(),

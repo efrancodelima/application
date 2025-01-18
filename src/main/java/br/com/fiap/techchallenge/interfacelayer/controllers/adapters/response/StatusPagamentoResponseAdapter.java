@@ -10,6 +10,8 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPa
 
 public final class StatusPagamentoResponseAdapter {
 
+    private StatusPagamentoResponseAdapter() {}
+
     public static ResponseEntity<StatusPagamentoDto> adaptar(Pedido pedido, HttpStatus httpStatus) {
         var status = pedido.getStatusPagamento().getStatus();
 

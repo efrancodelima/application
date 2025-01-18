@@ -5,6 +5,8 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPedidoJp
 
 public final class StatusPedidoMapper {
 
+    private StatusPedidoMapper() {}
+
     public static StatusPedidoJpa getStatusPedidoJpa(StatusPedido status) {
         return new StatusPedidoJpa(status.getStatus(), status.getDataHora());
     }

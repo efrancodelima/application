@@ -7,6 +7,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 
 public final class ClienteResponseAdapter {
 
+    private ClienteResponseAdapter() {}
+
     public static ResponseEntity<Cliente> adaptar(Cliente cliente, HttpStatus status) {
         return new ResponseEntity<>(cliente, status);
     }

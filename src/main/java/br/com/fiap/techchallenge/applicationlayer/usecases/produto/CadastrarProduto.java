@@ -7,6 +7,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 
 public final class CadastrarProduto {
 
+  private CadastrarProduto() {}
+
   public static Produto cadastrar(InProdutoGateway gateway, Produto produto) throws Exception {
     Validar.notNull(produto, EnumApplicationExceptions.PRODUTO_NULO);
     return gateway.gravarProduto(produto);

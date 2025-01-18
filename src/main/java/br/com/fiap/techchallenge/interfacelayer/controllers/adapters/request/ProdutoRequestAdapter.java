@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 
 public final class ProdutoRequestAdapter {
 
+    private ProdutoRequestAdapter() {}
+
     public static Produto adaptar(ProdutoDto produtoDto) throws Exception {
 
         String nome = produtoDto.getNome().trim();

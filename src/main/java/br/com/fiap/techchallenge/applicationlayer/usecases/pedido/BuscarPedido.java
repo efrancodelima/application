@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 
 public final class BuscarPedido {
 
+  private BuscarPedido() {}
+
   public static Pedido buscar(InPedidoGateway gateway, Long numeroPedido) throws Exception {
 
     Validar.notNull(numeroPedido, EnumApplicationExceptions.PEDIDO_NUMERO_NULO);

@@ -10,6 +10,8 @@ import java.util.List;
 
 public final class BuscarProdutosPorCategoria {
 
+  private BuscarProdutosPorCategoria() {}
+
   public static List<Produto> buscar(InProdutoGateway gateway, CategoriaProduto categoria)
       throws Exception {
 

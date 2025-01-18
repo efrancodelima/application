@@ -9,6 +9,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 
 public class PedidoResponseAdapter {
 
+    private PedidoResponseAdapter() {}
+
     public static ResponseEntity<Pedido> adaptar(Pedido pedido, HttpStatus status) {
         return new ResponseEntity<>(pedido, status);
     }

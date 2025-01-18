@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 
 public final class ProdutoResponseAdapter {
 
+    private ProdutoResponseAdapter() {}
+
     public static ResponseEntity<Produto> adaptar(Produto produto, HttpStatus status) {
         return new ResponseEntity<>(produto, status);
     }

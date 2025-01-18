@@ -9,6 +9,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 
 public final class BuscarClientePeloCpf {
 
+  private BuscarClientePeloCpf() {}
+
   public static Cliente buscar(InClienteGateway gateway, Cpf cpf) throws Exception {
     Validar.notNull(cpf, EnumApplicationExceptions.CPF_NULO);
 

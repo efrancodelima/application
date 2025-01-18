@@ -9,6 +9,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 
 public final class AtualizarStatusPagamento {
 
+  private AtualizarStatusPagamento() {}
+
   public static void atualizar(InPedidoGateway gateway, StatusPagamento statusPagamento)
       throws Exception {
 

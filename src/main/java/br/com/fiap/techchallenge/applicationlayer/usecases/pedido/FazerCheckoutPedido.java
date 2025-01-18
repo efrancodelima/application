@@ -11,6 +11,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamentoEn
 
 public final class FazerCheckoutPedido {
 
+  private FazerCheckoutPedido() {}
+
   public static Pedido fazerCheckout(InPedidoGateway gateway, Pedido pedido) throws Exception {
 
     Validar.notNull(pedido, EnumApplicationExceptions.PEDIDO_NULO);

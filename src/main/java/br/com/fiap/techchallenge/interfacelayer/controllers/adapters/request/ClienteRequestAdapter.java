@@ -6,6 +6,8 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 
 public final class ClienteRequestAdapter {
 
+    private ClienteRequestAdapter() {}
+
     public static Cliente adaptar(ClienteDto clienteDto) throws Exception {
         Cpf cpf = new Cpf(clienteDto.getCpf());
         String nome = clienteDto.getNome();

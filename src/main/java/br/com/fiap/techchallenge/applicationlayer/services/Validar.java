@@ -8,6 +8,8 @@ import java.util.List;
 
 public final class Validar {
 
+  private Validar() {}
+
   public static void notNull(Object objeto, EnumApplicationExceptions excecao)
       throws Exception {
 

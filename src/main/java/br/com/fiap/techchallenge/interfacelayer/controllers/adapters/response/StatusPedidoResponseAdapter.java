@@ -12,6 +12,8 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPe
 
 public final class StatusPedidoResponseAdapter {
 
+    private StatusPedidoResponseAdapter() {}
+
     // Métodos públicos
     public static ResponseEntity<StatusPedidoDto> adaptar(Pedido pedido, HttpStatus httpStatus) {
         StatusPedidoDto response = adaptarParaStatusPedido(pedido);

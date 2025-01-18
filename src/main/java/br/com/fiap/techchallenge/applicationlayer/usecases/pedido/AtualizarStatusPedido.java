@@ -8,6 +8,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 
 public final class AtualizarStatusPedido {
 
+  private AtualizarStatusPedido() {}
+
   public static Pedido atualizar(InPedidoGateway gateway, Long numeroPedido) throws Exception {
 
     Validar.notNull(numeroPedido, EnumApplicationExceptions.PEDIDO_NUMERO_NULO);

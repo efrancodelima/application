@@ -12,6 +12,8 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
 
 public final class ListarPedidos {
 
+  private ListarPedidos() {}
+
   public static List<Pedido> listar(InPedidoGateway gateway) throws Exception {
     List<Pedido> pedidos = gateway.buscarTodosOsPedidos();
     Validar.listNotEmpty(pedidos, EnumNotFoundExceptions.PEDIDO_LISTA_VAZIA);
