@@ -6,45 +6,50 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entidade JPA Pedido.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "pedido")
-public class PedidoJpa {
+public class PedidoJpa implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long numero;
+  private static final long serialVersionUID = 1L;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "codigo_cliente", nullable = true)
-    private ClienteJpa clienteJpa;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long numero;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "itens_pedido", joinColumns = @JoinColumn(name = "numero_pedido"))
-    private List<ItemPedidoJpa> itensJpa;
+  @ManyToOne(fetch = FetchType.EAGER)
+  @JoinColumn(name = "codigo_cliente", nullable = true)
+  private ClienteJpa clienteJpa;
 
-    @Column(name = "timestamp_checkout", nullable = true)
-    private LocalDateTime dataHoraCheckout;
+  @ElementCollection(fetch = FetchType.EAGER)
+  @CollectionTable(name = "itens_pedido", joinColumns = @JoinColumn(name = "numero_pedido"))
+  private List<ItemPedidoJpa> itensJpa;
 
-    @Embedded
-    private StatusPagamentoJpa statusPagamento;
+  @Column(name = "timestamp_checkout", nullable = true)
+  private LocalDateTime dataHoraCheckout;
 
-    @Embedded
-    private StatusPedidoJpa statusPedido;
+  @Embedded
+  private StatusPagamentoJpa statusPagamento;
+
+  @Embedded
+  private StatusPedidoJpa statusPedido;
 
 }

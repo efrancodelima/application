@@ -1,28 +1,32 @@
 package br.com.fiap.techchallenge.interfacelayer.gateways.entities;
 
+import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
-import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
-
+/**
+ * Entidade JPA StatusPedido.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class StatusPedidoJpa {
+public class StatusPedidoJpa implements Serializable {
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status_pedido", nullable = false)
-    private StatusPedidoEnum status;
+  private static final long serialVersionUID = 1L;
 
-    @Column(name = "timestamp_status_pedido", nullable = false)
-    private LocalDateTime dataHora;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "status_pedido", nullable = false)
+  private StatusPedidoEnum status;
+
+  @Column(name = "timestamp_status_pedido", nullable = false)
+  private LocalDateTime dataHora;
 
 }

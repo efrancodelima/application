@@ -1,43 +1,48 @@
 package br.com.fiap.techchallenge.interfacelayer.gateways.entities;
 
+import br.com.fiap.techchallenge.businesslayer.entities.produto.CategoriaProduto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-import br.com.fiap.techchallenge.businesslayer.entities.produto.CategoriaProduto;
-
+/**
+ * Entidade JPA Produto.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "produto")
-public class ProdutoJpa {
+public class ProdutoJpa implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long codigo;
+  private static final long serialVersionUID = 1L;
 
-    @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(20)")
-    private String nome;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long codigo;
 
-    @Column(name = "descricao", columnDefinition = "VARCHAR(150)")
-    private String descricao;
+  @Column(name = "nome", nullable = false, columnDefinition = "VARCHAR(20)")
+  private String nome;
 
-    @Column(name = "preco", nullable = false, columnDefinition = "DECIMAL(5,2)")
-    private BigDecimal preco;
+  @Column(name = "descricao", columnDefinition = "VARCHAR(150)")
+  private String descricao;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "categoria", nullable = false)
-    private CategoriaProduto categoria;
+  @Column(name = "preco", nullable = false, columnDefinition = "DECIMAL(5,2)")
+  private BigDecimal preco;
+
+  @Enumerated(EnumType.STRING)
+  @Column(name = "categoria", nullable = false)
+  private CategoriaProduto categoria;
 
 }
