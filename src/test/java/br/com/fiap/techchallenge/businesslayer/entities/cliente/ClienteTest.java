@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.businesslayer.entities.cliente;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -22,6 +23,29 @@ class ClienteTest {
   @BeforeEach
   void setup() throws BusinessRuleException{
     cpfValido = new Cpf(111222333, (byte) 96);
+  }
+
+  @Test
+  void deveInstanciarUmClienteComSucesso() {
+    assertDoesNotThrow(() -> {
+      new Cliente(codigoValido, cpfValido, nomeValido, emailValido);
+    });
+  }
+
+  @Test
+  void deveRetornarOsAtributosDoCliente() {
+    Cliente cliente = null;
+
+    try {
+      cliente = new Cliente(codigoValido, cpfValido, nomeValido, emailValido);
+    } catch (Exception e) {
+      fail("Falha ao instanciar o cliente.");
+    }
+      
+    assertEquals(cliente.getCodigo(), codigoValido);
+    assertEquals(cliente.getCpf(), cpfValido);
+    assertEquals(cliente.getNome(), nomeValido);
+    assertEquals(cliente.getEmail(), emailValido);
   }
 
   @Test
@@ -53,13 +77,6 @@ class ClienteTest {
   }
 
   @Test
-  void nomeClienteDeveAceitarNulo() {
-    assertDoesNotThrow(() -> {
-      new Cliente(codigoValido, cpfValido, null, emailValido);
-    });
-  }
-
-  @Test
   void nomeClienteNaoPodeSerStringVazia() {
     var exception = assertThrows(BusinessRuleException.class, () -> {
       new Cliente(codigoValido, cpfValido, "", emailValido);
@@ -81,6 +98,49 @@ class ClienteTest {
       new Cliente(codigoValido, cpfValido, "A B C D E", emailValido);
     });
     assertEquals(ClienteExceptions.NOME_INVALIDO.getMensagem(), exception.getMessage());
+  }
+
+  @Test
+  void emailNaoPodeSerStringVazia() {
+    var exception = assertThrows(BusinessRuleException.class, () -> {
+      new Cliente(codigoValido, cpfValido, nomeValido, "");
+    });
+    assertEquals(ClienteExceptions.EMAIL_INVALIDO.getMensagem(), exception.getMessage());
+  }
+
+  @Test
+  void emailNaoPodeSerInvalido() {
+    var exception = assertThrows(BusinessRuleException.class, () -> {
+      new Cliente(codigoValido, cpfValido, nomeValido, "sem_email");
+    });
+    assertEquals(ClienteExceptions.EMAIL_INVALIDO.getMensagem(), exception.getMessage());
+  }
+
+  @Test
+  void emailNaoPodeTerMaisQue40Caracteres() {
+    var exception = assertThrows(BusinessRuleException.class, () -> {
+      new Cliente(codigoValido, cpfValido, nomeValido, "abcd".repeat(10).concat("@gmail.com"));
+    });
+    assertEquals(ClienteExceptions.EMAIL_MAX_CHAR.getMensagem(), exception.getMessage());
+  }
+
+  @Test
+  void nomeOuEmailUmDosDoisPodeSerNulo() {
+    assertDoesNotThrow(() -> {
+      new Cliente(codigoValido, cpfValido, null, emailValido);
+    });
+
+    assertDoesNotThrow(() -> {
+      new Cliente(codigoValido, cpfValido, nomeValido, null);
+    });
+  }
+
+  @Test
+  void nomeEmailNaoPodemSerAmbosNulos() {
+    var exception = assertThrows(BusinessRuleException.class, () -> {
+      new Cliente(codigoValido, cpfValido, null, null);
+    });
+    assertEquals(ClienteExceptions.NOME_EMAIL_NULOS.getMensagem(), exception.getMessage());
   }
 
 }

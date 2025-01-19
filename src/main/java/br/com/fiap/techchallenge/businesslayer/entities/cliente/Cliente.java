@@ -99,7 +99,10 @@ public class Cliente {
   private void validarEmail(String email) throws BusinessRuleException {
     if (email != null) {
       
-      if (email.length() > 40) {
+      if (email.isEmpty()) {
+        throw new BusinessRuleException(ClienteExceptions.EMAIL_INVALIDO.getMensagem());
+
+      } else if (email.length() > 40) {
         throw new BusinessRuleException(ClienteExceptions.EMAIL_MAX_CHAR.getMensagem());
       
       } else {

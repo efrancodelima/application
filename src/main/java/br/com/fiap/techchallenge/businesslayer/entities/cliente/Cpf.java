@@ -9,24 +9,28 @@ public class Cpf {
   private final int numero;
   private final byte digitoVerificador;
 
-  // Construtor
+  /**
+   * Construtor público de CPF.
+   *
+   * @param numero O número do CPF (Integer).
+   * @param digitoVerificador O dígito verificador do CPF (Byte).
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pela operação.
+   */
   public Cpf(Integer numero, Byte digitoVerificador) throws BusinessRuleException {
 
-    validarNumeroEDigitoVerificador(numero, digitoVerificador);
+    validarAtributosCpf(numero, digitoVerificador);
     this.numero = numero;
     this.digitoVerificador = digitoVerificador;
   }
 
+  /**
+   * Construtor público de CPF.
+   *
+   * @param cpf O número do CPF, incluindo o dígito verificador (Long).
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pela operação.
+   */
   public Cpf(Long cpf) throws BusinessRuleException {
-
-    validarCpf(cpf);
-
-    int numeroCpf = (int) (cpf / 100);
-    byte digitoCpf = (byte) (cpf % 100);
-
-    validarNumeroEDigitoVerificador(numeroCpf, digitoCpf);
-    this.numero = numeroCpf;
-    this.digitoVerificador = digitoCpf;
+    this((int) (cpf / 100), (byte) (cpf % 100));
   }
 
   // Getters
@@ -43,7 +47,8 @@ public class Cpf {
   }
 
   // Métodos de validação
-  private void validarNumeroEDigitoVerificador(Integer numero, Byte digitoVerificador) throws BusinessRuleException {
+  private void validarAtributosCpf(
+      Integer numero, Byte digitoVerificador) throws BusinessRuleException {
 
     validarNumero(numero);
     validarDigitoVerificador(numero, digitoVerificador);
@@ -54,10 +59,12 @@ public class Cpf {
     if (numero == null) {
       throw new BusinessRuleException(CpfExceptions.NUMERO_NULO.getMensagem());
     }
+
     if (numero < 1) {
       throw new BusinessRuleException(CpfExceptions.NUMERO_MIN.getMensagem());
     }
-    if (numero > Math.pow(10, 10) - 1) {
+
+    if (numero > (Math.pow(10, 9) - 1)) {
       throw new BusinessRuleException(CpfExceptions.NUMERO_MAX.getMensagem());
     }
   }
@@ -69,13 +76,6 @@ public class Cpf {
     }
     if (digitoVerificador != calcularDigitoVerificador(numero)) {
       throw new BusinessRuleException(CpfExceptions.DIGITO_INVALIDO.getMensagem());
-    }
-  }
-
-  private void validarCpf(Long cpf) throws BusinessRuleException {
-
-    if (cpf == null) {
-      throw new BusinessRuleException(CpfExceptions.CPF_NULO.getMensagem());
     }
   }
 
