@@ -5,13 +5,18 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ClienteExcept
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
+/**
+ * Entidade de negócio: Cliente.
+ */
 public class Cliente {
   private Long codigo;
   private Cpf cpf;
   private String nome;
   private String email;
 
-  // Construtor
+  /**
+   * Construtor público de Cliente.
+   */
   public Cliente(Long codigo, Cpf cpf, String nome, String email) throws BusinessRuleException {
     setCodigo(codigo);
     setCpf(cpf);
@@ -74,11 +79,14 @@ public class Cliente {
   }
 
   private void validarNome(String nome) throws BusinessRuleException {
-    if (nome != null && !nome.isEmpty()) {
+    if (nome != null) {
 
-      if (nome.length() > 50) {
+      if (nome.isEmpty()) {
+        throw new BusinessRuleException(ClienteExceptions.NOME_INVALIDO.getMensagem());
+
+      } else if (nome.length() > 50) {
         throw new BusinessRuleException(ClienteExceptions.NOME_MAX_CHAR.getMensagem());
-      
+
       } else {
         ArrayList<String> palavras = getListaPalavras(nome, 3);
         if (palavras.isEmpty()) {

@@ -15,6 +15,23 @@ spring:
     hibernate:
       ddl-auto: "update"
       dialect: "org.hibernate.dialect.MySQL8Dialect"
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+  logback:
+    appender:
+      console:
+        class: ch.qos.logback.core.ConsoleAppender
+        encoder:
+          pattern: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    logger:
+      root:
+        level: INFO
+        appender: console
+      com.example:
+        level: DEBUG
+        appender: console
 
 # Profile para a AWS
 ---

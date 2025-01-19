@@ -1,5 +1,8 @@
 package br.com.fiap.techchallenge.businesslayer.exceptions.messages;
 
+/**
+ * Lista de exceções lançadas pela classe cliente.
+ */
 public enum ClienteExceptions {
   CODIGO_MIN("O código do cliente deve ser maior que 0."),
   NOME_MAX_CHAR("O nome do cliente não pode ter mais de 50 caracteres."),
