@@ -3,14 +3,13 @@ package br.com.fiap.techchallenge.businesslayer.entities.cliente;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.CpfExceptions;
 import org.junit.jupiter.api.Test;
 
 /**
- * Classe de teste do value object CPF.
+ * Classe de testes para o value object CPF.
  */
 class CpfTest {
 
@@ -19,42 +18,34 @@ class CpfTest {
   private final long numeroComDigitoValido = 11122233396L;
 
   @Test
-  void deveInstanciarUmCpfComSucesso() {
+  void deveConstruirUmCpfComSucesso() {
     assertDoesNotThrow(() -> {
       new Cpf(numeroValido, digitoValido);
-    });
-
-    assertDoesNotThrow(() -> {
       new Cpf(numeroComDigitoValido);
     });
   }
 
   @Test
   void deveRetornarOsAtributosDoCpf() {
-    Cpf cpf = null;
-    
-    try {
-      cpf = new Cpf(numeroComDigitoValido);
-    } catch (Exception e) {
-      fail("Falha ao instanciar o CPF.");
-    }
+    assertDoesNotThrow(() -> {
+
+      Cpf cpf = new Cpf(numeroComDigitoValido);
+
+      assertEquals(cpf.getNumeroSemDigito(), numeroValido);
+      assertEquals(cpf.getDigitoVerificador(), digitoValido);
+      assertEquals(cpf.pegarNumeroComDigito(), numeroComDigitoValido);
       
-    assertEquals(cpf.getNumeroSemDigito(), numeroValido);
-    assertEquals(cpf.getDigitoVerificador(), digitoValido);
-    assertEquals(cpf.pegarNumeroComDigito(), numeroComDigitoValido);
+    });
   }
 
   @Test
   void deveConverterCpfParaString() {
-    Cpf cpf = null;
-    
-    try {
-      cpf = new Cpf(numeroComDigitoValido);
-    } catch (Exception e) {
-      fail("Falha ao instanciar o CPF.");
-    }
+    assertDoesNotThrow(() -> {
       
-    assertEquals(cpf.toString(), ((Long) numeroComDigitoValido).toString());
+      Cpf cpf = new Cpf(numeroComDigitoValido);
+      assertEquals(cpf.toString(), ((Long) numeroComDigitoValido).toString());
+
+    });
   }
 
   @Test

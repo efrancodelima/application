@@ -30,8 +30,7 @@ public final class ListarPedidos {
   // Métodos privados
   private static List<Pedido> filtrarOrdenarPedidos(List<Pedido> pedidos) {
     return pedidos.stream()
-        .filter(p -> p.getStatusPedido().getStatus() != StatusPedidoEnum.AGUARDANDO_CHECKOUT &&
-            p.getStatusPedido().getStatus() != StatusPedidoEnum.FINALIZADO)
+        .filter(p -> p.getStatusPedido().getStatus() != StatusPedidoEnum.FINALIZADO)
         .sorted(Comparator.comparing((Pedido p) -> p.getStatusPedido().getStatus(),
             Comparator.comparingInt(ListarPedidos::getStatusOrder))
             .thenComparing(p -> p.getStatusPedido().getDataHora()))

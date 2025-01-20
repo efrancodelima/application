@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * Entidade de negócio: Cliente.
+ * Classe Cliente.
  */
 public class Cliente {
   private Long codigo;
@@ -15,7 +15,13 @@ public class Cliente {
   private String email;
 
   /**
-   * Construtor público de Cliente.
+   * Construtor público de cliente.
+   *
+   * @param codigo O código do cliente.
+   * @param cpf O Cpf do cliente.
+   * @param nome O nome do cliente.
+   * @param email O e-mail do cliente.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
    */
   public Cliente(Long codigo, Cpf cpf, String nome, String email) throws BusinessRuleException {
     setCodigo(codigo);

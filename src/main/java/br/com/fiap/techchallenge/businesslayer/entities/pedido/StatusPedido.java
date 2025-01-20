@@ -5,14 +5,25 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.StatusPedidoExceptions;
 import java.time.LocalDateTime;
 
+/**
+ * Situação do pedido.
+ */
 public class StatusPedido {
 
   // Atributos
   private final StatusPedidoEnum status;
   private final LocalDateTime dataHora;
 
-  // Construtor
-  public StatusPedido(StatusPedidoEnum status, LocalDateTime dataHora) throws BusinessRuleException {
+  /**
+   * Construtor público.
+   *
+   * @param status Situação do pedido.
+   * @param dataHora Data e hora do status.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
+   */
+  public StatusPedido(StatusPedidoEnum status,
+      LocalDateTime dataHora) throws BusinessRuleException {
+    
     validarStatusPedido(status, dataHora);
     this.status = status;
     this.dataHora = dataHora;
@@ -28,7 +39,9 @@ public class StatusPedido {
   }
 
   // Métodos de validação
-  private void validarStatusPedido(StatusPedidoEnum status, LocalDateTime dataHora) throws BusinessRuleException {
+  private void validarStatusPedido(StatusPedidoEnum status,
+      LocalDateTime dataHora) throws BusinessRuleException {
+    
     validarStatus(status);
     validarDataHora(dataHora);
   }

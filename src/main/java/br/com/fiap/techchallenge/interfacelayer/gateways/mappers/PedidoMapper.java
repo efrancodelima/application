@@ -38,12 +38,9 @@ public final class PedidoMapper {
           .getStatusPagamentoJpa(pedido.getStatusPagamento());
     }
 
-    if (pedido.getStatusPedido() != null) {
-      statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
-    } else {
-      statusPedidoJpa = new StatusPedidoJpa(StatusPedidoEnum.AGUARDANDO_CHECKOUT, LocalDateTime.now());
-    }
-
+    
+    statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
+    
     return new PedidoJpa(pedido.getNumero(), clienteJpa, itensJpa, dataHoraCheckout,
         statusPagamentoJpa, statusPedidoJpa);
   }

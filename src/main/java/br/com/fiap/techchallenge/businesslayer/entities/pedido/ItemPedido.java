@@ -5,12 +5,21 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ItemPedidoExceptions;
 import java.math.BigDecimal;
 
+/** 
+ * Classe ItemPedido.
+ */
 public class ItemPedido {
 
   private final Produto produto;
   private final int quantidade;
 
-  // Construtor
+  /**
+   * Construtor público de ItemPedido.
+   *
+   * @param produto O produto do item do pedido.
+   * @param quantidade A quantidade do produto do item do pedido.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
+   */
   public ItemPedido(Produto produto, Integer quantidade) throws BusinessRuleException {
     validarItemPedido(produto, quantidade);
     this.produto = produto;
@@ -46,7 +55,7 @@ public class ItemPedido {
     if (quantidade == null) {
       throw new BusinessRuleException(ItemPedidoExceptions.QTDE_NULA.getMensagem());
     }
-    if (quantidade < 0) {
+    if (quantidade < 1) {
       throw new BusinessRuleException(ItemPedidoExceptions.QTDE_MIN.getMensagem());
     }
     if (quantidade > 50) {

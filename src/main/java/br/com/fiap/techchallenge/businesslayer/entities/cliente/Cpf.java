@@ -4,17 +4,20 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.CpfExceptions;
 import org.apache.commons.lang3.StringUtils;
 
+/** 
+ * Classe Cpf.
+ */
 public class Cpf {
 
   private final int numero;
   private final byte digitoVerificador;
 
   /**
-   * Construtor público de CPF.
+   * Construtor público de Cpf.
    *
-   * @param numero O número do CPF (Integer).
-   * @param digitoVerificador O dígito verificador do CPF (Byte).
-   * @throws BusinessRuleException Exceção de regra de negócio lançada pela operação.
+   * @param numero O número do Cpf, sem o dígito verificador.
+   * @param digitoVerificador O dígito verificador do Cpf.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
    */
   public Cpf(Integer numero, Byte digitoVerificador) throws BusinessRuleException {
 
@@ -24,20 +27,16 @@ public class Cpf {
   }
 
   /**
-   * Construtor público de CPF.
+   * Construtor público de Cpf.
    *
-   * @param cpf O número do CPF, incluindo o dígito verificador (Long).
-   * @throws BusinessRuleException Exceção de regra de negócio lançada pela operação.
+   * @param cpf O número do Cpf, incluindo o dígito verificador.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
    */
   public Cpf(Long cpf) throws BusinessRuleException {
     this((int) (cpf / 100), (byte) (cpf % 100));
   }
 
   // Getters
-  public long pegarNumeroComDigito() {
-    return Long.parseLong(this.toString());
-  }
-
   public int getNumeroSemDigito() {
     return numero;
   }
@@ -69,7 +68,8 @@ public class Cpf {
     }
   }
 
-  private void validarDigitoVerificador(int numero, Byte digitoVerificador) throws BusinessRuleException {
+  private void validarDigitoVerificador(
+      int numero, Byte digitoVerificador) throws BusinessRuleException {
 
     if (digitoVerificador == null) {
       throw new BusinessRuleException(CpfExceptions.DIGITO_NULO.getMensagem());
@@ -79,7 +79,6 @@ public class Cpf {
     }
   }
 
-  // Métodos auxiliares
   private int calcularDigitoVerificador(int numero) {
     // Transforma a entrada em um array
     int[] numeroArr = new int[11];
@@ -112,6 +111,17 @@ public class Cpf {
 
     // Retorna
     return (primeiroDigitoVerificador * 10) + segundoDigitoVerificador;
+  }
+
+  // Métodos públicos
+
+  /**
+   * Retorna o número completo do Cpf, incluindo o dígito verificador.
+   *
+   * @return O número do Cpf com o dígito verificador.
+   */
+  public long pegarNumeroComDigito() {
+    return Long.parseLong(this.toString());
   }
 
   @Override

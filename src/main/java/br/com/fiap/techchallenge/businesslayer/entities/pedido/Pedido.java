@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Classe Pedido.
+ */
 public class Pedido {
   private Long numero;
   private Cliente cliente;
@@ -16,24 +19,44 @@ public class Pedido {
   private StatusPagamento statusPagamento;
   private StatusPedido statusPedido;
 
-  // Construtor usado para criar um pedido antes do checkout
+  /**
+   * Construtor público de Pedido.
+   * Usado para novos pedidos.
+   *
+   * @param cliente O cliente do pedido.
+   * @param itens Os itens do pedido.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
+   */
   public Pedido(Cliente cliente, List<ItemPedido> itens) throws BusinessRuleException {
     
     setCliente(cliente);
     setItens(itens);
 
+    var dataHora = LocalDateTime.now();
+    setDataHoraCheckout(dataHora);
+
     var newStatusPagamento = new StatusPagamento(null, 
-        StatusPagamentoEnum.AGUARDANDO_PAGAMENTO, LocalDateTime.now());
+        StatusPagamentoEnum.AGUARDANDO_PAGAMENTO, dataHora);
 
     setStatusPagamento(newStatusPagamento);
 
-    var newStatusPedido = new StatusPedido(StatusPedidoEnum.AGUARDANDO_CHECKOUT, 
-        LocalDateTime.now());
+    var newStatusPedido = new StatusPedido(StatusPedidoEnum.RECEBIDO, dataHora);
 
     setStatusPedido(newStatusPedido);
   }
 
-  // Construtor usado para instanciar um pedido já existente
+  /**
+   * Construtor público de Pedido.
+   * Usado para instanciar pedidos que já existem no banco de dados.
+   *
+   * @param numero O número do pedido.
+   * @param cliente O cliente do pedido.
+   * @param itens Os itens do pedido.
+   * @param dataHoraCheckout A data e hora do checkout do pedido.
+   * @param pagamento O pagamento do pedido.
+   * @param statusPedido O status do pedido.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
+   */
   public Pedido(Long numero, Cliente cliente, 
       List<ItemPedido> itens, LocalDateTime dataHoraCheckout,
       StatusPagamento pagamento, StatusPedido statusPedido)
@@ -42,7 +65,7 @@ public class Pedido {
     setNumero(numero);
     setCliente(cliente);
     setItens(itens);
-    setDataHoraCheckout(dataHoraCheckout, statusPedido.getStatus());
+    setDataHoraCheckout(dataHoraCheckout);
     setStatusPagamento(pagamento);
     setStatusPedido(statusPedido);
   }
@@ -72,14 +95,6 @@ public class Pedido {
     return statusPedido;
   }
 
-  public BigDecimal getValorPedido() {
-    BigDecimal result = BigDecimal.valueOf(0);
-    for (ItemPedido item : itens) {
-      result = result.add(item.getValorItem());
-    }
-    return result;
-  }
-
   // Setters
   private void setNumero(Long numero) throws BusinessRuleException {
     validarNumero(numero);
@@ -95,15 +110,11 @@ public class Pedido {
     this.itens = itens;
   }
 
-  private void setDataHoraCheckout(LocalDateTime dataHoraCheckout, StatusPedidoEnum statusPedido)
+  private void setDataHoraCheckout(LocalDateTime dataHoraCheckout)
       throws BusinessRuleException {
-    validarDataHoraCheckout(dataHoraCheckout, statusPedido);
-    this.dataHoraCheckout = dataHoraCheckout;
-  }
 
-  public void setStatusPagamento(StatusPagamento status) throws BusinessRuleException {
-    validarStatus(status);
-    this.statusPagamento = status;
+    validarDataHoraCheckout(dataHoraCheckout);
+    this.dataHoraCheckout = dataHoraCheckout;
   }
 
   private void setStatusPedido(StatusPedido status) throws BusinessRuleException {
@@ -113,13 +124,21 @@ public class Pedido {
 
   // Métodos de validação
   private void validarNumero(Long numero) throws BusinessRuleException {
-    if (numero != null && numero < 1) {
+    if (numero == null) {
+      throw new BusinessRuleException(PedidoExceptions.NUMERO_NULO.getMensagem());
+    }
+    
+    if (numero < 1) {
       throw new BusinessRuleException(PedidoExceptions.NUMERO_MIN.getMensagem());
     }
   }
 
   private void validarItens(List<ItemPedido> itens) throws BusinessRuleException {
-    if (itens == null || itens.isEmpty()) {
+    if (itens == null) {
+      throw new BusinessRuleException(PedidoExceptions.ITENS_NULO.getMensagem());
+    }
+
+    if (itens.isEmpty()) {
       throw new BusinessRuleException(PedidoExceptions.ITENS_VAZIO.getMensagem());
     }
 
@@ -128,14 +147,11 @@ public class Pedido {
     }
   }
 
-  private void validarDataHoraCheckout(LocalDateTime dataHora, StatusPedidoEnum statusPedido)
+  private void validarDataHoraCheckout(LocalDateTime dataHora)
       throws BusinessRuleException {
+
     if (dataHora == null) {
-      if (statusPedido != StatusPedidoEnum.AGUARDANDO_CHECKOUT) {
-        throw new BusinessRuleException(PedidoExceptions.DATA_CHECKOUT_NULA.getMensagem());
-      } else {
-        return;
-      }
+      throw new BusinessRuleException(PedidoExceptions.DATA_CHECKOUT_NULA.getMensagem());
     }
 
     if (dataHora.toLocalDate().isBefore(Validacao.DATA_MIN)) {
@@ -149,7 +165,7 @@ public class Pedido {
 
   private void validarStatus(StatusPagamento status) throws BusinessRuleException {
     if (status == null) {
-      throw new BusinessRuleException(PedidoExceptions.STATUS_NULO.getMensagem());
+      throw new BusinessRuleException(PedidoExceptions.PAGAMENTO_NULO.getMensagem());
     }
   }
 
@@ -165,18 +181,6 @@ public class Pedido {
     }
   }
 
-  private void validarCheckoutNaoRealizado() throws BusinessRuleException {
-    if (dataHoraCheckout != null) {
-      throw new BusinessRuleException(PedidoExceptions.CHECKOUT_REALIZADO.getMensagem());
-    }
-  }
-
-  private void validarPedidoContemItem() throws BusinessRuleException {
-    if (itens.isEmpty()) {
-      throw new BusinessRuleException(PedidoExceptions.PEDIDO_VAZIO.getMensagem());
-    }
-  }
-
   private void validarPedidoNaoFinalizado() throws BusinessRuleException {
     if (statusPedido.getStatus() == StatusPedidoEnum.FINALIZADO) {
       throw new BusinessRuleException(PedidoExceptions.PEDIDO_FINALIZADO.getMensagem());
@@ -187,7 +191,7 @@ public class Pedido {
     boolean pedidoRecebido = this.statusPedido.getStatus() == StatusPedidoEnum.RECEBIDO;
     boolean naoPago = this.statusPagamento.getStatus() != StatusPagamentoEnum.APROVADO;
     if (pedidoRecebido && naoPago) {
-      throw new BusinessRuleException(PedidoExceptions.PEDIDO_NAO_PAGO.getMensagem());
+      throw new BusinessRuleException(PedidoExceptions.PAGAMENTO_NAO_APROVADO.getMensagem());
     }
   }
 
@@ -200,13 +204,44 @@ public class Pedido {
   }
 
   // Métodos públicos
-  public void fazerCheckout() throws BusinessRuleException {
-    validarCheckoutNaoRealizado();
-    validarPedidoContemItem();
-    setDataHoraCheckout(LocalDateTime.now(), StatusPedidoEnum.AGUARDANDO_CHECKOUT);
-    atualizarStatusPedido();
+  
+  /**
+   * Retorna o valor totoal do pedido.
+   *
+   * @return Valor total do pedido.
+   */
+  public BigDecimal getValorPedido() {
+    BigDecimal result = BigDecimal.valueOf(0);
+    for (ItemPedido item : itens) {
+      result = result.add(item.getValorItem());
+    }
+    return result;
   }
 
+  /**
+   * Altera o status do pedido.
+   *
+   * @param status O status do pedido.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
+  public void setStatusPagamento(StatusPagamento status) throws BusinessRuleException {
+    validarStatus(status);
+
+    if (this.statusPagamento != null
+        && this.statusPagamento.getStatus() == StatusPagamentoEnum.APROVADO) {
+
+      throw new BusinessRuleException(PedidoExceptions.PAGAMENTO_JA_APROVADO.getMensagem()); 
+
+    } else {
+      this.statusPagamento = status;
+    }
+  }
+
+  /**
+   * Atualiza o status do pedido.
+   *
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
   public void atualizarStatusPedido() throws BusinessRuleException {
     validarPedidoNaoFinalizado();
     validarPagamentoSeRecebido();

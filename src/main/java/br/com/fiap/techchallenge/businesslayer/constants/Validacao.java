@@ -2,6 +2,9 @@ package br.com.fiap.techchallenge.businesslayer.constants;
 
 import java.time.LocalDate;
 
+/**
+ * Classe usada nas validações das entidades de negópcio.
+ */
 public class Validacao {
 
   private Validacao() {}

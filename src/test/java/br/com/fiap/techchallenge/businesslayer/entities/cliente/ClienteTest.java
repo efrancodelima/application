@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.businesslayer.entities.cliente;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,24 +8,28 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ClienteExceptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
- * Classe de teste da entidade de negócio Cliente.
+ * Classe de testes para a entidade de negócio Cliente.
  */
 class ClienteTest {
   
+  @Mock
   private Cpf cpfValido;
+
   private final Long codigoValido = 1L;
   private final String nomeValido = "Nome do cliente";
   private final String emailValido = "email@email.com";
 
   @BeforeEach
-  void setup() throws BusinessRuleException{
-    cpfValido = new Cpf(111222333, (byte) 96);
+  void setup() {
+    MockitoAnnotations.openMocks(this);
   }
 
   @Test
-  void deveInstanciarUmClienteComSucesso() {
+  void deveConstruirUmClienteComSucesso() {
     assertDoesNotThrow(() -> {
       new Cliente(codigoValido, cpfValido, nomeValido, emailValido);
     });
@@ -34,18 +37,16 @@ class ClienteTest {
 
   @Test
   void deveRetornarOsAtributosDoCliente() {
-    Cliente cliente = null;
+    assertDoesNotThrow(() -> {
 
-    try {
-      cliente = new Cliente(codigoValido, cpfValido, nomeValido, emailValido);
-    } catch (Exception e) {
-      fail("Falha ao instanciar o cliente.");
-    }
-      
-    assertEquals(cliente.getCodigo(), codigoValido);
-    assertEquals(cliente.getCpf(), cpfValido);
-    assertEquals(cliente.getNome(), nomeValido);
-    assertEquals(cliente.getEmail(), emailValido);
+      Cliente cliente = new Cliente(codigoValido, cpfValido, nomeValido, emailValido);
+
+      assertEquals(cliente.getCodigo(), codigoValido);
+      assertEquals(cliente.getCpf(), cpfValido);
+      assertEquals(cliente.getNome(), nomeValido);
+      assertEquals(cliente.getEmail(), emailValido);
+
+    });
   }
 
   @Test
@@ -53,11 +54,13 @@ class ClienteTest {
     var exception = assertThrows(BusinessRuleException.class, () -> {
       new Cliente(0L, cpfValido, nomeValido, emailValido);
     });
+
     assertEquals(ClienteExceptions.CODIGO_MIN.getMensagem(), exception.getMessage());
 
     exception = assertThrows(BusinessRuleException.class, () -> {
       new Cliente(-1L, cpfValido, nomeValido, emailValido);
     });
+    
     assertEquals(ClienteExceptions.CODIGO_MIN.getMensagem(), exception.getMessage());
   }
 

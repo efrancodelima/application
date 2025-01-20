@@ -17,7 +17,6 @@ public final class FazerCheckoutPedido {
 
     Validar.notNull(pedido, EnumApplicationExceptions.PEDIDO_NULO);
 
-    pedido.fazerCheckout();
     pedido = gateway.gravarPedido(pedido);
 
     // Por ora, o código do pagamento é igual ao do pedido
