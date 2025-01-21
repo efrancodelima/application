@@ -33,16 +33,16 @@ public final class PagamentoRequestAdapter {
   /**
    * Adapta uma string para o tipo StatusPagamentoEnum.
    *
-   * @param statusRequisicao A string a ser adaptada.
+   * @param statusPagamento A string a ser adaptada.
    * @return O enum correspondente.
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
-  private static StatusPagamentoEnum adaptarStatus(String statusRequisicao)
+  private static StatusPagamentoEnum adaptarStatus(String statusPagamento)
       throws BusinessRuleException {
 
-    statusRequisicao = statusRequisicao == null ? "" : statusRequisicao.trim().toUpperCase();
+    statusPagamento = statusPagamento == null ? "" : statusPagamento.trim().toUpperCase();
 
-    switch (statusRequisicao) {
+    switch (statusPagamento) {
       case "PENDING", "IN_PROCESS":
         return StatusPagamentoEnum.AGUARDANDO_PAGAMENTO;
       case "APPROVED":
@@ -51,7 +51,7 @@ public final class PagamentoRequestAdapter {
         return StatusPagamentoEnum.REPROVADO;
       default:
         // Retorna erro
-        return StatusPagamentoEnum.fromString(statusRequisicao);
+        return StatusPagamentoEnum.fromString(statusPagamento);
     }
   }
 }

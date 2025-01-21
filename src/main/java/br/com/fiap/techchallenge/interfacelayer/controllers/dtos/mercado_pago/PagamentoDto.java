@@ -13,7 +13,7 @@ public class PagamentoDto {
     @Schema(description = "Código de identificação do pagamento.", example = "10")
     public Long id;
 
-    @Schema(description = "Situação do pagamento.", example = "approved")
+    @Schema(description = "Situação do pagamento.", example = "APROVADO")
     public String status;
 
 }
