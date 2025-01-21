@@ -1,11 +1,10 @@
 package br.com.fiap.techchallenge.interfacelayer.adapters.requests;
 
-import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ProdutoRequestAdapter;
-import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ProdutoRequestAdapter;
+import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 import java.math.BigDecimal;
 import org.junit.jupiter.api.Test;
 
