@@ -4,6 +4,9 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ProdutoExceptions;
 import java.math.BigDecimal;
 
+/**
+ * Classe Produto.
+ */
 public class Produto {
   private Long codigo;
   private String nome;
@@ -11,9 +14,19 @@ public class Produto {
   private BigDecimal preco;
   private CategoriaProduto categoria;
 
-  // Construtor
-  public Produto(Long codigo, String nome, String descricao, BigDecimal preco, CategoriaProduto categoria)
-      throws BusinessRuleException {
+  /**
+   * Contrutor público de Produto.
+   *
+   * @param codigo O código do produto.
+   * @param nome O nome do produto.
+   * @param descricao A descrição do produto.
+   * @param preco O preço do produto.
+   * @param categoria A categoria do produto.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
+   */
+  public Produto(Long codigo, String nome,
+      String descricao, BigDecimal preco, CategoriaProduto categoria) throws BusinessRuleException {
+
     setCodigo(codigo);
     setNome(nome);
     setDescricao(descricao);
@@ -110,7 +123,7 @@ public class Produto {
       throw new BusinessRuleException(ProdutoExceptions.PRECO_NULO.getMensagem());
     } else if (preco.compareTo(BigDecimal.ZERO) <= 0) {
       throw new BusinessRuleException(ProdutoExceptions.PRECO_MIN.getMensagem());
-    } else if (preco.compareTo(BigDecimal.ZERO) > 300) {
+    } else if (preco.compareTo(BigDecimal.valueOf(300)) > 0) {
       throw new BusinessRuleException(ProdutoExceptions.PRECO_MAX.getMensagem());
     }
   }

@@ -1,8 +1,10 @@
 package br.com.fiap.techchallenge.interfacelayer.gateways;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.GatewayException;
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InClienteGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ClienteJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.mappers.ClienteMapper;
 import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.IClienteRepository;
@@ -24,7 +26,7 @@ public class ClienteGateway implements InClienteGateway {
 
   // Métodos públicos
   @Override
-  public Cliente gravarCliente(Cliente cliente) throws Exception {
+  public Cliente gravarCliente(Cliente cliente) throws BusinessRuleException {
 
     ClienteJpa clienteJpa = ClienteMapper.getClienteJpa(cliente);
 
@@ -34,7 +36,7 @@ public class ClienteGateway implements InClienteGateway {
   }
 
   @Override
-  public Cliente buscarClientePorCpf(Cpf cpf) throws Exception {
+  public Cliente buscarClientePorCpf(Cpf cpf) throws BusinessRuleException {
 
     ClienteJpa clienteJpa = clienteJpaRepository.findByCpf(cpf.pegarNumeroComDigito());
 
@@ -46,7 +48,7 @@ public class ClienteGateway implements InClienteGateway {
   }
 
   @Override
-  public boolean clienteJaExiste(Cpf cpf) throws Exception {
+  public boolean clienteJaExiste(Cpf cpf) {
     return clienteJpaRepository.existsByCpf(cpf.pegarNumeroComDigito());
   }
 

@@ -12,7 +12,7 @@ public class Home {
     @GetMapping
     @Hidden
     public String showHome() {
-        return "Tech Challenge Fase 3: aplicação rodando!<br><br>"+
+        return "Tech Challenge Fase 4: aplicação rodando!<br><br>"+
         "Link para a API: <a href=\"/swagger-ui/index.html\">Swagger UI</a>";
     }
 }

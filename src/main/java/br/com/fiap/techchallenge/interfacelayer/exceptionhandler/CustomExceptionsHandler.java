@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.interfacelayer.exceptionhandler;
 
-import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.GatewayException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -66,8 +66,8 @@ public class CustomExceptionsHandler {
   }
 
   // Status code 422
-  @ExceptionHandler(ApplicationException.class)
-  public ResponseEntity<ErrorResponse> handleApplicationException(ApplicationException ex) {
+  @ExceptionHandler(GatewayException.class)
+  public ResponseEntity<ErrorResponse> handleApplicationException(GatewayException ex) {
     return processa(ex.getMessage(), HttpStatus.UNPROCESSABLE_ENTITY);
   }
 

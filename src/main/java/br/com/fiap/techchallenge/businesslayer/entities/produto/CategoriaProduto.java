@@ -4,7 +4,7 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.EnumExceptions;
 
 /**
- * Enumera as categorias de produto.
+ * Lista as categorias de produto.
  */
 public enum CategoriaProduto {
   LANCHE,

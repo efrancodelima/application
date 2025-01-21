@@ -22,7 +22,7 @@ class StatusPedidoEnumTest {
   }
 
   @Test
-  void deveLancarExcecaoQuandoStringForInvalida() {
+  void deveLancarExcecaoQuandoStatusNaoExistir() {
     var exception = assertThrows(BusinessRuleException.class, () -> {
       StatusPedidoEnum.fromString("um status qualquer");
     });
