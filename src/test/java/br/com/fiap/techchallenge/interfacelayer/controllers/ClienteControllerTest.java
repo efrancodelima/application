@@ -38,11 +38,9 @@ class ClienteControllerTest {
 
     MockedStatic<CadastrarCliente> useCaseMock = Mockito.mockStatic(CadastrarCliente.class);
     
-    var paramRequisicao = new ClienteDto(11122233396L, 
-        "Arthur Conan Doyle", "conanad@gmail.com");
-
-    var respostaUseCase = new Cliente(1L,
-        new Cpf(11122233396L), "Arthur Conan Doyle", "conanad@gmail.com");
+    var cpf = 11122233396L;
+    var paramRequisicao = instanciarClienteDto(cpf);
+    var respostaUseCase = instanciarCliente(cpf);
 
     useCaseMock.when(() -> CadastrarCliente
         .cadastrar(Mockito.any(), Mockito.any())).thenReturn(respostaUseCase);
@@ -59,11 +57,10 @@ class ClienteControllerTest {
   @Test
   void deveBuscarClientePeloCpfComSucesso() throws BusinessRuleException {
 
-    MockedStatic<BuscarClientePeloCpf> useCaseMock = Mockito.mockStatic(BuscarClientePeloCpf.class);
+    var useCaseMock = Mockito.mockStatic(BuscarClientePeloCpf.class);
 
     var cpf = 11122233396L;
-
-    var respostaUseCase = new Cliente(1L, new Cpf(cpf), "Arthur Conan Doyle", "conanad@gmail.com");
+    var respostaUseCase = instanciarCliente(cpf);
 
     useCaseMock.when(() -> BuscarClientePeloCpf
         .buscar(Mockito.any(), Mockito.any())).thenReturn(respostaUseCase);
@@ -75,6 +72,16 @@ class ClienteControllerTest {
 
     useCaseMock.close();
 
+  }
+
+  // Métodos auxiliares dos testes
+  private Cliente instanciarCliente(Long cpf) throws BusinessRuleException {
+    return new Cliente(1L,
+        new Cpf(cpf), "Arthur Conan Doyle", "conanad@gmail.com");
+  }
+
+  private ClienteDto instanciarClienteDto(Long cpf) throws BusinessRuleException {
+    return new ClienteDto(cpf, "Arthur Conan Doyle", "conanad@gmail.com");
   }
 
 }

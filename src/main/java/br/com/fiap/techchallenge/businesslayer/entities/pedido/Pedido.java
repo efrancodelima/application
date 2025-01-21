@@ -53,20 +53,20 @@ public class Pedido {
    * @param cliente O cliente do pedido.
    * @param itens Os itens do pedido.
    * @param dataHoraCheckout A data e hora do checkout do pedido.
-   * @param pagamento O pagamento do pedido.
+   * @param statusPagamento O status do pagamento do pedido.
    * @param statusPedido O status do pedido.
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo construtor.
    */
   public Pedido(Long numero, Cliente cliente, 
       List<ItemPedido> itens, LocalDateTime dataHoraCheckout,
-      StatusPagamento pagamento, StatusPedido statusPedido)
+      StatusPagamento statusPagamento, StatusPedido statusPedido)
       throws BusinessRuleException {
 
     setNumero(numero);
     setCliente(cliente);
     setItens(itens);
     setDataHoraCheckout(dataHoraCheckout);
-    setStatusPagamento(pagamento);
+    setStatusPagamento(statusPagamento);
     setStatusPedido(statusPedido);
   }
 
