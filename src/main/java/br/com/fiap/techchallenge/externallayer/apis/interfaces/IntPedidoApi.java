@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.externallayer.apis.interfaces;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
-import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercado_pago.PagamentoDto;
+import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPedidoDto;

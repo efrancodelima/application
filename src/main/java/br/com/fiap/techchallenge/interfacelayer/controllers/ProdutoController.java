@@ -12,7 +12,7 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ProdutoRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ProdutoResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
-import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.IProdutoController;
+import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.InProdutoController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ProdutoGateway;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * Classe ProdutoController.
  */
 @Component
-public class ProdutoController implements IProdutoController {
+public class ProdutoController implements InProdutoController {
 
   // Atributos
   private final ProdutoGateway gateway;

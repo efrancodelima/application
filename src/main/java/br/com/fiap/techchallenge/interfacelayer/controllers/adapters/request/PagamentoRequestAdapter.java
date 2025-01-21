@@ -3,7 +3,8 @@ package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamentoEnum;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercado_pago.PagamentoDto;
+import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
+
 import java.time.LocalDateTime;
 
 /**

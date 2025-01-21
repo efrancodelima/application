@@ -20,12 +20,12 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.Pag
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.PedidoResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.StatusPagamentoResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.StatusPedidoResponseAdapter;
-import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercado_pago.PagamentoDto;
+import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.ItemPedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPedidoDto;
-import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.IPedidoController;
+import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.InPedidoController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.PedidoGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ProdutoGateway;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Component;
  * Classe PedidoController.
  */
 @Component
-public class PedidoController implements IPedidoController {
+public class PedidoController implements InPedidoController {
 
   // Atributos
   private final PedidoGateway pedidoGateway;

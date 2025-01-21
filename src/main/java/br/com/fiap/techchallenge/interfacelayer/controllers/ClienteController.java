@@ -7,7 +7,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ClienteRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ClienteResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
-import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.IClienteController;
+import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.InClienteController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * Classe ClienteController.
  */
 @Component
-public class ClienteController implements IClienteController {
+public class ClienteController implements InClienteController {
 
   // Atributos
   private final ClienteGateway gateway;
