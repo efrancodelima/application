@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class PagamentoRequestAdapterTest {
 
   @Test
-  void deveAdaptarUmPagamentoDtoParaUmStatusPagamento() {
+  void deveAdaptarPagamentoDtoParaStatusPagamento() {
 
     var pagDto = new PagamentoDto(1L, "APROVADO");
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class ClienteRequestAdapterTest {
   
   @Test
-  void deveAdaptarUmObjetoDtoParaUmaEntidadeDeNegocio() {
+  void deveAdaptarClienteDtoParaCliente() {
     
     var cpf = 11122233396L;
     var clienteDto = new ClienteDto(cpf, "Arthur Conan Doyle", "conanad@gmail.com");

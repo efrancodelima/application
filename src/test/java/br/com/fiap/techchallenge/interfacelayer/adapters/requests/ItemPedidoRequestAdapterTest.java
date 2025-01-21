@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 class ItemPedidoRequestAdapterTest {
 
   @Test
-  void deveAdaptarUmObjetoDtoParaUmaEntidadeDeNegocio() throws BusinessRuleException {
+  void deveAdaptarListItemPedidoDtoParaListItemPedido() throws BusinessRuleException {
 
     // Arrange
     var listaItensDto = new ArrayList<ItemPedidoDto>();
