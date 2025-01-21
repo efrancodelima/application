@@ -10,7 +10,6 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ClienteJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ItemPedidoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.PedidoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPagamentoJpa;
-import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPedidoJpa;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,31 +21,41 @@ public final class PedidoMapper {
 
   private PedidoMapper() {}
 
-  // Métodos públicos
+  /**
+   * Mapeia um objeto do tipo Pedido para o tipo PedidoJpa.
+   *
+   * @param pedido O objeto a ser mapeado.
+   * @return O objeto mapeado.
+   */
   public static PedidoJpa getPedidoJpa(Pedido pedido) {
 
     ClienteJpa clienteJpa = null;
-    List<ItemPedidoJpa> itensJpa = ItemPedidoMapper.getListItemPedidoJpa(pedido.getItens());
-    LocalDateTime dataHoraCheckout = pedido.getDataHoraCheckout();
-    StatusPagamentoJpa statusPagamentoJpa = null;
-    StatusPedidoJpa statusPedidoJpa;
-
     if (pedido.getCliente() != null) {
       clienteJpa = ClienteMapper.getClienteJpa(pedido.getCliente());
     }
 
+    List<ItemPedidoJpa> itensJpa = ItemPedidoMapper.getListItemPedidoJpa(pedido.getItens());
+    LocalDateTime dataHoraCheckout = pedido.getDataHoraCheckout();
+    
+    StatusPagamentoJpa statusPagamentoJpa = null;
     if (pedido.getStatusPagamento() != null) {
       statusPagamentoJpa = StatusPagamentoMapper
           .getStatusPagamentoJpa(pedido.getStatusPagamento());
     }
-
     
-    statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
+    var statusPedidoJpa = StatusPedidoMapper.getStatusPedidoJpa(pedido.getStatusPedido());
     
     return new PedidoJpa(pedido.getNumero(), clienteJpa, itensJpa, dataHoraCheckout,
         statusPagamentoJpa, statusPedidoJpa);
   }
 
+  /**
+   * Mapeia um objeto do tipo PedidoJpa para o tipo Pedido.
+   *
+   * @param pedidoJpa O objeto a ser mapeado.
+   * @return O objeto mapeado.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
   public static Pedido getPedido(PedidoJpa pedidoJpa) throws BusinessRuleException {
 
     long id = pedidoJpa.getNumero();
@@ -68,6 +77,13 @@ public final class PedidoMapper {
     return new Pedido(id, cliente, itens, dataHoraCheckout, statusPagamento, statusPedido);
   }
 
+  /**
+   * Mapeia um objeto do tipo List-PedidoJpa para o tipo List-Pedido.
+   *
+   * @param pedidosJpa O objeto a ser mapeado.
+   * @return O objeto mapeado.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
   public static List<Pedido> getListPedido(List<PedidoJpa> pedidosJpa)
       throws BusinessRuleException {
 

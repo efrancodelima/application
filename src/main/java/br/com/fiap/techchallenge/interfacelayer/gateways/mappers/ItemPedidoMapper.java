@@ -16,10 +16,10 @@ public final class ItemPedidoMapper {
   private ItemPedidoMapper() {}
 
   /**
-   * Converte uma entidade de negócio para uma entidade JPA.
+   * Mapeia um objeto do tipo ItemPedido para o tipo ItemPedidoJpa.
    *
-   * @param item A entidade de negócio que será convertida.
-   * @return A entidade JPA.
+   * @param item O objeto a ser mapeado.
+   * @return O objeto mapeado.
    */
   public static ItemPedidoJpa getItemPedidoJpa(ItemPedido item) {
     ProdutoJpa produtoJpa = ProdutoMapper.getProdutoJpa(item.getProduto());
@@ -27,10 +27,10 @@ public final class ItemPedidoMapper {
   }
 
   /**
-   * Converte uma entidade JPA para uma entidade de negócio.
+   * Mapeia um objeto do tipo ItemPedidoJpa para o tipo ItemPedido.
    *
-   * @param itemJpa A entidade JPA que será convertida.
-   * @return A entidade de negócio.
+   * @param itemJpa O objeto a ser mapeado.
+   * @return O objeto mapeado.
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
   public static ItemPedido getItemPedido(ItemPedidoJpa itemJpa)
@@ -41,10 +41,10 @@ public final class ItemPedidoMapper {
   }
 
   /**
-   * Converte uma lista de entidades de negócio para uma lista de entidades JPA.
+   * Mapeia um objeto do tipo List-ItemPedido para o tipo List-ItemPedidoJpa.
    *
-   * @param itens A lista de entidades de negócio.
-   * @return A lista de entidades JPA.
+   * @param itens O objeto a ser mapeado.
+   * @return O objeto mapeado.
    */
   public static List<ItemPedidoJpa> getListItemPedidoJpa(List<ItemPedido> itens) {
     
@@ -59,10 +59,10 @@ public final class ItemPedidoMapper {
   }
 
   /**
-   * Converte uma lista de entidades JPA para uma lista de entidades de negócio.
+   * Mapeia um objeto do tipo List-ItemPedidoJpa para o tipo List-ItemPedido.
    *
-   * @param itensJpa A lista de entidades JPA.
-   * @return A lista de entidades de negócio.
+   * @param itensJpa O objeto a ser mapeado.
+   * @return O objeto mapeado.
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
   public static List<ItemPedido> getListItemPedido(List<ItemPedidoJpa> itensJpa)
