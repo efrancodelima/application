@@ -111,7 +111,6 @@ class PedidoMapperTest {
     
   }
 
-
   // Métodos auxiliares dos testes
   private Pedido instanciarPedidoCompleto() throws BusinessRuleException {
 
