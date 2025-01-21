@@ -6,7 +6,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ClienteJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.mappers.ClienteMapper;
-import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.IClienteRepository;
+import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.InClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class ClienteGateway implements InClienteGateway {
 
   // Atributos
-  private final IClienteRepository clienteJpaRepository;
+  private final InClienteRepository clienteJpaRepository;
 
   /**
    * Construtor público de ClienteGateway.
@@ -25,7 +25,7 @@ public class ClienteGateway implements InClienteGateway {
    * @param clienteJpaRepository O repositório JPA para acesso aos dados.
    */
   @Autowired
-  public ClienteGateway(IClienteRepository clienteJpaRepository) {
+  public ClienteGateway(InClienteRepository clienteJpaRepository) {
     this.clienteJpaRepository = clienteJpaRepository;
   }
 

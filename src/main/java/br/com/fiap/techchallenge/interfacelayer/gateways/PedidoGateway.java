@@ -5,7 +5,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.PedidoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.mappers.PedidoMapper;
-import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.IPedidoRepository;
+import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.InPedidoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class PedidoGateway implements InPedidoGateway {
 
   // Atributos
-  private final IPedidoRepository pedidoJpaRepository;
+  private final InPedidoRepository pedidoJpaRepository;
 
   /**
    * Construtor público de PedidoGateway.
@@ -26,7 +26,7 @@ public class PedidoGateway implements InPedidoGateway {
    * @param pedidoJpaRepository O repositório JPA para acesso aos dados.
    */
   @Autowired
-  public PedidoGateway(IPedidoRepository pedidoJpaRepository) {
+  public PedidoGateway(InPedidoRepository pedidoJpaRepository) {
     this.pedidoJpaRepository = pedidoJpaRepository;
   }
 

@@ -6,7 +6,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ProdutoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.mappers.ProdutoMapper;
-import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.IProdutoRepository;
+import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.InProdutoRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class ProdutoGateway implements InProdutoGateway {
 
   // Atributos
-  private final IProdutoRepository produtoJpaRepository;
+  private final InProdutoRepository produtoJpaRepository;
 
   /**
    * Construtor público de ProdutoGateway.
@@ -27,7 +27,7 @@ public class ProdutoGateway implements InProdutoGateway {
    * @param produtoJpaRepository O repositório JPA para acesso aos dados.
    */
   @Autowired
-  public ProdutoGateway(IProdutoRepository produtoJpaRepository) {
+  public ProdutoGateway(InProdutoRepository produtoJpaRepository) {
     this.produtoJpaRepository = produtoJpaRepository;
   }
 
