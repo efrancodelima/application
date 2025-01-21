@@ -4,7 +4,6 @@ import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamentoEnum;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
-
 import java.time.LocalDateTime;
 
 /**
@@ -16,6 +15,7 @@ public final class PagamentoRequestAdapter {
 
   /**
    * Adapta um objeto do tipo PagamentoDto para o tipo StatusPagamento.
+   * Método usado com a notificação do Mercado Livre.
    *
    * @param pagamentoDto O objeto a ser adaptado.
    * @return O objeto adaptado.
@@ -38,8 +38,7 @@ public final class PagamentoRequestAdapter {
    * @return O enum correspondente.
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
-  private static StatusPagamentoEnum adaptarStatus(String statusPagamento)
-      throws BusinessRuleException {
+  private static StatusPagamentoEnum adaptarStatus(String statusPagamento) {
 
     statusPagamento = statusPagamento == null ? "" : statusPagamento.trim().toUpperCase();
 
@@ -51,8 +50,7 @@ public final class PagamentoRequestAdapter {
       case "REJECTED":
         return StatusPagamentoEnum.REPROVADO;
       default:
-        // Retorna erro
-        return StatusPagamentoEnum.fromString(statusPagamento);
+        return null;
     }
   }
 }

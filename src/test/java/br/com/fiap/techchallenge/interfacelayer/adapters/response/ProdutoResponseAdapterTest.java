@@ -3,6 +3,8 @@ package br.com.fiap.techchallenge.interfacelayer.adapters.response;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.List;
+
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ProdutoResponseAdapter;
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +23,9 @@ class ProdutoResponseAdapterTest {
 
   @Mock
   Produto produtoMock;
+
+  @Mock
+  List<Produto> listaProdutosMock;
 
   @BeforeEach
   void setup() {
@@ -42,6 +47,19 @@ class ProdutoResponseAdapterTest {
 
       assertEquals(httpStatus, resposta.getStatusCode());
       assertEquals(produtoMock, resposta.getBody());
+    });
+  }
+
+  @Test
+  void deveAdaptarListProdutoParaResponseEntityListProduto() {
+
+    var httpStatus = HttpStatus.OK;
+
+    assertDoesNotThrow(() -> {
+      var resposta = ProdutoResponseAdapter.adaptar(listaProdutosMock, httpStatus);
+
+      assertEquals(httpStatus, resposta.getStatusCode());
+      assertEquals(listaProdutosMock, resposta.getBody());
     });
   }
     

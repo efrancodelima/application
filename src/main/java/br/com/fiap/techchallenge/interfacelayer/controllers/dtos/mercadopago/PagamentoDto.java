@@ -7,16 +7,17 @@ import lombok.NoArgsConstructor;
 
 /**
  * Classe PagamentoDto.
+ * Usada para mapear alguns dados da notificação do Mercado Livre.
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagamentoDto {
 
-  @Schema(description = "Código de identificação do pagamento.", example = "10")
+  @Schema(description = "Código de identificação do pagamento.", example = "1")
   public Long id;
 
-  @Schema(description = "Situação do pagamento.", example = "APROVADO")
+  @Schema(description = "Situação do pagamento.", example = "PENDING")
   public String status;
 
 }

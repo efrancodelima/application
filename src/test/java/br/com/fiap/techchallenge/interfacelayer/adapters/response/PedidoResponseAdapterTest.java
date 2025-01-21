@@ -21,6 +21,9 @@ class PedidoResponseAdapterTest {
   private AutoCloseable closeable;
 
   @Mock
+  Pedido pedidoMock;
+
+  @Mock
   List<Pedido> listaPedidosMock;
 
   @BeforeEach
@@ -31,6 +34,19 @@ class PedidoResponseAdapterTest {
   @AfterEach
   void tearDown() throws Exception {
     closeable.close();
+  }
+
+  @Test
+  void deveAdaptarPedidoParaResponseEntityPedido() {
+
+    var httpStatus = HttpStatus.OK;
+
+    assertDoesNotThrow(() -> {
+      var resposta = PedidoResponseAdapter.adaptar(pedidoMock, httpStatus);
+
+      assertEquals(httpStatus, resposta.getStatusCode());
+      assertEquals(pedidoMock, resposta.getBody());
+    });
   }
 
   @Test
