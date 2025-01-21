@@ -1,21 +1,23 @@
 package br.com.fiap.techchallenge.interfacelayer.gateways.mappers;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.ItemPedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedido;
-import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ClienteJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ItemPedidoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.PedidoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPagamentoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.StatusPedidoJpa;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Classe PedidoMapper.
+ */
 public final class PedidoMapper {
 
   private PedidoMapper() {}
@@ -45,7 +47,7 @@ public final class PedidoMapper {
         statusPagamentoJpa, statusPedidoJpa);
   }
 
-  public static Pedido getPedido(PedidoJpa pedidoJpa) throws Exception {
+  public static Pedido getPedido(PedidoJpa pedidoJpa) throws BusinessRuleException {
 
     long id = pedidoJpa.getNumero();
     Cliente cliente = null;
@@ -67,7 +69,8 @@ public final class PedidoMapper {
   }
 
   public static List<Pedido> getListPedido(List<PedidoJpa> pedidosJpa)
-      throws Exception {
+      throws BusinessRuleException {
+
     List<Pedido> pedidos = new ArrayList<>();
     for (PedidoJpa pedidoJpa : pedidosJpa) {
 

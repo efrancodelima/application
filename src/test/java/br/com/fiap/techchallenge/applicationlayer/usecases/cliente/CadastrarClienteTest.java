@@ -11,7 +11,6 @@ import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InClienteGa
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

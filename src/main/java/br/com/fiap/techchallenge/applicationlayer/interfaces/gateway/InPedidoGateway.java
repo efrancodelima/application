@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.applicationlayer.interfaces.gateway;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
+
 import java.util.List;
 
 /**
@@ -15,14 +17,14 @@ public interface InPedidoGateway {
    * @return O pedido que foi gravado.
    * @throws Exception Exceção lançado durante a operação.
    */
-  Pedido gravarPedido(Pedido pedido) throws Exception;
+  Pedido gravarPedido(Pedido pedido) throws BusinessRuleException;
 
-  void atualizarPedido(Pedido pedido) throws Exception;
+  void atualizarPedido(Pedido pedido) throws BusinessRuleException;
 
-  Pedido buscarPedido(long numeroPedido) throws Exception;
+  Pedido buscarPedido(long numeroPedido) throws BusinessRuleException;
 
-  Pedido buscarPedidoPeloCodigoPagamento(long codigoPagamento) throws Exception;
+  Pedido buscarPedidoPeloCodigoPagamento(long codigoPagamento) throws BusinessRuleException;
 
-  List<Pedido> buscarTodosOsPedidos() throws Exception;
+  List<Pedido> buscarTodosOsPedidos() throws BusinessRuleException;
 
 }

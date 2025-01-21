@@ -1,27 +1,33 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.pedido;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.messages.EnumNotFoundExceptions;
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InPedidoGateway;
 import br.com.fiap.techchallenge.applicationlayer.services.Validar;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Listar pedidos.
+ * Classe ListarPedidos.
  */
 public final class ListarPedidos {
 
   private ListarPedidos() {}
 
   /**
-   * Listar pedidos.
+   * Lista os pedidos.
    *
-   * @param gateway O gateway para conexão com o repositório.
+   * @param gateway O gateway para acesso ao repositório do banco de dados.
    * @return A lista de pedidos.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
-  public static List<Pedido> listar(InPedidoGateway gateway) throws Exception {
+  public static List<Pedido> listar(InPedidoGateway gateway)
+      throws BusinessRuleException, ResourceNotFoundException {
+
     List<Pedido> pedidos = gateway.buscarTodosOsPedidos();
     Validar.listNotEmpty(pedidos, EnumNotFoundExceptions.PEDIDO_LISTA_VAZIA);
     return filtrarOrdenarPedidos(pedidos);

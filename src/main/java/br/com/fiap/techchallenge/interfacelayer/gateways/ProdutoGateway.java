@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.interfacelayer.gateways;
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.CategoriaProduto;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ProdutoJpa;
 import br.com.fiap.techchallenge.interfacelayer.gateways.mappers.ProdutoMapper;
 import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.IProdutoRepository;
@@ -25,31 +26,36 @@ public class ProdutoGateway implements InProdutoGateway {
 
   // Métodos públicos
   @Override
-  public Produto gravarProduto(Produto produto) throws Exception {
+  public Produto gravarProduto(Produto produto) throws BusinessRuleException {
+    
     ProdutoJpa produtoJpa = ProdutoMapper.getProdutoJpa(produto);
     produtoJpa = produtoJpaRepository.save(produtoJpa);
     return ProdutoMapper.getProduto(produtoJpa);
   }
 
   @Override
-  public void atualizarProduto(Produto produto) throws Exception {
+  public void atualizarProduto(Produto produto) throws BusinessRuleException {
+    
     ProdutoJpa produtoJpa = ProdutoMapper.getProdutoJpa(produto);
     produtoJpaRepository.save(produtoJpa);
   }
 
   @Override
-  public void removerProduto(long codigoProduto) throws Exception {
+  public void removerProduto(long codigoProduto) throws BusinessRuleException {
     produtoJpaRepository.deleteById(codigoProduto);
   }
 
   @Override
-  public Produto buscarProduto(long codigoProduto) throws Exception {
+  public Produto buscarProduto(long codigoProduto) throws BusinessRuleException {
+
     Optional<ProdutoJpa> produtoJpa = produtoJpaRepository.findById(codigoProduto);
     return produtoJpa.isPresent() ? ProdutoMapper.getProduto(produtoJpa.get()) : null;
   }
 
   @Override
-  public List<Produto> buscarProdutosPorCategoria(CategoriaProduto categoria) throws Exception {
+  public List<Produto> buscarProdutosPorCategoria(CategoriaProduto categoria)
+      throws BusinessRuleException {
+
     List<ProdutoJpa> produtosJpa = produtoJpaRepository.findByCategoria(categoria);
     return ProdutoMapper.getListProduto(produtosJpa);
   }

@@ -3,11 +3,9 @@ package br.com.fiap.techchallenge.applicationlayer.usecases.cliente;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
-import br.com.fiap.techchallenge.applicationlayer.exceptions.GatewayException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.messages.EnumApplicationExceptions;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.messages.EnumNotFoundExceptions;
@@ -15,8 +13,6 @@ import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InClienteGa
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ClienteExceptions;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

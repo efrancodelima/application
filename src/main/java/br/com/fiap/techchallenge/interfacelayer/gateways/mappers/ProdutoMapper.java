@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.gateways.entities.ProdutoJpa;
 
 public final class ProdutoMapper {
@@ -16,14 +17,14 @@ public final class ProdutoMapper {
                 produto.getCategoria());
     }
 
-    public static Produto getProduto(ProdutoJpa produtoJpa) throws Exception {
+    public static Produto getProduto(ProdutoJpa produtoJpa) throws BusinessRuleException  {
         return new Produto(produtoJpa.getCodigo(), produtoJpa.getNome(), produtoJpa.getDescricao(),
                 produtoJpa.getPreco(),
                 produtoJpa.getCategoria());
     }
 
     public static List<Produto> getListProduto(List<ProdutoJpa> produtosJpa)
-            throws Exception {
+            throws BusinessRuleException {
         List<Produto> produtos = new ArrayList<>();
         for (ProdutoJpa produtoJpa : produtosJpa) {
             Produto produto = getProduto(produtoJpa);
