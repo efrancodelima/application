@@ -14,13 +14,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Classe ClienteController.
+ */
 @Component
 public class ClienteController implements IClienteController {
 
   // Atributos
   private final ClienteGateway gateway;
 
-  // Construtor
+  /**
+   * Construtor público de ClienteController.
+   *
+   * @param gateway O gateway do repositório de clientes.
+   */
   @Autowired
   public ClienteController(ClienteGateway gateway) {
     this.gateway = gateway;
@@ -35,7 +42,7 @@ public class ClienteController implements IClienteController {
   }
 
   @Override
-  public ResponseEntity<Cliente> buscarClientePorCpf(Long cpfLong) throws Exception {
+  public ResponseEntity<Cliente> buscarClientePeloCpf(Long cpfLong) throws Exception {
 
     Cpf cpf = new Cpf(cpfLong);
     Cliente cliente = BuscarClientePeloCpf.buscar(gateway, cpf);

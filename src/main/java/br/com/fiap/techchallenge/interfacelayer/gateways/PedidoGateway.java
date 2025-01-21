@@ -11,13 +11,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Classe PedidoGateway.
+ */
 @Component
 public class PedidoGateway implements InPedidoGateway {
 
   // Atributos
   private final IPedidoRepository pedidoJpaRepository;
 
-  // Construtor
+  /**
+   * Construtor público de PedidoGateway.
+   *
+   * @param pedidoJpaRepository O repositório JPA para acesso aos dados.
+   */
   @Autowired
   public PedidoGateway(IPedidoRepository pedidoJpaRepository) {
     this.pedidoJpaRepository = pedidoJpaRepository;

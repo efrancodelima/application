@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.applicationlayer.interfaces.gateway;
 
-import br.com.fiap.techchallenge.applicationlayer.exceptions.GatewayException;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;

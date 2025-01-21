@@ -9,5 +9,5 @@ public interface IClienteController {
 
     ResponseEntity<Cliente> cadastrarCliente(ClienteDto clienteDto) throws Exception;
 
-    ResponseEntity<Cliente> buscarClientePorCpf(Long cpfLong) throws Exception;
+    ResponseEntity<Cliente> buscarClientePeloCpf(Long cpfLong) throws Exception;
 }

@@ -33,7 +33,7 @@ public class ClienteApi implements IntClienteApi {
 
   @Override
   public ResponseEntity<Cliente> buscarClientePorCpf(long cpf) throws Exception {
-    return controller.buscarClientePorCpf(cpf);
+    return controller.buscarClientePeloCpf(cpf);
   }
 
 }

@@ -1,5 +1,7 @@
 package br.com.fiap.techchallenge.interfacelayer.controllers;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.BuscarClientePeloCpf;
 import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.AtualizarStatusPagamento;
 import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.AtualizarStatusPedido;
@@ -12,6 +14,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.ItemPedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ItemPedidoRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.PagamentoRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.PedidoResponseAdapter;
@@ -33,6 +36,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+/**
+ * Classe PedidoController.
+ */
 @Component
 public class PedidoController implements IPedidoController {
 
@@ -41,10 +47,17 @@ public class PedidoController implements IPedidoController {
   private final ClienteGateway clienteGateway;
   private final ProdutoGateway produtoGateway;
 
-  // Construtor
+  /**
+   * Construtor público de PedidoController.
+   *
+   * @param pedidoGateway O gateway do repositório de pedidos.
+   * @param clienteGateway O gateway do repositório de clientes.
+   * @param produtoGateway O gateway do repositório de produtos.
+   */
   @Autowired
   public PedidoController(PedidoGateway pedidoGateway, ClienteGateway clienteGateway, 
       ProdutoGateway produtoGateway) {
+
     this.pedidoGateway = pedidoGateway;
     this.clienteGateway = clienteGateway;
     this.produtoGateway = produtoGateway;
@@ -89,11 +102,13 @@ public class PedidoController implements IPedidoController {
   public ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto) throws Exception {
     var statusPagamento = PagamentoRequestAdapter.adaptar(pagamentoDto);
     AtualizarStatusPagamento.atualizar(pedidoGateway, statusPagamento);
-    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   // Métodos privados
-  private Cliente getClientePedidoDto(PedidoDto pedidoDto) throws Exception {
+  private Cliente getClientePedidoDto(PedidoDto pedidoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+
     Cliente cliente = null;
     Long cpfLong = pedidoDto.getCpfCliente();
 

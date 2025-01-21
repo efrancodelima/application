@@ -12,13 +12,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Classe ProdutoGateway.
+ */
 @Component
 public class ProdutoGateway implements InProdutoGateway {
 
   // Atributos
   private final IProdutoRepository produtoJpaRepository;
 
-  // Construtor
+  /**
+   * Construtor público de ProdutoGateway.
+   *
+   * @param produtoJpaRepository O repositório JPA para acesso aos dados.
+   */
   @Autowired
   public ProdutoGateway(IProdutoRepository produtoJpaRepository) {
     this.produtoJpaRepository = produtoJpaRepository;
