@@ -2,14 +2,26 @@ package br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamentoEnum;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercado_pago.PagamentoDto;
 import java.time.LocalDateTime;
 
+/**
+ * Classe PagamentoRequestAdapter.
+ */
 public final class PagamentoRequestAdapter {
 
   private PagamentoRequestAdapter() {}
 
-  public static StatusPagamento adaptar(PagamentoDto pagamentoDto) throws Exception {
+  /**
+   * Adapta um objeto do tipo PagamentoDto para o tipo StatusPagamento.
+   *
+   * @param pagamentoDto O objeto a ser adaptado.
+   * @return O objeto adaptado.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
+  public static StatusPagamento adaptar(PagamentoDto pagamentoDto)
+      throws BusinessRuleException {
 
     Long codigo = pagamentoDto.getId();
     StatusPagamentoEnum status = adaptarStatus(pagamentoDto.getStatus());
@@ -18,7 +30,15 @@ public final class PagamentoRequestAdapter {
     return new StatusPagamento(codigo, status, dataHora);
   }
 
-  private static StatusPagamentoEnum adaptarStatus(String statusRequisicao) throws Exception {
+  /**
+   * Adapta uma string para o tipo StatusPagamentoEnum.
+   *
+   * @param statusRequisicao A string a ser adaptada.
+   * @return O enum correspondente.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   */
+  private static StatusPagamentoEnum adaptarStatus(String statusRequisicao)
+      throws BusinessRuleException {
 
     statusRequisicao = statusRequisicao == null ? "" : statusRequisicao.trim().toUpperCase();
 
