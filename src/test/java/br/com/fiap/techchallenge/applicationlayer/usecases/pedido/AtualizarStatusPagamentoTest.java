@@ -3,6 +3,7 @@ package br.com.fiap.techchallenge.applicationlayer.usecases.pedido;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
@@ -50,8 +51,8 @@ class AtualizarStatusPagamentoTest {
   void deveAtualizarStatusPagamentoComSucesso() throws BusinessRuleException {
 
     when(gatewayMock.buscarPedidoPeloCodigoPagamento(Mockito.anyLong())).thenReturn(pedidoMock);
-    Mockito.doNothing().when(pedidoMock).setStatusPagamento(Mockito.any());
-    Mockito.doNothing().when(gatewayMock).atualizarPedido(Mockito.any());
+    doNothing().when(pedidoMock).setStatusPagamento(Mockito.any());
+    doNothing().when(gatewayMock).atualizarPedido(Mockito.any());
     
     assertDoesNotThrow(() -> {
       AtualizarStatusPagamento.atualizar(gatewayMock, statusPagamentoMock);

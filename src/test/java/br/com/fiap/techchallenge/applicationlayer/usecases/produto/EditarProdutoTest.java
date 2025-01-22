@@ -3,14 +3,15 @@ package br.com.fiap.techchallenge.applicationlayer.usecases.produto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import org.junit.jupiter.api.AfterEach;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.messages.EnumNotFoundExceptions;
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -43,8 +44,8 @@ class EditarProdutoTest {
   @Test
   void deveEditarProdutoComSucesso() throws BusinessRuleException {
 
-    Mockito.doReturn(true).when(gatewayMock).produtoExiste(Mockito.anyLong());
-    Mockito.doNothing().when(gatewayMock).atualizarProduto(produtoMock);
+    doReturn(true).when(gatewayMock).produtoExiste(Mockito.anyLong());
+    doNothing().when(gatewayMock).atualizarProduto(produtoMock);
     
     assertDoesNotThrow(() -> {
       EditarProduto.editar(gatewayMock, produtoMock);
@@ -54,7 +55,7 @@ class EditarProdutoTest {
   @Test
   void deveLancarExcecaoQuandoProdutoNaoExistir() throws BusinessRuleException {
 
-    Mockito.doReturn(false).when(gatewayMock).produtoExiste(Mockito.anyLong());
+    doReturn(false).when(gatewayMock).produtoExiste(Mockito.anyLong());
     
     var exception = assertThrows(ResourceNotFoundException.class, () -> {
       EditarProduto.editar(gatewayMock, produtoMock);

@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.interfacelayer.adapters.response;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
@@ -44,7 +44,7 @@ class StatusPagamentoResponseAdapterTest {
     var statusPagamento = new StatusPagamento(1L,
         StatusPagamentoEnum.APROVADO, LocalDateTime.now());
 
-    Mockito.doReturn(statusPagamento).when(pedidoMock).getStatusPagamento();
+    doReturn(statusPagamento).when(pedidoMock).getStatusPagamento();
 
     var httpStatus = HttpStatus.OK;
 

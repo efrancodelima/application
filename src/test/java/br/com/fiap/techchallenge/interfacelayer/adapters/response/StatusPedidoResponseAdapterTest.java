@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.interfacelayer.adapters.response;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedido;
@@ -14,7 +15,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
@@ -43,7 +43,7 @@ class StatusPedidoResponseAdapterTest {
 
     // Arrange
     var statusPedido = new StatusPedido(StatusPedidoEnum.EM_PREPARACAO, LocalDateTime.now());
-    Mockito.doReturn(statusPedido).when(pedidoMock).getStatusPedido();
+    doReturn(statusPedido).when(pedidoMock).getStatusPedido();
 
     var httpStatus = HttpStatus.OK;
 
@@ -64,10 +64,10 @@ class StatusPedidoResponseAdapterTest {
     listaPedidos.add(pedidoMock);
 
     var statusPedido = new StatusPedido(StatusPedidoEnum.EM_PREPARACAO, LocalDateTime.now());    
-    Mockito.doReturn(statusPedido).when(pedidoMock).getStatusPedido();
+    doReturn(statusPedido).when(pedidoMock).getStatusPedido();
 
     Long numeroPedido = Long.valueOf(123);
-    Mockito.doReturn(numeroPedido).when(pedidoMock).getNumero();
+    doReturn(numeroPedido).when(pedidoMock).getNumero();
 
     var httpStatus = HttpStatus.OK;
 

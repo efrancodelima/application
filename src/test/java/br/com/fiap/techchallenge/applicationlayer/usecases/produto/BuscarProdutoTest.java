@@ -1,12 +1,12 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.produto;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-
-import org.junit.jupiter.api.AfterEach;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -39,7 +39,7 @@ class BuscarProdutoTest {
   @Test
   void deveBuscarProdutoPeloCodigoComSucesso() throws BusinessRuleException {
 
-    Mockito.doReturn(produtoMock).when(gatewayMock).buscarProduto(Mockito.anyLong());
+    doReturn(produtoMock).when(gatewayMock).buscarProduto(Mockito.anyLong());
     
     assertDoesNotThrow(() -> {
       BuscarProduto.buscar(gatewayMock, 1L);

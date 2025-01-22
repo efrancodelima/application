@@ -13,6 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Controlador REST para a API pedidos.
+ */
 @RestController
 @RequestMapping("/pedidos")
 public class PedidoApi implements IntPedidoApi {
@@ -20,7 +23,11 @@ public class PedidoApi implements IntPedidoApi {
   // Atributos
   private final PedidoController controller;
 
-  // Construtor
+  /**
+   * O construtor público da classe.
+   *
+   * @param controller O controller de Cliente.
+   */
   @Autowired
   public PedidoApi(PedidoController controller) {
     this.controller = controller;

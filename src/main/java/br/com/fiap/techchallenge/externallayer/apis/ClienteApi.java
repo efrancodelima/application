@@ -19,7 +19,9 @@ public class ClienteApi implements IntClienteApi {
   private final ClienteController controller;
 
   /**
-   * Injeta o controller via construtor.
+   * O construtor público da classe.
+   *
+   * @param controller O controller de Cliente.
    */
   @Autowired
   public ClienteApi(ClienteController controller) {

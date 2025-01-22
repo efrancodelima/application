@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.produto;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.CategoriaProduto;
@@ -44,7 +45,7 @@ class BuscarProdutosPorCategoriaTest {
     List<Produto> lista = new ArrayList<>();
     lista.add(produtoMock);
 
-    Mockito.doReturn(lista).when(gatewayMock).buscarProdutosPorCategoria(Mockito.any());
+    doReturn(lista).when(gatewayMock).buscarProdutosPorCategoria(Mockito.any());
     
     assertDoesNotThrow(() -> {
       BuscarProdutosPorCategoria.buscar(gatewayMock, CategoriaProduto.LANCHE);

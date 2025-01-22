@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.pedido;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InPedidoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
@@ -42,9 +44,9 @@ class AtualizarStatusPedidoTest {
   @Test
   void deveAtualizarStatusPedidoComSucesso() throws BusinessRuleException {
 
-    Mockito.doReturn(pedidoMock).when(gatewayMock).buscarPedido(Mockito.anyLong());
-    Mockito.doNothing().when(gatewayMock).atualizarPedido(Mockito.any());
-    Mockito.doNothing().when(pedidoMock).atualizarStatusPedido();
+    doReturn(pedidoMock).when(gatewayMock).buscarPedido(Mockito.anyLong());
+    doNothing().when(gatewayMock).atualizarPedido(Mockito.any());
+    doNothing().when(pedidoMock).atualizarStatusPedido();
     
     assertDoesNotThrow(() -> {
       AtualizarStatusPedido.atualizar(gatewayMock, 1L);

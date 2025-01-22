@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * A API de Produtos.
+ * Controlador REST para a API produtos.
  */
 @RestController
 @RequestMapping("/produtos")
@@ -21,9 +21,9 @@ public class ProdutoApi implements IntProdutoApi {
   private final ProdutoController controller;
 
   /**
-   * O construtor da classe.
+   * O construtor público da classe.
    *
-   * @param controller O controller de Produtos.
+   * @param controller O controller de Produto.
    */
   @Autowired
   public ProdutoApi(ProdutoController controller) {

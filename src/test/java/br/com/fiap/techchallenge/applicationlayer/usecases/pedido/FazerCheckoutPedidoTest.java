@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.pedido;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InPedidoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
@@ -56,7 +57,7 @@ class FazerCheckoutPedidoTest {
   void deveFazerCheckoutComSucesso() throws BusinessRuleException {
 
     Pedido pedidoGravado = getPedido();
-    Mockito.doReturn(pedidoGravado).when(gatewayMock).gravarPedido(Mockito.any());
+    doReturn(pedidoGravado).when(gatewayMock).gravarPedido(Mockito.any());
     
     assertDoesNotThrow(() -> {
       FazerCheckoutPedido.fazerCheckout(gatewayMock, pedidoMock);

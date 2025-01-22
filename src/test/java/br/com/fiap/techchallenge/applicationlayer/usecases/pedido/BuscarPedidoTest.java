@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.applicationlayer.usecases.pedido;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InPedidoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
@@ -38,7 +39,7 @@ class BuscarPedidoTest {
   @Test
   void deveBuscarPedidoComSucesso() throws BusinessRuleException {
 
-    Mockito.doReturn(pedidoMock).when(gatewayMock).buscarPedido(Mockito.anyLong());
+    doReturn(pedidoMock).when(gatewayMock).buscarPedido(Mockito.anyLong());
     
     assertDoesNotThrow(() -> {
       BuscarPedido.buscar(gatewayMock, 1L);
