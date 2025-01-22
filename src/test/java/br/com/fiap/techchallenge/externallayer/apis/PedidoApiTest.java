@@ -29,7 +29,7 @@ class PedidoApiTest {
   InPedidoRepository repo;
 
   @Autowired
-  PedidoApi api;
+  PedidoApiImpl api;
 
   @Test
   void verificaSeTabelaFoiPrePopulada() {

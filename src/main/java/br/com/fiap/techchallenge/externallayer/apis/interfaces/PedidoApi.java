@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.externallayer.apis.interfaces;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPagamentoDto;
@@ -24,14 +27,16 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Interface da API Pedidos.
  */
 @Tag(name = "Pedidos")
-public interface IntPedidoApi {
+public interface PedidoApi {
 
   /**
    * Fazer checkout.
    *
    * @param pedidoDto O pedido para o checkout.
    * @return O número, status e timestamp do pedido.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Fazer checkout", description = Constantes.DESC_FAZER_CHECKOUT)
   @ApiResponses(value = {
@@ -56,14 +61,19 @@ public interface IntPedidoApi {
         value = Constantes.E500))) })
 
   @PostMapping(value = "/checkout/")
-  ResponseEntity<StatusPedidoDto> fazerCheckout(@RequestBody PedidoDto pedidoDto) throws Exception;
+
+  ResponseEntity<StatusPedidoDto>
+      fazerCheckout(@RequestBody PedidoDto pedidoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /**
    * Atualizar status do pedido.
    *
    * @param numeroPedido O número do pedido.
    * @return O número, status e timestamp do pedido.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Atualizar o status do pedido", description = 
       Constantes.DESC_ATUALIZAR_STATUS_PEDIDO)
@@ -90,15 +100,19 @@ public interface IntPedidoApi {
         value = Constantes.E500))) })
 
   @PutMapping(value = "/status/{numeroPedido}")
-  ResponseEntity<StatusPedidoDto> atualizarStatusPedido(
-      @PathVariable("numeroPedido") long numeroPedido) throws Exception;
+
+  ResponseEntity<StatusPedidoDto> 
+      atualizarStatusPedido(@PathVariable("numeroPedido") long numeroPedido)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /**
    * Consultar status do pagamento.
    *
    * @param numeroPedido O número do pedido.
    * @return O status do pagamento.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Consultar o status do pagamento",
       description = Constantes.DESC_CONSULTAR_STATUS_PAG)
@@ -125,14 +139,17 @@ public interface IntPedidoApi {
         value = Constantes.E500))) })
   
   @GetMapping(value = "/pagamento/{numeroPedido}")
-  ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(
-      @PathVariable("numeroPedido") long numeroPedido) throws Exception;
+
+  ResponseEntity<StatusPagamentoDto> 
+      consultarStatusPagamento(@PathVariable("numeroPedido") long numeroPedido)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /**
    * Listar pedidos.
    *
    * @return A lista com os pedidos ordenados por situação.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Listar pedidos", description = Constantes.DESC_LISTAR_PEDIDOS)
   @ApiResponses(value = {
@@ -157,17 +174,22 @@ public interface IntPedidoApi {
         value = Constantes.E500))) })
 
   @GetMapping(value = "/listar")
-  ResponseEntity<List<Pedido>> listarPedidos() throws Exception;
+
+  ResponseEntity<List<Pedido>> listarPedidos()
+      throws BusinessRuleException, ResourceNotFoundException;
 
   /**
    * Webhook do Mercado Pago.
    *
    * @param pagamentoDto A notificação do Mercado Pago.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Hidden
   @PutMapping(value = "/webhook/")
-  ResponseEntity<Void> webhookMercadoPago(@RequestBody PagamentoDto pagamentoDto) throws Exception;
+  ResponseEntity<Void> webhookMercadoPago(@RequestBody PagamentoDto pagamentoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /** 
    * Constantes usadas na interface da API Pedidos.

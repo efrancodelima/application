@@ -10,7 +10,7 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ClienteRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ClienteResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
-import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.InClienteController;
+import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.ClienteController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
- * Classe ClienteController.
+ * Classe ClienteControllerImpl.
  */
 @Component
-public class ClienteController implements InClienteController {
+public class ClienteControllerImpl implements ClienteController {
 
   // Atributos
   private final ClienteGateway gateway;
@@ -32,7 +32,7 @@ public class ClienteController implements InClienteController {
    * @param gateway O gateway do repositório de clientes.
    */
   @Autowired
-  public ClienteController(ClienteGateway gateway) {
+  public ClienteControllerImpl(ClienteGateway gateway) {
     this.gateway = gateway;
   }
 

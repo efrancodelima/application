@@ -4,8 +4,8 @@ import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationExceptio
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntPedidoApi;
-import br.com.fiap.techchallenge.interfacelayer.controllers.PedidoController;
+import br.com.fiap.techchallenge.externallayer.apis.interfaces.PedidoApi;
+import br.com.fiap.techchallenge.interfacelayer.controllers.PedidoControllerImpl;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPagamentoDto;
@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/pedidos")
-public class PedidoApi implements IntPedidoApi {
+public class PedidoApiImpl implements PedidoApi {
 
   // Atributos
-  private final PedidoController controller;
+  private final PedidoControllerImpl controller;
 
   /**
    * O construtor público da classe.
@@ -32,7 +32,7 @@ public class PedidoApi implements IntPedidoApi {
    * @param controller O controller de Cliente.
    */
   @Autowired
-  public PedidoApi(PedidoController controller) {
+  public PedidoApiImpl(PedidoControllerImpl controller) {
     this.controller = controller;
   }
 

@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.externallayer.apis.interfaces;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,14 +22,15 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Interface da API Cliente.
  */
 @Tag(name = "Clientes")
-public interface IntClienteApi {
+public interface ClienteApi {
 
   /**
    * Cadastrar cliente.
    *
    * @param cadastrar O cliente a ser cadastrado.
    * @return O cliente cadastrado.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
   @Operation(summary = "Cadastrar cliente", description = Constantes.DESC_CADASTRAR)
   @ApiResponses(value = {
@@ -47,14 +51,19 @@ public interface IntClienteApi {
         value = Constantes.E500))) })
 
   @PostMapping(value = "/cadastrar")
-  ResponseEntity<Cliente> cadastrarCliente(@RequestBody ClienteDto cadastrar) throws Exception;
+
+  ResponseEntity<Cliente>
+      cadastrarCliente(@RequestBody ClienteDto cadastrar)
+      throws ApplicationException, BusinessRuleException;
 
   /**
    * Buscar cliente por cpf.
    *
    * @param cpf O CPF do cliente a ser buscado.
    * @return O cliente encontrado para o CPF.
-   * @throws Exception Exceção lançada pela operação.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Buscar cliente por CPF", description = Constantes.DESC_BUSCAR)
   @Parameter(name = "cpf", description = "CPF do cliente", required = true)
@@ -81,8 +90,10 @@ public interface IntClienteApi {
         value = Constantes.E500))) })
   
   @GetMapping(value = "/buscar/{cpf}")
-  ResponseEntity<Cliente> buscarClientePorCpf(
-      @PathVariable("cpf") long cpf) throws Exception;
+
+  ResponseEntity<Cliente>
+      buscarClientePorCpf(@PathVariable("cpf") long cpf)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /** 
    * Constantes usadas na interface da API Cliente.

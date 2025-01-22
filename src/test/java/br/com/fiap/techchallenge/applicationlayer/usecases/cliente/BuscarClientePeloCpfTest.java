@@ -42,7 +42,7 @@ class BuscarClientePeloCpfTest {
   }
 
   @AfterEach
-  void tearDown() throws Exception {
+  void tearDown() throws Exception  {
     closeable.close();
   }
     

@@ -24,7 +24,7 @@ class ClienteApiTest {
   InClienteRepository repo;
 
   @Autowired
-  ClienteApi api;
+  ClienteApiImpl api;
 
   @Test
   void verificaSeTabelaFoiPrePopulada() {

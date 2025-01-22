@@ -25,7 +25,7 @@ import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.ItemPedi
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.PedidoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPagamentoDto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPedidoDto;
-import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.InPedidoController;
+import br.com.fiap.techchallenge.interfacelayer.controllers.interfaces.PedidoController;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.PedidoGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ProdutoGateway;
@@ -37,10 +37,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 /**
- * Classe PedidoController.
+ * Classe PedidoControllerImpl.
  */
 @Component
-public class PedidoController implements InPedidoController {
+public class PedidoControllerImpl implements PedidoController {
 
   // Atributos
   private final PedidoGateway pedidoGateway;
@@ -55,7 +55,7 @@ public class PedidoController implements InPedidoController {
    * @param produtoGateway O gateway do repositório de produtos.
    */
   @Autowired
-  public PedidoController(PedidoGateway pedidoGateway, ClienteGateway clienteGateway, 
+  public PedidoControllerImpl(PedidoGateway pedidoGateway, ClienteGateway clienteGateway, 
       ProdutoGateway produtoGateway) {
 
     this.pedidoGateway = pedidoGateway;

@@ -4,8 +4,8 @@ import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationExceptio
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntProdutoApi;
-import br.com.fiap.techchallenge.interfacelayer.controllers.ProdutoController;
+import br.com.fiap.techchallenge.externallayer.apis.interfaces.ProdutoApi;
+import br.com.fiap.techchallenge.interfacelayer.controllers.ProdutoControllerImpl;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/produtos")
-public class ProdutoApi implements IntProdutoApi {
+public class ProdutoApiImpl implements ProdutoApi {
 
   // Atributos
-  private final ProdutoController controller;
+  private final ProdutoControllerImpl controller;
 
   /**
    * O construtor público da classe.
@@ -29,7 +29,7 @@ public class ProdutoApi implements IntProdutoApi {
    * @param controller O controller de Produto.
    */
   @Autowired
-  public ProdutoApi(ProdutoController controller) {
+  public ProdutoApiImpl(ProdutoControllerImpl controller) {
     this.controller = controller;
   }
 
@@ -56,7 +56,7 @@ public class ProdutoApi implements IntProdutoApi {
 
   @Override
   public ResponseEntity<List<Produto>> buscarProdutosPorCategoria(String categoria)
-      throws ApplicationException, ResourceNotFoundException, BusinessRuleException {
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
 
     return controller.buscarProdutosPorCategoria(categoria);
   }

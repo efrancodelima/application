@@ -24,7 +24,7 @@ import org.mockito.MockitoAnnotations;
 class ClienteControllerTest {
 
   AutoCloseable closeable;
-  ClienteController controller;
+  ClienteControllerImpl controller;
     
   @Mock
   ClienteGateway clienteGatewayMock;
@@ -32,7 +32,7 @@ class ClienteControllerTest {
   @BeforeEach
   void setup() {
     closeable = MockitoAnnotations.openMocks(this);
-    controller = new ClienteController(clienteGatewayMock);
+    controller = new ClienteControllerImpl(clienteGatewayMock);
   }
 
   @AfterEach

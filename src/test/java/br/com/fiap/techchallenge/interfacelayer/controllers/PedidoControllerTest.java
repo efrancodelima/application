@@ -36,7 +36,7 @@ import org.mockito.MockitoAnnotations;
 class PedidoControllerTest {
 
   AutoCloseable closeable;
-  PedidoController controller;
+  PedidoControllerImpl controller;
   
   @Mock
   PedidoGateway pedidoGatewayMock;
@@ -59,7 +59,7 @@ class PedidoControllerTest {
   @BeforeEach
   void setup() {
     closeable = MockitoAnnotations.openMocks(this);
-    controller = new PedidoController(pedidoGatewayMock, clienteGatewayMock, produtoGatewayMock);
+    controller = new PedidoControllerImpl(pedidoGatewayMock, clienteGatewayMock, produtoGatewayMock);
   }
 
   @AfterEach

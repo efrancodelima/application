@@ -22,7 +22,7 @@ class ProdutoApiTest {
   InProdutoRepository repo;
 
   @Autowired
-  ProdutoApi api;
+  ProdutoApiImpl api;
 
   @Test
   void verificaSeTabelaFoiPrePopulada() {

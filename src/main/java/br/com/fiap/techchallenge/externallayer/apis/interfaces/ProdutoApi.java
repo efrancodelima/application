@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.externallayer.apis.interfaces;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,13 +25,15 @@ import org.springframework.web.bind.annotation.RequestBody;
  * Interface da API Produtos.
  */
 @Tag(name = "Produtos")
-public interface IntProdutoApi {
+public interface ProdutoApi {
 
   /** 
    * Cadastrar produto.
    *
    * @param cadastrar O produto que será cadastrado.
    * @return O produto que foi cadastrado.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    */
   @Operation(summary = "Cadastrar produto", description = Constantes.DESC_CADASTRAR)
   @ApiResponses(value = {
@@ -49,7 +54,10 @@ public interface IntProdutoApi {
         value = Constantes.E500))) })
   
   @PostMapping("/cadastrar")
-  ResponseEntity<Produto> cadastrarProduto(@RequestBody ProdutoDto cadastrar) throws Exception;
+
+  ResponseEntity<Produto>
+      cadastrarProduto(@RequestBody ProdutoDto cadastrar)
+      throws ApplicationException, BusinessRuleException;
 
   /** 
    * Editar produto.
@@ -57,6 +65,9 @@ public interface IntProdutoApi {
    * @param codigo O código do produto que será atualizado.
    * @param atualizar O produto que será atualizado.
    * @return O produto que foi atualizado.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Editar produto", description = Constantes.DESC_EDITAR)
   
@@ -84,14 +95,19 @@ public interface IntProdutoApi {
         value = Constantes.E500))) })
   
   @PutMapping("/editar/{codigo}")
-  ResponseEntity<Produto> editarProduto(@PathVariable long codigo,
-      @RequestBody ProdutoDto atualizar) throws Exception;
+
+  ResponseEntity<Produto>
+      editarProduto(@PathVariable long codigo, @RequestBody ProdutoDto atualizar)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /** 
    * Remover produto.
    *
    * @param codigo O código do produto que será removido.
    * @return O produto que foi removido.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Remover produto", description = Constantes.DESC_REMOVER)
 
@@ -119,10 +135,19 @@ public interface IntProdutoApi {
         value = Constantes.E500))) })
   
   @DeleteMapping(value = "/remover/{codigo}")
-  ResponseEntity<Produto> removerProduto(@PathVariable long codigo) throws Exception;
 
-  /** 
+  ResponseEntity<Produto>
+      removerProduto(@PathVariable long codigo)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
+
+  /**
    * Listar produtos por categoria.
+   *
+   * @param categoria A categoria dos produtos a serem listados.
+   * @return A lista com os produtos.
+   * @throws ApplicationException Exceção da aplicação lançada pelo método.
+   * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
+   * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
   @Operation(summary = "Buscar produtos por categoria",
       description = Constantes.DESC_BUSCAR_POR_CAT)
@@ -152,8 +177,10 @@ public interface IntProdutoApi {
         value = Constantes.E500))) })
   
   @GetMapping(value = "/buscar/{categoria}")
-  ResponseEntity<List<Produto>> buscarProdutosPorCategoria(
-      @PathVariable("categoria") String categoria) throws Exception;
+
+  ResponseEntity<List<Produto>>
+      buscarProdutosPorCategoria(@PathVariable("categoria") String categoria)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException;
 
   /** 
    * Constantes usadas na APi de Produtos.
