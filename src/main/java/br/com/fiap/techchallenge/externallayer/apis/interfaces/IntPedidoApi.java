@@ -163,7 +163,6 @@ public interface IntPedidoApi {
    * Webhook do Mercado Pago.
    *
    * @param pagamentoDto A notificação do Mercado Pago.
-   * @return Não há retorno.
    * @throws Exception Exceção lançada pela operação.
    */
   @Hidden

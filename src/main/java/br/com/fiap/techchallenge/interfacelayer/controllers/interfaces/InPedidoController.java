@@ -49,9 +49,9 @@ public interface InPedidoController {
   ResponseEntity<List<Pedido>> listarPedidos() throws Exception;
 
   /**
-   * Recebe as notificações de pagamento do Mercado livre.
+   * Recebe as notificações de pagamento do Mercado Pago.
    *
-   * @param pagamentoDto A notificação do Mercado Livre.
+   * @param pagamentoDto A notificação do Mercado Pago.
    * @throws Exception Exceção lançada pelo método.
    */
   ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto) throws Exception;

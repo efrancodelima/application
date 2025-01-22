@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntProdutoApi;
 import br.com.fiap.techchallenge.interfacelayer.controllers.ProdutoController;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
@@ -31,24 +34,30 @@ public class ProdutoApi implements IntProdutoApi {
   }
 
   @Override
-  public ResponseEntity<Produto> cadastrarProduto(ProdutoDto produtoDto) throws Exception {
+  public ResponseEntity<Produto> cadastrarProduto(ProdutoDto produtoDto)
+      throws ApplicationException, BusinessRuleException {
+
     return controller.cadastrarProduto(produtoDto);
   }
 
   @Override
-  public ResponseEntity<Produto> editarProduto(long codigo,
-      ProdutoDto produtoDto) throws Exception {
+  public ResponseEntity<Produto> editarProduto(long codigo, ProdutoDto produtoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+
     return controller.editarProduto(codigo, produtoDto);
   }
 
   @Override
-  public ResponseEntity<Produto> removerProduto(long codigo) throws Exception {
+  public ResponseEntity<Produto> removerProduto(long codigo)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+
     return controller.removerProduto(codigo);
   }
 
   @Override
-  public ResponseEntity<List<Produto>> buscarProdutosPorCategoria(
-      String categoria) throws Exception {
+  public ResponseEntity<List<Produto>> buscarProdutosPorCategoria(String categoria)
+      throws ApplicationException, ResourceNotFoundException, BusinessRuleException {
+
     return controller.buscarProdutosPorCategoria(categoria);
   }
 }

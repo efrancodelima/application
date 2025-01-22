@@ -15,7 +15,7 @@ public final class PagamentoRequestAdapter {
 
   /**
    * Adapta um objeto do tipo PagamentoDto para o tipo StatusPagamento.
-   * Método usado com a notificação do Mercado Livre.
+   * Método usado com a notificação do Mercado Pago.
    *
    * @param pagamentoDto O objeto a ser adaptado.
    * @return O objeto adaptado.

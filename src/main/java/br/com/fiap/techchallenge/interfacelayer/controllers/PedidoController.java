@@ -65,7 +65,9 @@ public class PedidoController implements InPedidoController {
 
   // Métodos públicos
   @Override
-  public ResponseEntity<StatusPedidoDto> fazerCheckout(PedidoDto pedidoDto) throws Exception {
+  public ResponseEntity<StatusPedidoDto> fazerCheckout(PedidoDto pedidoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+        
     Cliente cliente = getClientePedidoDto(pedidoDto);
     List<ItemPedido> itens = getItensPedidoDto(pedidoDto);
 
@@ -76,20 +78,25 @@ public class PedidoController implements InPedidoController {
   }
 
   @Override
-  public ResponseEntity<StatusPedidoDto> atualizarStatusPedido(Long numeroPedido) throws Exception {
+  public ResponseEntity<StatusPedidoDto> atualizarStatusPedido(Long numeroPedido)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+        
     Pedido pedido = AtualizarStatusPedido.atualizar(pedidoGateway, numeroPedido);
     return StatusPedidoResponseAdapter.adaptar(pedido, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(
-      Long numeroPedido) throws Exception {
+  public ResponseEntity<StatusPagamentoDto> consultarStatusPagamento(Long numeroPedido)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+        
     Pedido pedido = BuscarPedido.buscar(pedidoGateway, numeroPedido);
     return StatusPagamentoResponseAdapter.adaptar(pedido, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<List<Pedido>> listarPedidos() throws Exception {
+  public ResponseEntity<List<Pedido>> listarPedidos()
+      throws BusinessRuleException, ResourceNotFoundException {
+        
     List<Pedido> pedidos = ListarPedidos.listar(pedidoGateway);
     if (pedidos.isEmpty()) {
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -99,9 +106,12 @@ public class PedidoController implements InPedidoController {
   }
 
   @Override
-  public ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto) throws Exception {
+  public ResponseEntity<Void> webhookMercadoPago(PagamentoDto pagamentoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+
     var statusPagamento = PagamentoRequestAdapter.adaptar(pagamentoDto);
     AtualizarStatusPagamento.atualizar(pedidoGateway, statusPagamento);
+
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
@@ -119,7 +129,9 @@ public class PedidoController implements InPedidoController {
     return cliente;
   }
 
-  private List<ItemPedido> getItensPedidoDto(PedidoDto pedidoDto) throws Exception {
+  private List<ItemPedido> getItensPedidoDto(PedidoDto pedidoDto)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException  {
+
     List<Produto> produtos = new ArrayList<>();
     List<ItemPedidoDto> itensDto = pedidoDto.getItens();
 

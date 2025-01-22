@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge.applicationlayer.usecases.produto;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
@@ -45,7 +44,7 @@ class EditarProdutoTest {
   void deveEditarProdutoComSucesso() throws BusinessRuleException {
 
     doReturn(true).when(gatewayMock).produtoExiste(Mockito.anyLong());
-    doNothing().when(gatewayMock).atualizarProduto(produtoMock);
+    doReturn(produtoMock).when(gatewayMock).atualizarProduto(produtoMock);
     
     assertDoesNotThrow(() -> {
       EditarProduto.editar(gatewayMock, produtoMock);

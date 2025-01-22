@@ -54,8 +54,8 @@ public class ProdutoController implements InProdutoController {
       throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
 
     Produto produto = ProdutoRequestAdapter.adaptar(codigo, produtoDto);
-    EditarProduto.editar(gateway, produto);
-    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    produto = EditarProduto.editar(gateway, produto);
+    return new ResponseEntity<>(produto, HttpStatus.OK);
   }
 
   @Override

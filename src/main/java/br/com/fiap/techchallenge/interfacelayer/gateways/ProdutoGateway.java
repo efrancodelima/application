@@ -41,10 +41,8 @@ public class ProdutoGateway implements InProdutoGateway {
   }
 
   @Override
-  public void atualizarProduto(Produto produto) throws BusinessRuleException {
-    
-    ProdutoJpa produtoJpa = ProdutoMapper.getProdutoJpa(produto);
-    produtoJpaRepository.save(produtoJpa);
+  public Produto atualizarProduto(Produto produto) throws BusinessRuleException {
+    return gravarProduto(produto);
   }
 
   @Override

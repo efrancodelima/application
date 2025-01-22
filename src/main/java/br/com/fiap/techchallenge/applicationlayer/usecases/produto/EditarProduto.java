@@ -25,7 +25,7 @@ public final class EditarProduto {
    * @throws BusinessRuleException Exceção de regra de negócio lançada pelo método.
    * @throws ResourceNotFoundException Exceção de recurso não encontrado lançada pelo método.
    */
-  public static void editar(InProdutoGateway gateway, Produto produto)
+  public static Produto editar(InProdutoGateway gateway, Produto produto)
       throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
 
     Validar.notNull(produto, EnumApplicationExceptions.PRODUTO_NULO);
@@ -37,8 +37,7 @@ public final class EditarProduto {
           EnumNotFoundExceptions.PRODUTO_NAO_ENCONTRADO.getMensagem());
     }
     
-    gateway.atualizarProduto(produto);
-
+    return gateway.atualizarProduto(produto);
   }
 
 }

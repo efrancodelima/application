@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ProdutoDto;
@@ -24,9 +25,9 @@ class ProdutoApiTest {
   ProdutoApi api;
 
   @Test
-  void devePermitirCriarTabela() {
+  void verificaSeTabelaFoiPrePopulada() {
     var numeroEntidades = repo.count();
-    assertEquals(true, numeroEntidades < 1);
+    assertEquals(true, numeroEntidades > 0);
   }
 
   @Test
@@ -41,46 +42,44 @@ class ProdutoApiTest {
   }
 
   @Test
-  void deveEditarProduto() throws Exception {
+  void deveEditarProduto() {
     
-    // Arrange
-    ProdutoDto produtoDto = instanciarProdutoDto();
-    var produtoCadastrado = api.cadastrarProduto(produtoDto);
-    var codigoProduto = produtoCadastrado.getBody().getCodigo();
-    produtoDto.setNome("X-Bacon");
-    
-    // Act
-    var response = api.editarProduto(codigoProduto, produtoDto);
+    var codigoProduto = 1L;
+    var produtoEditado = instanciarProdutoDto();
+    produtoEditado.setNome("Cold Dog");
 
-    // Assert
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    assertDoesNotThrow(() -> {
+
+      var response = api.editarProduto(codigoProduto, produtoEditado);
+      assertEquals(HttpStatus.OK, response.getStatusCode());
+      assertEquals(codigoProduto, response.getBody().getCodigo());
+      assertEquals(produtoEditado.getNome(), response.getBody().getNome());
+    });
   }
 
   @Test
-  void deveRemoverProduto() throws Exception {
+  void deveRemoverProduto() {
     
-    // Arrange
-    var produtoCadastrado = api.cadastrarProduto(instanciarProdutoDto());
-    var codigoProduto = produtoCadastrado.getBody().getCodigo();
-    
-    // Act
-    var response = api.removerProduto(codigoProduto);
+    assertDoesNotThrow(() -> {
 
-    // Assert
-    assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+      var response = api.removerProduto(1L);
+      assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
+    });
   }
 
   @Test
-  void deveBuscarProdutosPorCategoria() throws Exception {
+  void deveBuscarProdutosPorCategoria() {
     
-    // Arrange and act
     var categoria = "LANCHE";
-    api.cadastrarProduto(instanciarProdutoDto(categoria));
-    var response = api.buscarProdutosPorCategoria(categoria);
 
-    // Assert
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-    assertEquals(false, response.getBody().isEmpty());
+    assertDoesNotThrow(() -> {
+
+      var response = api.buscarProdutosPorCategoria(categoria);
+      
+      assertEquals(HttpStatus.OK, response.getStatusCode());
+      assertEquals(false, response.getBody().isEmpty());
+      assertEquals(categoria, response.getBody().get(0).getCategoria().toString());
+    });
   }
 
   // Métodos auxiliares dos testes

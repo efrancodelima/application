@@ -3,7 +3,6 @@ package br.com.fiap.techchallenge.applicationlayer.interfaces.gateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.CategoriaProduto;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public interface InProdutoGateway {
 
   Produto gravarProduto(Produto produto) throws BusinessRuleException;
 
-  void atualizarProduto(Produto produto) throws BusinessRuleException;
+  Produto atualizarProduto(Produto produto) throws BusinessRuleException;
 
   void removerProduto(long codigoProduto) throws BusinessRuleException;
 

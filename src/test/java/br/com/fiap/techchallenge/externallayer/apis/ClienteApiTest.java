@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 import br.com.fiap.techchallenge.interfacelayer.gateways.repositories.InClienteRepository;
@@ -26,33 +27,31 @@ class ClienteApiTest {
   ClienteApi api;
 
   @Test
-  void devePermitirCriarTabela() {
+  void verificaSeTabelaFoiPrePopulada() {
     var numeroEntidades = repo.count();
-    assertEquals(true, numeroEntidades < 1);
+    assertEquals(true, numeroEntidades > 0);
   }
 
   @Test
-  void deveCadastrarClienteComSucesso() throws Exception {
+  void deveCadastrarClienteComSucesso() {
 
-    ClienteDto clienteDto = instanciarClienteDto();
+    var clienteDto = new ClienteDto(11122233396L, "Nome do cliente", "email@email.com");
 
-    var response = api.cadastrarCliente(clienteDto);
-    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    assertDoesNotThrow(() -> {
+
+      var response = api.cadastrarCliente(clienteDto);
+      assertEquals(HttpStatus.CREATED, response.getStatusCode());
+    });
   }
 
   @Test
-  void deveBuscarClientePorCpf() throws Exception {
+  void deveBuscarClientePorCpf() {
 
-    ClienteDto clienteDto = instanciarClienteDto();
-    api.cadastrarCliente(clienteDto);
-    
-    var response = api.buscarClientePorCpf(clienteDto.getCpf());
-    assertEquals(HttpStatus.OK, response.getStatusCode());
-  }
-
-  // Métodos auxiliares dos testes
-  private ClienteDto instanciarClienteDto() {
-    return new ClienteDto(11122233396L, "Nome do cliente", "email@email.com");
+    assertDoesNotThrow(() -> {
+      
+      var response = api.buscarClientePorCpf(23456789092L);
+      assertEquals(HttpStatus.OK, response.getStatusCode());
+    });
   }
   
 }

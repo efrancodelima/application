@@ -1,9 +1,12 @@
 package br.com.fiap.techchallenge.interfacelayer.controllers;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.BuscarClientePeloCpf;
 import br.com.fiap.techchallenge.applicationlayer.usecases.cliente.CadastrarCliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.ClienteRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ClienteResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
@@ -34,7 +37,8 @@ public class ClienteController implements InClienteController {
   }
 
   @Override
-  public ResponseEntity<Cliente> cadastrarCliente(ClienteDto clienteDto) throws Exception {
+  public ResponseEntity<Cliente> cadastrarCliente(ClienteDto clienteDto)
+      throws ApplicationException, BusinessRuleException {
 
     Cliente cliente = ClienteRequestAdapter.adaptar(clienteDto);
     cliente = CadastrarCliente.cadastrar(gateway, cliente);
@@ -42,7 +46,8 @@ public class ClienteController implements InClienteController {
   }
 
   @Override
-  public ResponseEntity<Cliente> buscarClientePeloCpf(Long cpfLong) throws Exception {
+  public ResponseEntity<Cliente> buscarClientePeloCpf(Long cpfLong)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
 
     Cpf cpf = new Cpf(cpfLong);
     Cliente cliente = BuscarClientePeloCpf.buscar(gateway, cpf);

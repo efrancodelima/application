@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Classe PagamentoDto.
- * Usada para mapear alguns dados da notificação do Mercado Livre.
+ * Usada para mapear alguns dados da notificação do Mercado Pago.
  */
 @Data
 @NoArgsConstructor

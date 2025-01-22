@@ -1,6 +1,9 @@
 package br.com.fiap.techchallenge.externallayer.apis;
 
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ApplicationException;
+import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
+import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.externallayer.apis.interfaces.IntClienteApi;
 import br.com.fiap.techchallenge.interfacelayer.controllers.ClienteController;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
@@ -29,12 +32,16 @@ public class ClienteApi implements IntClienteApi {
   }
 
   @Override
-  public ResponseEntity<Cliente> cadastrarCliente(ClienteDto clienteDto) throws Exception {
+  public ResponseEntity<Cliente> cadastrarCliente(ClienteDto clienteDto)
+      throws ApplicationException, BusinessRuleException {
+
     return controller.cadastrarCliente(clienteDto);
   }
 
   @Override
-  public ResponseEntity<Cliente> buscarClientePorCpf(long cpf) throws Exception {
+  public ResponseEntity<Cliente> buscarClientePorCpf(long cpf)
+      throws ApplicationException, BusinessRuleException, ResourceNotFoundException {
+
     return controller.buscarClientePeloCpf(cpf);
   }
 
