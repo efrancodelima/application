@@ -2,6 +2,8 @@ package br.com.fiap.techchallenge.applicationlayer.usecases.produto;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import org.junit.jupiter.api.AfterEach;
+
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
@@ -16,6 +18,8 @@ import org.mockito.MockitoAnnotations;
  */
 class CadastrarProdutoTest {
 
+  AutoCloseable closeable;
+
   @Mock
   InProdutoGateway gatewayMock;
 
@@ -24,7 +28,12 @@ class CadastrarProdutoTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test

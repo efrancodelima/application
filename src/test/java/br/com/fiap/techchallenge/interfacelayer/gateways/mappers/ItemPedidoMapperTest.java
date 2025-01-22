@@ -101,7 +101,7 @@ class ItemPedidoMapperTest {
           listaItensPedido.get(0).getValorItem(),
           listaItensPedidoJpa.get(0).getProdutoJpa().getPreco()
           .multiply(BigDecimal.valueOf(listaItensPedidoJpa.get(0).getQuantidade())));
-      });
+    });
   }
 
   // Métodos auxiliares dos testes

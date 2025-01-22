@@ -3,10 +3,9 @@ package br.com.fiap.techchallenge.interfacelayer.adapters.response;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
-
 import br.com.fiap.techchallenge.businesslayer.entities.produto.Produto;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.ProdutoResponseAdapter;
+import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import org.springframework.http.HttpStatus;
  */
 class ProdutoResponseAdapterTest {
 
-  private AutoCloseable closeable;
+  AutoCloseable closeable;
 
   @Mock
   Produto produtoMock;

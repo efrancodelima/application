@@ -10,6 +10,7 @@ import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.ClienteDto;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ClienteGateway;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -22,6 +23,7 @@ import org.mockito.MockitoAnnotations;
  */
 class ClienteControllerTest {
 
+  AutoCloseable closeable;
   ClienteController controller;
     
   @Mock
@@ -29,8 +31,13 @@ class ClienteControllerTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
     controller = new ClienteController(clienteGatewayMock);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test
@@ -80,7 +87,7 @@ class ClienteControllerTest {
         new Cpf(cpf), "Arthur Conan Doyle", "conanad@gmail.com");
   }
 
-  private ClienteDto instanciarClienteDto(Long cpf) throws BusinessRuleException {
+  private ClienteDto instanciarClienteDto(Long cpf) {
     return new ClienteDto(cpf, "Arthur Conan Doyle", "conanad@gmail.com");
   }
 

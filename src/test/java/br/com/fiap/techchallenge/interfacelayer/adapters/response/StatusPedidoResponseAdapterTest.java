@@ -4,18 +4,12 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
-import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
-import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamentoEnum;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPedidoEnum;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
-import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.StatusPagamentoResponseAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.response.StatusPedidoResponseAdapter;
-import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.pedido.StatusPedidoDto;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +23,7 @@ import org.springframework.http.HttpStatus;
  */
 class StatusPedidoResponseAdapterTest {
 
-  private AutoCloseable closeable;
+  AutoCloseable closeable;
 
   @Mock
   Pedido pedidoMock;

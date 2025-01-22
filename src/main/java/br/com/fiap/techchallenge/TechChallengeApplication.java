@@ -16,9 +16,7 @@ public class TechChallengeApplication {
   public static void main(String[] args) {
     var application = new SpringApplication(TechChallengeApplication.class);
     application.setApplicationStartup(new BufferingApplicationStartup(1024));
-    var context = application.run(args);
-
-    PopularBd.popular(context);
+    application.run(args);
   }
 
 }

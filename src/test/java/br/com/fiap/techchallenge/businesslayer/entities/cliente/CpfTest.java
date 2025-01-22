@@ -9,7 +9,7 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.messages.CpfExceptions
 import org.junit.jupiter.api.Test;
 
 /**
- * Classe de testes para o value object CPF.
+ * Classe de testes para o Cpf.
  */
 class CpfTest {
 

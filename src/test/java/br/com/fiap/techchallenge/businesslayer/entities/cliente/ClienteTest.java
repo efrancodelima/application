@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.ClienteExceptions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -15,6 +16,8 @@ import org.mockito.MockitoAnnotations;
  * Classe de testes para a entidade de negócio Cliente.
  */
 class ClienteTest {
+
+  AutoCloseable closeable;
   
   @Mock
   private Cpf cpfValido;
@@ -25,7 +28,12 @@ class ClienteTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test

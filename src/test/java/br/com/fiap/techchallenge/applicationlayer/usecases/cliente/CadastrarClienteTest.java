@@ -11,6 +11,7 @@ import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InClienteGa
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,6 +22,8 @@ import org.mockito.MockitoAnnotations;
  * Classe de testes para o use case CadastrarCliente.
  */
 class CadastrarClienteTest {
+
+  AutoCloseable closeable;
 
   @Mock
   InClienteGateway gatewayMock;
@@ -33,9 +36,14 @@ class CadastrarClienteTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
   }
-  
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
+  }
+    
   @Test
   void deveCadastrarClienteComSucesso() {
     assertDoesNotThrow(() -> {

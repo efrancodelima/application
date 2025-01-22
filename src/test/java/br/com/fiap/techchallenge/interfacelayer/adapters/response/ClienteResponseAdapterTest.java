@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
  */
 class ClienteResponseAdapterTest {
 
-  private AutoCloseable closeable;
+  AutoCloseable closeable;
 
   @Mock
   Cliente clienteMock;

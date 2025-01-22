@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
+import org.junit.jupiter.api.AfterEach;
+
 import br.com.fiap.techchallenge.applicationlayer.exceptions.ResourceNotFoundException;
 import br.com.fiap.techchallenge.applicationlayer.exceptions.messages.EnumNotFoundExceptions;
 import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InProdutoGateway;
@@ -20,6 +22,8 @@ import org.mockito.MockitoAnnotations;
  */
 class EditarProdutoTest {
 
+  AutoCloseable closeable;
+
   @Mock
   InProdutoGateway gatewayMock;
 
@@ -28,7 +32,12 @@ class EditarProdutoTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test

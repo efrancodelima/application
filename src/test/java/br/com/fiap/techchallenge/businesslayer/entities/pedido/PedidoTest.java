@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -21,6 +22,8 @@ import org.mockito.MockitoAnnotations;
  * Classe de testes para a entidade de negócio Pedido.
  */
 class PedidoTest {
+
+  AutoCloseable closeable;
 
   @Mock
   private Cliente cliente;
@@ -37,10 +40,15 @@ class PedidoTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
     
     listaItens = new ArrayList<>();
     listaItens.add(item);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test

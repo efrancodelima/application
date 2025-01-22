@@ -22,7 +22,7 @@ import org.springframework.http.HttpStatus;
  */
 class StatusPagamentoResponseAdapterTest {
 
-  private AutoCloseable closeable;
+  AutoCloseable closeable;
 
   @Mock
   Pedido pedidoMock;

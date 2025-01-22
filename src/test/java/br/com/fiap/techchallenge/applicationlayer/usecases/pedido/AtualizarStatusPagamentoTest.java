@@ -13,6 +13,7 @@ import br.com.fiap.techchallenge.applicationlayer.interfaces.gateway.InPedidoGat
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
 import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -23,6 +24,8 @@ import org.mockito.MockitoAnnotations;
  * Classe de testes para o use case AtualizarStatusPagamento.
  */
 class AtualizarStatusPagamentoTest {
+
+  AutoCloseable closeable;
 
   @Mock
   InPedidoGateway gatewayMock;
@@ -35,9 +38,14 @@ class AtualizarStatusPagamentoTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
   }
-  
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
+  }
+    
   @Test
   void deveAtualizarStatusPagamentoComSucesso() throws BusinessRuleException {
 

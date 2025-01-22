@@ -9,7 +9,6 @@ import br.com.fiap.techchallenge.businesslayer.exceptions.BusinessRuleException;
 import br.com.fiap.techchallenge.businesslayer.exceptions.messages.StatusPagamentoExceptions;
 import br.com.fiap.techchallenge.interfacelayer.controllers.adapters.request.PagamentoRequestAdapter;
 import br.com.fiap.techchallenge.interfacelayer.controllers.dtos.mercadopago.PagamentoDto;
-
 import org.junit.jupiter.api.Test;
 
 /**

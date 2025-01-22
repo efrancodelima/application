@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus;
  */
 class PedidoResponseAdapterTest {
 
-  private AutoCloseable closeable;
+  AutoCloseable closeable;
 
   @Mock
   Pedido pedidoMock;

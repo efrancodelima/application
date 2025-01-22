@@ -8,7 +8,6 @@ import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.AtualizarStatu
 import br.com.fiap.techchallenge.applicationlayer.usecases.pedido.FazerCheckoutPedido;
 import br.com.fiap.techchallenge.applicationlayer.usecases.produto.BuscarProduto;
 import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cliente;
-import br.com.fiap.techchallenge.businesslayer.entities.cliente.Cpf;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.ItemPedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.Pedido;
 import br.com.fiap.techchallenge.businesslayer.entities.pedido.StatusPagamento;
@@ -24,6 +23,7 @@ import br.com.fiap.techchallenge.interfacelayer.gateways.PedidoGateway;
 import br.com.fiap.techchallenge.interfacelayer.gateways.ProdutoGateway;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -35,6 +35,7 @@ import org.mockito.MockitoAnnotations;
  */
 class PedidoControllerTest {
 
+  AutoCloseable closeable;
   PedidoController controller;
   
   @Mock
@@ -57,8 +58,13 @@ class PedidoControllerTest {
 
   @BeforeEach
   void setup() {
-    MockitoAnnotations.openMocks(this);
+    closeable = MockitoAnnotations.openMocks(this);
     controller = new PedidoController(pedidoGatewayMock, clienteGatewayMock, produtoGatewayMock);
+  }
+
+  @AfterEach
+  void tearDown() throws Exception {
+    closeable.close();
   }
 
   @Test
